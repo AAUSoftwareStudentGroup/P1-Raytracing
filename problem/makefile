@@ -1,8 +1,10 @@
-all: main.tex
-	latexmk -pdf main.tex
+DOCUMENT=main
 
-watch: main.tex
-	latexmk -pdf -pvc main.tex
+all: $(DOCUMENT).tex
+	latexmk -pdf $(DOCUMENT).tex
+
+watch: $(DOCUMENT).tex
+	latexmk -pdf -pvc $(DOCUMENT).tex
 
 clean:
 	rm *.log *.fls *.fdb_latexmk *.aux
