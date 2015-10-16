@@ -1,6 +1,2 @@
 *.pnm
 *~
-*.log
-*.fls
-*.fdb_latexmk
-*.aux
