@@ -1,11 +1,32 @@
-\documentclass{article}
+
+\documentclass[12pt,oneside,a4paper,titlepage]{article}
+\usepackage{blindtext}
+\usepackage[utf8]{inputenc}
+
+% supresses errors during compilation
+\batchmode
+
 \title{Ray Tracing}
-\author{B2-28}
-\date{Oktober 2015}
+\author{P1 B2-28}
+\date{\today}
+
 \begin{document}
-    \maketitle
-        Hello World!
+\maketitle
+
+\renewcommand{\abstractname}{Abstrakt}
+\begin{abstract}
+\input{./sections/abstract.tex}
+\end{abstract}
+
+\tableofcontents
+\clearpage
 
 \input{./sections/problemformulering.tex}
 
+\renewcommand\refname{Bibliografi}
+\begin{thebibliography}{99}
+
+\input{./sections/bibliography.tex}
+
+\end{thebibliography}
 \end{document}
