@@ -2,6 +2,10 @@
 \documentclass[12pt,oneside,a4paper,titlepage]{article}
 \usepackage{blindtext}
 \usepackage[utf8]{inputenc}
+\usepackage{verbatim} 
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{float}
 
 % supresses errors during compilation
 \batchmode
@@ -21,6 +25,9 @@
 \tableofcontents
 \clearpage
 
+\input{./subsection/e_handel.tex}
+--
+\input{./sections/problemformulering.tex}
 \input{./sections/problemformulering.tex}
 
 \renewcommand\refname{Bibliografi}
