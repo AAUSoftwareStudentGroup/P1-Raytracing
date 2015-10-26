@@ -1,2 +1,4 @@
 *.pnm
+*.synctex.gz
+*.toc
 *~
