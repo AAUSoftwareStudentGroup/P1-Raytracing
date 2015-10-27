@@ -243,6 +243,7 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
+  <g>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
@@ -656,5 +657,6 @@
          id="tspan9987"
          x="300.66248"
          y="380.90042">Bestillinger</tspan></text>
+  </g>
   </g>
 </svg>

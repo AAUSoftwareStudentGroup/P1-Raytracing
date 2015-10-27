@@ -1,4 +1,4 @@
-%% Creator: Inkscape 0.91_64bit, www.inkscape.org
+%% Creator: Inkscape inkscape 0.48.4, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
 %% Accompanies image file 'e_handel_med_lampe.pdf' (pdf, eps, ps)
 %%
@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{407.85536398bp}%
+    \setlength{\unitlength}{407.84997909bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,19 +48,7 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.28674403)%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{e_handel_med_lampe.pdf}}%
-    \put(0.41765247,0.2392055){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{E-handel}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=2]{e_handel_med_lampe.pdf}}%
-    \put(0.72290132,0.16315872){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Lampesælger}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=3]{e_handel_med_lampe.pdf}}%
-    \put(0.40649901,0.09977793){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Lampe}}}%
-    \put(0.22789779,0.20547491){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Bestilling}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=4]{e_handel_med_lampe.pdf}}%
-    \put(0.21424624,0.1279651){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Lampeudvalg}}}%
-    \put(0.56978248,0.20936651){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Bestilling}}}%
-    \put(0.54036029,0.12894584){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Opdatere E-butik}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=5]{e_handel_med_lampe.pdf}}%
-    \put(0.38429298,0.03625809){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Lampe retur}}}%
+  \begin{picture}(1,0.28674758)%
+    \put(0,0){\includegraphics[width=\unitlength]{./graphics/e_handel_med_lampe.pdf}}%
   \end{picture}%
 \endgroup%

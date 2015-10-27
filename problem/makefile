@@ -7,4 +7,4 @@ watch: $(DOCUMENT).tex
 	latexmk -pdf -pvc $(DOCUMENT).tex
 
 clean:
-	rm -f *.log *.fls *.fdb_latexmk *.aux *.toc
+	rm -f *.log *.out *.fls *.fdb_latexmk *.aux *.toc
