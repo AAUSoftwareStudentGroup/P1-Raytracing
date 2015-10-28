@@ -1,7 +1,7 @@
 DOCUMENT=main
 
 all: $(DOCUMENT).tex
-	latexmk -pdf $(DOCUMENT).tex
+	latexmk -pdf $(DOCUMENT).tex -f
 
 watch: $(DOCUMENT).tex
 	latexmk -pdf -pvc $(DOCUMENT).tex
