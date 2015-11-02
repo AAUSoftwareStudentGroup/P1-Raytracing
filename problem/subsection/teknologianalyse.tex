@@ -25,12 +25,24 @@ For at undersøge hvilke teknologier der kan anvendes til visualisering, er der 
 
 \paragraph{3D print}
 En teknologi som sælgeren vil kunne være i stand til at bruge er 3D printere, **hvad er 3D printere?**. Sælgeren vil kunne lave en demostrations vare som forbrugeren ville kunne være i stand til at tage med hjem, men da vi fokuserer på sælgere inden for e-handel vil dette ikke være en mulighed da e-handel som sagt ikke er en fysisk butik. I stedet kan sælgeren give forbrugeren en fil, så personen selv vil være i stand til at lave en 3D print af en bestemt lampe, dette vil dog kræve at forbrugeren har en 3D printer, som i en meget simpelt forstand er en printer der kan lave 3D figurer af et materiale, som for det meste er plastik. Disse 3D printere varierer rigtigt meget i pris og funktionalitet, dog koster nogle af de gode 3D printer over titusinde kroner \cite{3D_printer}. 
-Dette vil dog ikke være en fuldstændig løsning da forbrugeren stadig vil skulle hænge lampen op for at se lysets udbredelse. Desuden vil det være en dårlig ide for sælgere at forvente at deres kunder har en 3D printer derhjemme og det kan heller ikke forventes at forbrugerne investerer så mange penge på noget som de måske kun kommer til at bruge til at lave en lampe. Et andet problem er at sælgeren også kommer i et dilemma, da sælgeren skal bestemme om man kan få disse tegninger inden man har købt lampen eller om forbrugeren skal betale en form for depositum.
+Dette vil dog ikke være en fuldstændig løsning da forbrugeren stadig vil skulle hænge lampen op for at se lysets udbredelse. Desuden vil det være en dårlig ide for sælgere at forvente at deres kunder har en 3D printer derhjemme og det kan heller ikke forventes at forbrugerne investerer så mange penge på noget som de måske kun kommer til at bruge til at lave en lampe, men hvis prisen på 3D printere falder med teknologiens udvikling kunne det måske blive en mulighed i fremtiden. Et andet problem er at sælgeren også kommer i et dilemma, da sælgeren skal bestemme om man kan få disse tegninger inden man har købt lampen eller om forbrugeren skal betale en form for depositum.
 
 \paragraph{Computergrafik}
-\lipsum[3]
-\subparagraph{Rasterization}
-\lipsum[4]
+Ved hjælp af mattematiske modeller og vektorbaserede beskrivelser af objekter kan computere bruges til at efterligne lys interaktion med simulerede fysiske objekter. Der eksistere en mængde forskællige metoder til dette formål, flere af hvilke kan bruges sammen med andre for at opnå et mere realistisk eller effektivt resultat. Der er ofte tale om en balance mellem hastighed og fotorealisme.
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{time_vs_quality}
+    \caption{Interpolation af flade-normaler kan få kantede figure til at få mere naturligt udseende.}
+    \label{fig:tid_versus_kvalitet}
+\end{figure}
+\subparagraph{Rasterisering}
+Den mest almindelige metode til at rendere miljøer med høj aktiv bruger interaktion er rasterisering. Rasterisering er også betegnelsen for at omdanne vector objekter til punkmatricer eller pixel-billeder (Se figur \ref{fig:pixelering}) Metoden virker ved at andvende linear transformationer på vektor objekter for at finde deres position på skærmen og derefter udfylde 2D polygonerne med farve, evt. baseret på forskællige lyskilder. Der kan dog simplificeres ved kun at andvende en ambient lys konstant. Rasterisering er også effektiv fordi grafikprocessore i computere er udviklet specifikt til at udføre matrix transformationer på store punktmængder.
+\begin{figure}[H]
+    \centering
+    \includegraphics{rastarization_aprox}
+    \includegraphics{rastarization_aprox}
+    \caption{Pixelering der fremkommer når vektor objekter rastariseres.}
+    \label{fig:pixelering}
+\end{figure}
 \subparagraph{Radiosity}
 \lipsum[5]
 \subparagraph{Raytracing}

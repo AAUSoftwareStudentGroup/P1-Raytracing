@@ -6,8 +6,16 @@
 \usepackage{graphicx}
 \usepackage{color}
 \usepackage{float}
+% hidelinks fjerner farvede kanter omkring links og refferencer
 \usepackage[hidelinks]{hyperref}
 \usepackage{lipsum}
+
+% Mappe hvori billeder ligger
+\graphicspath{ {graphics/} }
+
+% Tekst som står først i figur captions "{Figure/Figur} 3: Pixelering der fremkommer..."
+\renewcommand{\figurename}{Figur}
+
 
 % supresses errors during compilation
 \batchmode
