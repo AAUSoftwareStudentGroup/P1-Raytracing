@@ -49,8 +49,9 @@ Sælgeren vil kunne bruge denne teknologi til at lave en demostrations vare som 
 % Fotorealistisk 3D animation https://youtu.be/HjHiC0mt4Ts
 Ved hjælp af mattematiske modeller og vektorbaserede beskrivelser af objekter kan computere bruges til at efterligne lys interaktion med simulerede fysiske objekter. Der eksistere en mængde forskællige metoder til dette formål, flere af hvilke kan bruges sammen med andre for at opnå et mere realistisk eller effektivt resultat. Der er ofte tale om en balance mellem hastighed og fotorealisme.
 \begin{figure}[H]
+    \centering
     %\includegraphics[width=\textwidth]{time_vs_quality}
-    \includegraphics[width=10cm]{bumpmaps}
+    \includegraphics[width=12cm]{bumpmaps}
     \caption{Interpolation af flade-normaler kan få kantede figure til at få mere naturligt udseende.}
     \label{fig:tid_versus_kvalitet}
     % Demo der viser det samme http://math.hws.edu/graphicsbook/demos/c4/smooth-vs-flat.html
@@ -59,8 +60,8 @@ Ved hjælp af mattematiske modeller og vektorbaserede beskrivelser af objekter k
 Den mest almindelige metode til at rendere miljøer med høj aktiv bruger interaktion er rasterisering. Rasterisering er også betegnelsen for at omdanne vector objekter til punkmatricer eller pixel-billeder (Se figur \ref{fig:pixelering}) Metoden virker ved at andvende linear transformationer på vektor objekter for at finde deres position på skærmen og derefter udfylde 2D polygonerne med farve, evt. baseret på forskællige lyskilder. Der kan dog simplificeres ved kun at andvende en ambient lys konstant. Rasterisering er også effektiv fordi grafikprocessore i computere er udviklet specifikt til at udføre matrix transformationer på store punktmængder.
 \begin{figure}[H]
     \centering
-    \includegraphics{rastarization_aprox}
-    \includegraphics{rastarization_aprox}
+    \includegraphics[width=6cm]{rastarization_aprox}
+    \includegraphics[width=6cm]{rastarization_aprox}
     \caption{Pixelering der fremkommer når vektor objekter rastariseres.}
     \label{fig:pixelering}
 \end{figure}
