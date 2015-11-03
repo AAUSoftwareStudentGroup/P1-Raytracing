@@ -1,7 +1,7 @@
 language: c
 compiler: gcc
 install:
-    - make unittest
+    - make -C solution unittest
 
 script:
-    - ./unittest
+    - ./solution/unittest
