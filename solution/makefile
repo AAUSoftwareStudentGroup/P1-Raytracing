@@ -34,6 +34,7 @@ all: before $(SOURCES) $(EXECUTABLE)
 
 before:
 	-@mkdir obj $(SUPPRESS_ALL) ||: 
+	-@mkdir units/obj $(SUPPRESS_ALL) ||: 
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
@@ -48,7 +49,7 @@ clean:
 	-@rm unittest $(SUPPRESS_ALL) ||:
 	@echo "Binaries removed!"
 
-unittest: $(TESTSOURCES) $(TESTOBJECTS) $(filter-out obj/main.o, $(OBJECTS))
+unittest: before $(TESTSOURCES) $(TESTOBJECTS) $(filter-out obj/main.o, $(OBJECTS))
 	@echo "TestSources: $(TESTSOURCES)"
 	@echo "TestObjects: $(TESTOBJECTS)"
 	$(CC) $(filter-out obj/main.o, $(OBJECTS)) $(TESTOBJECTS) $(LDFLAGS) -o $@
