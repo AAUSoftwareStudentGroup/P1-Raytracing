@@ -1,1 +1,9 @@
+*.o
+*.pgm
+*.pnm
+*.png
+*.ply
+*.d
+*.exe
 trace
+unittest
