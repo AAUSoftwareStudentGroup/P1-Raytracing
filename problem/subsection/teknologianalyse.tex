@@ -49,8 +49,9 @@ Sælgeren vil kunne bruge denne teknologi til at lave en demostrations vare som 
 % Fotorealistisk 3D animation https://youtu.be/HjHiC0mt4Ts
 Ved hjælp af mattematiske modeller og vektorbaserede beskrivelser af objekter kan computere bruges til at efterligne lys interaktion med simulerede fysiske objekter. Der eksistere en mængde forskællige metoder til dette formål, flere af hvilke kan bruges sammen med andre for at opnå et mere realistisk eller effektivt resultat. Der er ofte tale om en balance mellem hastighed og fotorealisme.
 \begin{figure}[H]
+    \centering
     %\includegraphics[width=\textwidth]{time_vs_quality}
-    \includegraphics[width=10cm]{bumpmaps}
+    \includegraphics[width=12cm]{bumpmaps}
     \caption{Interpolation af flade-normaler kan få kantede figure til at få mere naturligt udseende.}
     \label{fig:tid_versus_kvalitet}
     % Demo der viser det samme http://math.hws.edu/graphicsbook/demos/c4/smooth-vs-flat.html
@@ -59,8 +60,8 @@ Ved hjælp af mattematiske modeller og vektorbaserede beskrivelser af objekter k
 Den mest almindelige metode til at rendere miljøer med høj aktiv bruger interaktion er rasterisering. Rasterisering er også betegnelsen for at omdanne vector objekter til punkmatricer eller pixel-billeder (Se figur \ref{fig:pixelering}) Metoden virker ved at andvende linear transformationer på vektor objekter for at finde deres position på skærmen og derefter udfylde 2D polygonerne med farve, evt. baseret på forskællige lyskilder. Der kan dog simplificeres ved kun at andvende en ambient lys konstant. Rasterisering er også effektiv fordi grafikprocessore i computere er udviklet specifikt til at udføre matrix transformationer på store punktmængder.
 \begin{figure}[H]
     \centering
-    \includegraphics{rastarization_aprox}
-    \includegraphics{rastarization_aprox}
+    \includegraphics[width=6cm]{rastarization_aprox}
+    \includegraphics[width=6cm]{rastarization_aprox}
     \caption{Pixelering der fremkommer når vektor objekter rastariseres.}
     \label{fig:pixelering}
 \end{figure}
@@ -83,3 +84,8 @@ Hvor Rasterisering og raytracing udregner en pixels farve baseret på hvad man k
     \caption{\textit{Color bleeding} kan ses i billedet til højre.}
     \label{fig:colorbleeding}
 \end{figure}
+
+\paragraph{Opsummering}
+Ideen om at printe en model af et produkt fra en netbutik for at se hvordan det rigtigt ser ud, er ikke en fornuftig løsning på nuværende tidspunkt, eftersom at 3D printere stadig er dyre og kan være svære at kallibrere korrekt. Computer grafik kan derimod nemt indlejres i en hjemmeside. Hvilken Computergrafisk teknik der er den korrekte er et case til case valg eftersom det helt afhænger af hvor meget fleksibilitet versus kvalitet der er nødvendigt. Radiosity giver, i de fleste tilfælde, den bedste kvalitet modsat rasterisering som til gengæld hurtigt kan tegne nye billeder og dermed tillader et stort nivau af bruger interaktion. Den gyldne middelvej kunne være raytracing som giver et lignende resultat, set i forhold til radiosity.
+% Sammenligning (fordele, ulemper)
+% Hvordan kan de omtalte teknologier bruges i butikken eller ved e-handel? Findes der allerede nogle løsninger
