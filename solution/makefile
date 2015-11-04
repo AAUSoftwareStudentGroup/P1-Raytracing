@@ -50,8 +50,6 @@ clean:
 	@echo "Binaries removed!"
 
 unittest: before $(TESTSOURCES) $(TESTOBJECTS) $(filter-out obj/main.o, $(OBJECTS))
-	@echo "TestSources: $(TESTSOURCES)"
-	@echo "TestObjects: $(TESTOBJECTS)"
 	$(CC) $(filter-out obj/main.o, $(OBJECTS)) $(TESTOBJECTS) $(LDFLAGS) -o $@
 
 units/$(OBJDIR)/%.o: units/$(SRCDIR)/%.c
