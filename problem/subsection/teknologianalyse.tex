@@ -1,9 +1,9 @@
 \subsection{Teknologianalyse}
 \label{sec:teknologianalyse}
-Vi ser en tydelig mulighed for at assistere forbrugere med at træffe et valg når det kommer til (køb af vare på nettet | bestemmelse af optimale lysforhold i hjemmet | visualisering af et tilkøbt element i forbrugernes dagligdag/hjem). Dette vil sandsynligvis kunne løses ved hjælp af bedre købsvejledning eller værktøjer til at assistere forbrugeren i en købssituation hvor en prøve ikke kan stilles til rådighed eller at returnere varen er umuligt eller for omfattende en process.
+Vi ser en tydelig mulighed for at assistere forbrugere med at træffe et valg når det kommer til køb af vare på nettet, bestemmelse af optimale lysforhold i hjemmet og visualisering af et tilkøbt element i forbrugernes dagligdag/hjem. Dette vil sandsynligvis kunne løses ved hjælp af bedre købsvejledning eller værktøjer til at assistere forbrugeren i en købssituation hvor en prøve ikke kan stilles til rådighed eller at returnere varen er umuligt eller for omfattende en process.
 
 % // redegørelse
-Blot at vælge en lampe fra et katalog er problematisk hvis der ikke er billeder af lampen som 
+Blot at vælge en lampe fra et katalog er problematisk hvis der ikke er billeder af lampen som
 \begin{enumerate}
     \item Fremviser lampen som møbel, rent visuelt, det fysiske design og 
     \item Viser hvordan lys kastes af lampen. En god løsning vil være at have en fysisk model placeret i en kontekst hvor man kan komme og se lampen og se lyset i sammenspil med anden indretning, sålledes som f.eks. Ikea gør.
@@ -47,10 +47,7 @@ Sælgeren give forbrugeren en fil, så forbrugeren selv vil være i stand til at
 
 Dette vil dog ikke være en fuldstændig løsning da forbrugeren stadig vil skulle hænge lampen op for at se lysets udbredelse. Desuden vil det være en dårlig ide for sælgere at forvente at deres kunder har en 3D printer derhjemme og det kan heller ikke forventes at forbrugerne investerer så mange penge på noget som de måske kun kommer til at bruge til at lave en lampe. Et andet problem er at sælgeren også kommer i et dilemma, da sælgeren skal bestemme om man kan få disse tegninger inden man har købt lampen eller om forbrugeren skal betale en form for depositum.
 
-\paragraph{Computergrafik}
-% Kilder:
-% Rastarizering og lidt gennerelt http://people.csail.mit.edu/fredo/Depiction/1_Introduction/reviewGraphics.pdf
-% Fotorealistisk 3D animation https://youtu.be/HjHiC0mt4Ts
+\paragraph{Computergrafik \cite{computergrafik_introduktion}}
 Ved hjælp af mattematiske modeller og vektorbaserede beskrivelser af objekter kan computere bruges til at efterligne lys interaktion med simulerede fysiske objekter. Der eksistere en mængde forskællige metoder til dette formål, flere af hvilke kan bruges sammen med andre for at opnå et mere realistisk eller effektivt resultat. Der er ofte tale om en balance mellem hastighed og fotorealisme.
 % Find ny figur
 \begin{figure}[H]
@@ -70,17 +67,12 @@ Den mest almindelige metode til at rendere miljøer med høj aktiv bruger intera
     \caption{Pixelering der fremkommer når vektor objekter rastariseres.}
     \label{fig:pixelering}
 \end{figure}
-\subparagraph{Ray tracing}
-% Kilder
-% https://www.cs.unc.edu/~rademach/xroads-RT/RTarticle.html
-% 
+\subparagraph{Ray tracing \cite{raytracing_for_begyndere}}
 Raytracing er en metode som med relative simple regler, forsøger at andvende en fysisk model af lys, hvor fotoner spredes fra en lyskilde og rammer forskællige objekter indtil nogle få rammer øjet eller kamerarets optik. 
 
 Raytracing simplificere ved at reducere problemet til kun at simulere de stråler der rammer vores øje. Dette gøres ved såkaldt \textit{backward ray tracing} hvorved man følger en stråle fra øjet, igennem computerskærmen og ind i vektormodellen hvor man tjekker for kollisioner mellem strålen og objekter. Ved kollision med reflektiktive objekter som metaliske overflader og gennemsigtige objekter som glas, vil strålen nu dele sig og følge f.eks gennem glasset men også følge en reflektiv vinkel for at udregne farven som den gennemsigtige/reflektive overflade har. For hver kollision følger man også en stråle mod alle lyskilder for at teste om der er objekter i vejen, således at kollisionspunktet ligger i skygge, da dette tages i betragtning som farven udregnes. Ved kollision med et mat objekt eller efter en forudbestemt antal reflektioner/refraktioner stopper udregningen og propagere tilbage igen.
-\subparagraph{Radiosity}
-% Kilder
-% http://web.cs.wpi.edu/~matt/courses/cs563/talks/radiosity.html 
-% http://www.cs.bath.ac.uk/~pjw/NOTES/75-ACG/ch5-radiosity.pdf
+
+\subparagraph{Radiosity \cite{radiosity_by_wpi,radiosity_by_uob}}
 Hvor Rasterisering og raytracing udregner en pixels farve baseret på hvad man kan se igennem en skærmflade, så er radiosity en metode som er uafhængig af hvor kameraret er placeret og er af samme grund en af de mest tidskrævende metoder. 
 
 Radiosity er baseret på en fysisk forståelse af lys interaktion med flader og fungere ved at alle flader absorbere en del af lyset der rammer dem og reflektere(radiates) resten som så går videre til at gentage processen for andre flader i scenen. Ved radiosity er lyskilder selv geometriske flader, hvilket gør det nemt at beskrive elementer som lamper og el-pærer. Karakteristisk for denne metode er såkaldt \textit{color bleeding}, hvor farver fra forskællige objekter smitter af på hindanden.
