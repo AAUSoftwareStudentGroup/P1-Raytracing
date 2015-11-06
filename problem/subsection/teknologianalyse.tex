@@ -35,8 +35,6 @@ Fordelen ved denne type af visualisering er at den giver et virkelighedstro bill
 Herudfra kan man kortfattet sige at visualisering af lamper gennem billeder taget med et fysisk kamera, giver et realistisk billede af lampen, men kun i den kontekst og vinkel billedet er taget i. 
 
 \paragraph{3D print}
-% 3d printere anvender plastik
-% skær det overflødige væk
 En teknologi som sælgeren vil kunne bruge er 3D printere. 3D printere anvender plastik isteædet for blæk, som bliver varmet op til knap 200 grader \cite{hvordan_3Dprinter}. Den flydende plastik bliver lagt i tynde lag og størkner hurtigt efter at have bundet sig med det underliggende lag. 
 
 Sælgeren kan give forbrugeren en fil, så forbrugeren selv vil være i stand til at lave et 3D print af en bestemt lampe, dette forudsætter dog at forbrugeren har en 3D printer og at brugeren er dedikeret nok til at få printet lampen, da store objekter kan tage dage at printe og ofte skal deles op i mindre dele fordi det hele objekt måske er større end hvad printeren har plads til på en gang\cite{hvordan_3Dprinter}. Derudover er 3D printere stadig en så ny teknologi og de er stadig primært rettet mod hobby folk som vil bruge lang tid på at kallibreret printeren korrekt, da et print ellers nemt kan fejle. 3D printer er heller ikke en uvæsentlig inverstering, flere koster over titusinde kroner\cite{3D_printer}. 
@@ -44,16 +42,8 @@ Sælgeren kan give forbrugeren en fil, så forbrugeren selv vil være i stand ti
 Idag vil det være en dårlig ide for sælgere at forvente at deres kunder har en 3D printer derhjemme. Et andet problem er at sælgeren også kommer i et dilemma, da sælgeren skal bestemme om man kan udgive tegninger inden forbrugeren har købt lampen eller om de skal betale en form for depositum.
 
 \paragraph{Computergrafik \cite{computergrafik_introduktion}}
-Ved hjælp af mattematiske modeller og vektorbaserede beskrivelser af objekter kan computere bruges til at efterligne lys interaktion med simulerede fysiske objekter. Der eksistere en mængde forskællige metoder til dette formål, flere af hvilke kan bruges sammen med andre for at opnå et mere realistisk eller effektivt resultat. Der er ofte tale om en balance mellem hastighed og fotorealisme.
-% Find ny figur
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{time_vs_quality}
-    % \includegraphics[width=12cm]{bumpmaps}
-    \caption{Interpolation af flade-normaler kan få kantede figure til at få mere naturligt udseende.}
-    \label{fig:tid_versus_kvalitet}
-    % Demo der viser det samme http://math.hws.edu/graphicsbook/demos/c4/smooth-vs-flat.html
-\end{figure}
+I computergrafik, er en 3D model en beskrivelser af objekters form og materiale, computergrafiske metoder kan så bruges til at efterligne lys interaktion med modellen og tegne et billede. Der eksistere en mængde forskællige computergrafiske metoder, flere af hvilke kan bruges sammen med andre for at opnå et mere realistisk eller effektivt resultat. Der er ofte tale om en balance mellem hastighed og fotorealisme eftersom at fotorealistiske billeder kan tage mange timer eller dage at tegne på almindelige computere.
+
 \subparagraph{Rasterisering}
 Den mest almindelige metode til at rendere miljøer med høj aktiv bruger interaktion er rasterisering. Rasterisering er også betegnelsen for at omdanne vector objekter til punkmatricer eller pixel-billeder (Se figur \ref{fig:pixelering}) Metoden virker ved at andvende linear transformationer på vektor objekter for at finde deres position på skærmen og derefter udfylde 2D polygonerne med farve, evt. baseret på forskællige lyskilder. Der kan dog simplificeres ved kun at andvende en ambient lys konstant. Rasterisering er også effektiv fordi grafikprocessore i computere er udviklet specifikt til at udføre matrix transformationer på store punktmængder.
 \begin{figure}[H]
