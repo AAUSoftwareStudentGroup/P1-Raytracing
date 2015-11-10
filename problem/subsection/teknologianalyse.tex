@@ -59,10 +59,7 @@ I radiosity modellen er alle flader betegnet med en absorbans faktor og en energ
 
 Radiosity er i stor grad blandt de mest tidskrævende metoder eftersom at den laver beregninger som ikke nødvendigvis bliver set i et billede. Dette muliggøre dog at visualisere en scene en gang og derefter at kunne se den fra mange vinkler eftersom at de ekstra udregninger allerede er gjort. Radiosity er derimod ikke designet til at håndtere fenomener som er afhængig af hvor man ser et objekt fra, så som reflektion og refraktion. Dvs. at radiosity ikke kan håndtere metalliske overflader eller semitransparante materialer. Til gændgeld er Radiosity rigtig god til at simulere matte overflader og skygger.
 
-% Skjuler opsumering fra indholdsfortegnelsen
-% \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
 \subsubsection*{Opsummering}
-% \addtocontents{toc}{\protect\setcounter{tocdepth}{3}}
 Billeder af den fysiske lampe er en god og nem løsning på visualiseringsproblemet, men computergrafik vil gøre det muligt for forbrugeren, at se lampen fra flere vinkler, hvor det måske er et større besvær for sælgeren at skaffe flere billeder af produktet istedet for blot at andvende en 3D model af lampen. Computergrafik giver også mulighed for nemt, at se lampen i forskellige kontekster ved at udskifte miljøet som lampen bliver renderet i. 
 
 Ideen om at printe en model af en lampe fra en e-butik for at se hvordan den rigtigt ser ud er ikke en fornuftig løsning på nuværende tidspunkt, eftersom at 3D printere stadig er dyre og kan være svære at kalibrere korrekt. Computergrafik kan derimod nemt indlejres i en hjemmeside. Hvilken Computergrafisk teknik der er den korrekte er et case til case valg eftersom det helt afhænger af hvor meget fleksibilitet versus kvalitet der er nødvendigt. Rasterisering og radiosity kan begge implementeres på en måde hvorved der opnås et højt niveau af bruger interaktion som kan gøre værktøjet mere naturligt at anvende for forbrugeren. Eftersom at målet er at simulere lamper og ikke møbler som borde og stole, er langt mere komplekst at lave en god visualisation med rasterisering. Radiosity falder også til kort hvis der er behov for mere komplekse materialer som metaliske overflader eller f.eks. klar plast og glas. Billeder tegnet med raytracing kan tage lang tid at rendere, men der er mulighed for stor fleksibilitet og komplekse materialer er relativt simple at rendere. Med det grundlag vil raporten fremadrettet arbejde med raytracing som metode til visualisering.
@@ -77,7 +74,6 @@ For at visualisere hvilken afgrænsning af løsningsfeltet, der nu er foretaget,
   \caption{\textit{Illustrerer lønningsfeltet til initierende problem, hvor det afgrænsede løsningsfelt er markeret med en cirkel.}}
   \label{fig:p1_skitser}
 \end{figure}
-  
 
 Det første løsningsmulighed er fysiske lamper uden interaktion, som er de lamper sælgeren udstiller i fysiske butikker, men som forbrugeren ikke har mulighed for interaktion med, det vil sige at dette ofte er lamper som er slukket.
 
