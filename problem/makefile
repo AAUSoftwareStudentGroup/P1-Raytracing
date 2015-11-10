@@ -1,10 +1,15 @@
 DOCUMENT=main
+SVGGFX=$(wildcard graphics/*.svg)
+PDFGFX=$(addprefix graphics/,$(notdir $(SVGGFX:.svg=.pdf)))
 
-all: $(DOCUMENT).tex
-	latexmk -pdf $(DOCUMENT).tex -f -quiet -latexoption=-interaction=batchmode
+all: $(PDFGFX) $(DOCUMENT).tex
+	latexmk -pdf $(DOCUMENT).tex -f -quiet --shell-escape -latexoption=-interaction=batchmode
 
-watch: $(DOCUMENT).tex
-	latexmk -pdf -pvc $(DOCUMENT).tex -f -latexoption=-interaction=batchmode
+graphics/%.pdf: graphics/%.svg
+	-inkscape $< --export-text-to-path --export-pdf=$@
+
+watch: $(PDFGFX) $(DOCUMENT).tex
+	latexmk -pdf -pvc $(DOCUMENT).tex -f --shell-escape  -latexoption=-interaction=batchmode
 
 test: $(DOCUMENT).tex
 	latexmk -pdf $(DOCUMENT).tex -quiet
