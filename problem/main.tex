@@ -9,6 +9,11 @@
 \usepackage{lipsum}
 \usepackage{pdfpages}
 \usepackage{geometry}
+\usepackage[clean]{svg}
+\usepackage{transparent}
+\usepackage{xcolor}
+\usepackage{relsize}
+\usepackage{amsmath}
  \geometry{
  % a4paper,
  % total={170mm,217mm},
@@ -21,7 +26,8 @@
 \setlength\parindent{0pt} % sets indent to zero
 \setlength{\parskip}{6pt} % changes vertical space between paragraphs
 \renewcommand{\baselinestretch}{1.2} % sets lineheight
-
+\setsvg{inkscape = inkscape -z -D}
+\setsvg{svgpath = graphics/}
 
 % Mappe hvori billeder ligger
 \graphicspath{ {graphics/} }
