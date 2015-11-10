@@ -35,7 +35,7 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
+     inkscape:window-width="1024"
      inkscape:window-height="705"
      id="namedview4715"
      showgrid="false"
@@ -43,9 +43,9 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="0.93870968"
-     inkscape:cx="356.48757"
-     inkscape:cy="227.03953"
+     inkscape:zoom="0.66376798"
+     inkscape:cx="233.66753"
+     inkscape:cy="200.47595"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -676,18 +676,18 @@
   </g>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      x="162.07663"
      y="110.5842"
      id="text5592"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
        id="tspan5594"
-       x="165.82663"
-       y="110.5842">Fysiske lamper </tspan><tspan
+       x="164.88913"
+       y="110.5842">1. Fysiske lamper </tspan><tspan
        sodipodi:role="line"
        x="162.07663"
-       y="148.0842"
+       y="138.7092"
        id="tspan5596">uden interaktion</tspan></text>
   <text
      xml:space="preserve"
@@ -699,7 +699,7 @@
        sodipodi:role="line"
        x="500.34238"
        y="108.44033"
-       id="tspan5596-2">Billeder af fysiske </tspan><tspan
+       id="tspan5596-2">2. Billeder af fysiske </tspan><tspan
        sodipodi:role="line"
        x="497.52988"
        y="136.56534"
@@ -714,7 +714,7 @@
        sodipodi:role="line"
        x="525.0022"
        y="367.18469"
-       id="tspan5621-6">3D-modeller af lamper</tspan><tspan
+       id="tspan5621-6">4. 3D-modeller af lamper</tspan><tspan
        sodipodi:role="line"
        x="525.0022"
        y="395.30969"
@@ -729,7 +729,7 @@
        sodipodi:role="line"
        id="tspan5594-9"
        x="158.38359"
-       y="356.65341">Fysiske lamper </tspan><tspan
+       y="356.65341">3. Fysiske lamper </tspan><tspan
        sodipodi:role="line"
        x="155.57109"
        y="384.77841"
