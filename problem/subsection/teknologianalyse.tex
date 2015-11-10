@@ -68,6 +68,24 @@ Billeder af den fysiske lampe er en god og nem løsning på visualiseringsproble
 Ideen om at printe en model af en lampe fra en e-butik for at se hvordan den rigtigt ser ud er ikke en fornuftig løsning på nuværende tidspunkt, eftersom at 3D printere stadig er dyre og kan være svære at kalibrere korrekt. Computergrafik kan derimod nemt indlejres i en hjemmeside. Hvilken Computergrafisk teknik der er den korrekte er et case til case valg eftersom det helt afhænger af hvor meget fleksibilitet versus kvalitet der er nødvendigt. Rasterisering og radiosity kan begge implementeres på en måde hvorved der opnås et højt niveau af bruger interaktion som kan gøre værktøjet mere naturligt at anvende for forbrugeren. Eftersom at målet er at simulere lamper og ikke møbler som borde og stole, er langt mere komplekst at lave en god visualisation med rasterisering. Radiosity falder også til kort hvis der er behov for mere komplekse materialer som metaliske overflader eller f.eks. klar plast og glas. Billeder tegnet med raytracing kan tage lang tid at rendere, men der er mulighed for stor fleksibilitet og komplekse materialer er relativt simple at rendere. Med det grundlag vil raporten fremadrettet arbejde med raytracing som metode til visualisering.
 
 \subsection{Afgrænsning af løsningsfelt}
+
+Ud fra problemfeltet opstilles nu 4 mulige løsningsforslag. Løsningsforslagene er baseret på et koordinatsystem 
+og er placeret i forhold til om det er en løsning til detailhandel eller e-handel og om løsningen er styret af forbrugeren eller af sælgeren.
+
+Det første løsningsforslag er fysiske lamper u. interaktion, som er de lamper sælgeren udstiller i fysiske butikker, men som brugeren ikke har mulighed for interaktion med, det vil sige at dette ofte er lamper som er slukket.
+
+Det andet løsningsforslag er fysiske lamper m. interaktion, som er de lamper sægeren udstiller i fysiske butikker og som brugeren bla. kan slukke og tænde for, altså have interaktion med.
+
+Det tredje løsningsforslag er  billeder af fysiske lamper på e-butikker. Her har kunden mulighed for at se et billede af lampen, men kun fra de vinkler og i den kontekst som sælgeren har valgt.
+
+Det fjerde løsningsforslag er 3D-modeller af fysiske lamper m. interaktion på e-bukker. Her har kunden mulighed for at se et 3D billede af lampen samt rotere lampen, og herved se hvordan lampens belysning er fra de ønskede vinkler, og ikke kun i den kontekst som sælgeren vælger det. 
+
+
+Da vi allerede har afgrænset os til at fokusere på e-butikker så står baldet mellem det trede og fjerde løsningsforslag. Det tredje løsningsforslag er en løsning som vi stort set finder på alle e-butikker der sælger lamper. Fordelen ved denne løsning er, at det er nemt for sælgeren, at opstille lampen i den kontekst som de ønsker lampen set fra. Ulempen er at forbrugeren ikke har mulighed for interaktion, og kan derfor ikke se lampen fra andre synsvinkler end de som der er taget billeder fra. Fordelen ved det fjerde løsningsforslag er, at vi har kunden har muligheden for, at skabe interaktion og se lampens belysning fra de ønskede vinkler samt i den ønskede kontekst. Ulempen er derimod, at det vil kræve at sælgeren får 3D-modeller af lamperne fra de forskellige lampeproducenter og derefter implementere en teknisk løsning på deres hjemmeside som gør at brugerne kan se lamperne i 3D. 
+
+
+Da det initierende problem fastslog, at det var forbrugeren, som havde svært ved at visualisere hvordan lys udbreder sig fra en lampe, så er den bedste løsning på dette problem, at implementere det fjerde løsningsforslag på e-butikkerne, da dette vil gøre forbrugeren i stand til at se lampens belysning i den ønskede kontekst og vinkel, hvilket vil give forbrugeren det bedste værktøj til selv at løse problemet.
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=10cm]{p1_skitser}
