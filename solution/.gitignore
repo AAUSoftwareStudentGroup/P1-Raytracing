@@ -1,6 +1,7 @@
 *.o
 *.pgm
 *.pnm
+*.ppm
 *.png
 *.ply
 *.d
