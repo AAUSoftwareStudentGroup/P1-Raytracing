@@ -14,7 +14,6 @@ TESTSOURCES=$(wildcard units/$(SRCDIR)/*.c)
 TESTOBJECTS=$(addprefix units/$(OBJDIR)/,$(notdir $(TESTSOURCES:.c=.o)))
 
 ifeq ($(OS),Windows_NT)
-    EXECUTABLE += .exe
 	SUPPRESS= >nul
 	SUPPRESS_ALL= >nul 2>&1
 	SUPPRESS_ERRORS= 2>nul
