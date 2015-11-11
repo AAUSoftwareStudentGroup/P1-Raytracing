@@ -28,6 +28,33 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
 }
 
 Pixel raytracer_trace(Ray ray, Scene *scene) {
-  
-  return (Pixel){0.0, 0.0, 0.0};
+  Intersection *intersection;
+  Pixel pixel = {0,0,0};
+  if( raytracer_scene_intersection(ray, scene, &intersection) ) {
+    // shade based on intersection
+
+
+  }
+  return pixel;
+}
+
+int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection **intersection) {
+  int i;
+  double lowest_t = -1;
+  Intersection* temporary_intersection;
+
+  for(i = 0; i < scene->n_objects; i++) {
+    if(raytracer_object_intersection(ray, scene->objects[i], &temporary_intersection)) {
+      if(temporary_intersection->t < lowest_t || lowest_t == -1) {
+        *intersection = temporary_intersection;
+        lowest_t = temporary_intersection->t;
+      }
+    }
+  }
+  return lowest_t > 0;
+}
+
+int raytracer_object_intersection(Ray ray, Scene *scene, Intersection **intersection) {
+  // Implementer intersections
+  return 0;
 }
