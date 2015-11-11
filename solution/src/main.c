@@ -1,16 +1,18 @@
 #include "raytracer.h"
 #include "input.h"
 #include "scene.h"
+#include "camera.h"
 #include "image.h"
 
 int main(int argc, char* argv[]) {
   Scene *scene;
-  Image *img;
+  Camera *camera;
+  Image *image;
 
-  scene = input_parse(argc, argv);
-  img = raytracer_render(scene);
+  input_parse(argc, argv, &scene, &camera);
+  image = raytracer_render(scene, camera);
 
-  image_write(img, "out.ppm");
+  image_write(image, "out.ppm");
 
   return 0;
 }

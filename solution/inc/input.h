@@ -2,7 +2,8 @@
 #define _INPUT_
 
 #include "scene.h"
+#include "camera.h"
 
-Scene* input_parse(int argc, char* argv[]);
+int input_parse(int argc, char* argv[], Scene **scene, Camera **camera);
 
 #endif

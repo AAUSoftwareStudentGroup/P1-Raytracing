@@ -1,7 +1,8 @@
 #include "scene.h"
 
 Scene *new_scene(void) {
-  return (Scene*)malloc(sizeof(Scene));
+  Scene *scene = (Scene*)malloc(sizeof(Scene));
+  return scene;
 }
 
 int free_scene(Scene *scene) {
