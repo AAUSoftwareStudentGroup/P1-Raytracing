@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #include "raytracer.h"
 #include "input.h"
 #include "scene.h"
