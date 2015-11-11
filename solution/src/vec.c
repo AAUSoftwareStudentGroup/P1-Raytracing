@@ -6,21 +6,22 @@ vec* new_vec(void) {
     return res;
 }
 
-int  free_vec(vec *res) {
+int free_vec(vec *res) {
     free(res);
     return 1;
 }
 
-int vec_add_to(vec *res, const vec *b) {
+vec* vec_add_to(vec *res, const vec *b) {
 	res->x += b->x;
 	res->y += b->y;
 	res->z += b->z;
-	return 1;
+	return res;
 }
 
-int vec_add(vec *res, const vec *a, const vec *b) {
-	res->x = a->x + b->x;
+vec* vec_add(const vec *a, const vec *b) {
+	vec* res = new_vec();
+  res->x = a->x + b->x;
 	res->y = a->y + b->y;
 	res->z = a->z + b->z;
-	return 1;
+  return res;
 }

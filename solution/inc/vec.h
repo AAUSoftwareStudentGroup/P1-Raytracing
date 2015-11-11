@@ -10,7 +10,7 @@ typedef struct _vec {
 vec* new_vec    (void);
 int  free_vec   (vec *res);
 
-int  vec_add_to (vec *res, const vec *b);
-int  vec_add    (vec *res, const vec *a, const vec *b);
+vec* vec_add_to (vec *res, const vec *b);
+vec* vec_add    (const vec *a, const vec *b);
 
 #endif
