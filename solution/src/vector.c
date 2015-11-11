@@ -29,5 +29,5 @@ double vector_angle_between(Vector v1, Vector v2) {
 }
 
 Vector vector_cross(Vector v1, Vector v2) {
-  return ((v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.x), (v1.x * v2.y) - (v1.y * v1.x));}
+  return ((v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.x), (v1.x * v2.y) - (v1.y * v1.x));} // Går ud fra det er denne fremgangsmåde?
 }
