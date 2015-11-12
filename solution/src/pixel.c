@@ -19,8 +19,9 @@ Pixel create_from_color_temperature(unsigned int kelvin) {
  */
 
   Pixel color;
+  kelvin = kelvin / 100;
   /* Calculate red */
-  if(kelvin <= 6600){
+  if(kelvin <= 66){
     color.red = 255;
   }
   else{
@@ -35,7 +36,7 @@ Pixel create_from_color_temperature(unsigned int kelvin) {
   }
 
   /* Calculate green */
-  if(kelvin <= 6600){
+  if(kelvin <= 66){
     color.green = kelvin;
     color.green = 99.4708025861 * log(color.green) - 161.1195681661;
     if(color.green < 0){
@@ -57,11 +58,11 @@ Pixel create_from_color_temperature(unsigned int kelvin) {
   }
 
   /* Calculate blue */
-  if(kelvin >= 6600){
+  if(kelvin >= 66){
     color.blue = 255;
   }
   else {
-    if(kelvin <= 1900){
+    if(kelvin <= 19){
       color.blue = 0;
       }
     else{
