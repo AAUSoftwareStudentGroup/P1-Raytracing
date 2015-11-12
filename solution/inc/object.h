@@ -13,7 +13,9 @@ typedef struct _triangle {
 
 typedef struct _object {
   Vector *verticies;
+  int n_verticies;
   Triangle *triangles;
+  int n_triangles;
   Pixel color;
   Material material;
 } Object;
