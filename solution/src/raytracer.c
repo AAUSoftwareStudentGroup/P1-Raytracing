@@ -15,7 +15,7 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
       direction = vector_add(direction, vector_scale(camera->up, y-(double)(camera->height)/2));
       direction = vector_add(direction, vector_scale(camera->right, x-(double)(camera->width)/2));
 
-      ray = create_ray(camera->position, vector_normalize(direction));
+      ray = create_ray(camera->position, direction);
 
       // trace ray
       image->pixels[x][y] = raytracer_trace(ray, scene);
@@ -38,7 +38,7 @@ Pixel raytracer_trace(Ray ray, Scene *scene) {
 int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection **intersection) {
   int i;
   double lowest_t = -1;
-  Intersection* temporary_intersection;
+  Intersection* temporary_intersection = malloc(sizeof(Intersection));
 
   for(i = 0; i < scene->n_objects; i++) {
     if(raytracer_object_intersection(ray, scene->objects[i], &temporary_intersection)) {
@@ -55,7 +55,7 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection **inters
   // Find normal-vector to plane
   // Crossproduct (AB, CA)
   int i;
-  for(i = 0; i < object->n_triangles;i++)
+  for(i = 0; i < (int)object->n_triangles;i++)
   {
     Vector AB = vector_subtract(*object->triangles[i].verticies[1], *object->triangles[i].verticies[0]);
     Vector CA = vector_subtract(*object->triangles[i].verticies[0], *object->triangles[i].verticies[2]);
@@ -63,9 +63,9 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection **inters
 
     Vector normal_vector_plane = vector_normalize(vector_cross(AB, CA));
     
-    Vector d = vector_cross(normal_vector_plane, AB);
+    double d = vector_dot(normal_vector_plane, AB);
 
-    double t = (vector_dot( vector_subtract(d, normal_vector_plane), ray.initial_point)) / vector_dot(normal_vector_plane, ray.direction);
+    double t = (d - vector_dot( normal_vector_plane, ray.initial_point)) / vector_dot(normal_vector_plane, ray.direction);
 
     // Q is a point on the plane n which triangles[i]->verticies lies, but not neccesarily inside the triangles[i]->verticies
     Vector Q = ray_get_point_of_intersection(ray, t);

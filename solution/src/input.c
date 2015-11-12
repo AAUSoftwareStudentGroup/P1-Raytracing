@@ -20,6 +20,9 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   ts[0].verticies[0] = &((*scene)->objects[0]->verticies[0]);
   ts[0].verticies[1] = &((*scene)->objects[0]->verticies[1]);
   ts[0].verticies[2] = &((*scene)->objects[0]->verticies[2]);
+  (*scene)->objects[0]->n_verticies = 3;
+  (*scene)->objects[0]->n_triangles = 1;
+
   (*scene)->objects[0]->triangles = ts;
   (*scene)->objects[0]->color.red = 1.0;
   (*scene)->objects[0]->color.green = 0.75;  
