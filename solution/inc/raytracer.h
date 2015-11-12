@@ -1,7 +1,6 @@
 #ifndef _RAYTRACER_
 #define _RAYTRACER_
 
-#include <stdio.h>
 #include "scene.h"
 #include "camera.h"
 #include "image.h"
