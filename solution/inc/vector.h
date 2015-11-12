@@ -1,6 +1,8 @@
 #ifndef _VECTOR_
 #define _VECTOR_
 
+#include <math.h>
+
 typedef struct _vector {
 	double x,y,z;
 } Vector;

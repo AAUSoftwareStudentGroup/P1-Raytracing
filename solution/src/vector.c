@@ -17,15 +17,15 @@ double vector_dot (Vector v1, Vector v2) {
 }
 
 double vector_norm(Vector v) {
-  return sqrt(vector_dot(v1, v2));
+  return sqrt(vector_dot(v, v));
 }
 
 Vector vector_normalize(Vector v) {
-  return vector_scale(1/vector_norm(v), v);
+  return vector_scale(v, 1/vector_norm(v));
 }
 
 double vector_angle_between(Vector v1, Vector v2) {
-  return acos(vector_dot(v1, v2)/(vector_norm(v1) * vector_norm(v2)));} // Hvorfor ikke bare vector_norm(v)?
+  return acos(vector_dot(v1, v2)/(vector_norm(v1) * vector_norm(v2))); // Hvorfor ikke bare vector_norm(v)?
 }
 
 Vector vector_cross(Vector v1, Vector v2) {
