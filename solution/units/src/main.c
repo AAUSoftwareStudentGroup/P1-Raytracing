@@ -1,14 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "CuTest.h"
 
-#include "testsuite_vec.h"
+#include "testsuite_vector.h"
 
 int main(void)
 {
     CuString *output = CuStringNew();
     CuSuite* suite = CuSuiteNew();
 
-    CuSuiteAddSuite(suite, suite_vec());
+    CuSuiteAddSuite(suite, suite_vector());
     
     CuSuiteRun(suite);
     CuSuiteSummary(suite, output);
