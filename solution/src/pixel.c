@@ -76,7 +76,8 @@ Pixel create_from_color_temperature(unsigned int kelvin) {
       }
     }
   }
-  return color/255;
+  color = pixel_scale(color, 1/255);
+  return color;
 }
 
 char pixel_component_to_byte(double component) {
