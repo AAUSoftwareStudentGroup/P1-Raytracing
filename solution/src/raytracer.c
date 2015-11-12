@@ -31,9 +31,7 @@ Pixel raytracer_trace(Ray ray, Scene *scene) {
   Intersection *intersection;
   Pixel pixel = {0,0,0};
   if( raytracer_scene_intersection(ray, scene, &intersection) ) {
-    // shade based on intersection
-
-
+    pixel = raytracer_phong(intersection, scene);
   }
   return pixel;
 }
@@ -54,7 +52,14 @@ int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection **intersect
   return lowest_t > 0;
 }
 
-int raytracer_object_intersection(Ray ray, Scene *scene, Intersection **intersection) {
+int raytracer_object_intersection(Ray ray, Object *object, Intersection **intersection) {
   // Implementer intersections
   return 0;
+}
+
+Pixel raytracer_phong(Intersection *intersection, Scene *scene) {
+  Pixel result = create_pixel(1,0,0);
+  // calculate phong shading
+
+  return result;
 }
