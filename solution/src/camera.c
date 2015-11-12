@@ -38,4 +38,6 @@ int camera_set_angle(Camera *camera, double vertical_angle, double horizontal_an
   camera->up = vector_rotate_around_z(camera->up, horizontal_angle);
   camera->forward = vector_rotate_around_z(camera->forward, horizontal_angle);
   camera->right = vector_rotate_around_z(camera->right, horizontal_angle);
+  
+  return 1;
 }
