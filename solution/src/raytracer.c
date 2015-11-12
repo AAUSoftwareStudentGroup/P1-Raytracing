@@ -7,7 +7,6 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
 
   image = new_image(camera->width, camera->height);
 
-
   for(x = 0; x < camera->width; x++) {
     for(y = 0; y < camera->height; y++) {
       // beregn ray
@@ -33,7 +32,7 @@ Pixel raytracer_trace(Ray ray, Scene *scene) {
   if( raytracer_scene_intersection(ray, scene, &intersection) ) {
     // shade based on intersection
     printf("Intersect\n");
-    pixel = (Pixel){255, 255, 255};
+    pixel = (Pixel){1, 1, 1};
   }
   return pixel;
 }
@@ -55,7 +54,7 @@ int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection **intersect
 }
 
 int raytracer_object_intersection(Ray ray, Object *object, Intersection **intersection) {
-  // Find normalvector to plane
+  // Find normal-vector to plane
   // Crossproduct (AB, CA)
   int i;
   for(i = 0; i < object->n_triangles;i++)
