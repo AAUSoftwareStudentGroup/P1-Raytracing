@@ -76,7 +76,7 @@ Pixel create_from_color_temperature(unsigned int kelvin) {
       }
     }
   }
-  color = pixel_scale(color, 1/255);
+  color = pixel_scale(color, 1.0/255.0);
   return color;
 }
 
