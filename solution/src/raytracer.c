@@ -12,10 +12,10 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
       // beregn ray
       Vector direction;
       direction = vector_scale(camera->forward, camera->distance);
-      direction = vector_add(direction, vector_scale(camera->up, y-camera->height/2));
-      direction = vector_add(direction, vector_scale(camera->right, x-camera->width/2));
+      direction = vector_add(direction, vector_scale(camera->up, y-(double)(camera->height)/2));
+      direction = vector_add(direction, vector_scale(camera->right, x-(double)(camera->width)/2));
 
-      ray = create_ray(camera->position, direction);
+      ray = create_ray(camera->position, vector_normalize(direction));
 
       // trace ray
       image->pixels[x][y] = raytracer_trace(ray, scene);
