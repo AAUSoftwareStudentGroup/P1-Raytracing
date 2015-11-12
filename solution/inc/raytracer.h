@@ -20,6 +20,7 @@ Image* raytracer_render(Scene *scene, Camera *camera);
 Pixel raytracer_trace(Ray ray, Scene *scene);
 int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection **intersection);
 int raytracer_object_intersection(Ray ray, Object *object, Intersection **intersection);
+int raytracer_triangle_intersection(Ray ray, Triangle *triangle, double *time);
 Pixel raytracer_phong(Intersection *intersection, Scene *scene);
 
 #endif
