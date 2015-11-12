@@ -9,11 +9,9 @@ char pixel_component_to_byte(double component) {
 }
 
 Pixel pixel_scale(Pixel color, double scalar) {
-
-  return color;
+  return (Pixel){color.red * scalar, color.green * scalar, color.blue * scalar};
 }
 
 Pixel pixel_multiply(Pixel color1, Pixel color2) {
-
-  return color1;
+  return (Pixel){color1.red * color2.red, color1.green * color2.green, color1.blue * color2.blue};
 }
