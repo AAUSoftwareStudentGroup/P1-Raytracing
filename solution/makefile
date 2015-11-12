@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -Wall -g -Wno-unused-variable
+CFLAGS=-c -Wall -g -Wno-unused-variable -g
 LDFLAGS=-lm
 
 EXECUTABLE=trace
