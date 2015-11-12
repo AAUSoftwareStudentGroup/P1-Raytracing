@@ -8,5 +8,6 @@ typedef struct _ray {
 } Ray;
 
 Ray create_ray(Vector p1, Vector p2);
+Vector ray_get_point_of_intersection(Ray, double);
 
 #endif
