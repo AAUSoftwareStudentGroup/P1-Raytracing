@@ -13,5 +13,7 @@ double vector_norm(Vector v);
 Vector vector_normalize(Vector v);
 double vector_angle_between(Vector v1, Vector v2);
 Vector vector_cross(Vector v1, Vector v2);
+Vector vector_rotate_around_z(Vector v, double angle);
+Vector vector_rotate_around_x(Vector v, double angle);
 
 #endif
