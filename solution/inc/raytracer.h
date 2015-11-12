@@ -6,6 +6,8 @@
 #include "image.h"
 #include "ray.h"
 
+#define EPSILON 0.000001
+
 typedef struct _intersection {
   Vector surface_normal;
   Material material;
@@ -17,5 +19,6 @@ typedef struct _intersection {
 Image* raytracer_render(Scene *scene, Camera *camera);
 Pixel raytracer_trace(Ray ray, Scene *scene);
 int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection **intersection);
+int raytracer_object_intersection(Ray ray, Object *object, Intersection **intersection);
 
 #endif
