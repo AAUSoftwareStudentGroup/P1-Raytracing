@@ -11,6 +11,7 @@ typedef struct _scene {
   unsigned int n_objects;
   Light **lights;
   unsigned int n_lights;
+  Pixel ambient_intensity;
 } Scene;
 
 Scene *new_scene(void);
