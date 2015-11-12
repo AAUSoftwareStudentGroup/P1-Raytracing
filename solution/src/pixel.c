@@ -26,34 +26,34 @@ Pixel create_from_color_temperature(unsigned int kelvin) {
   else{
     color.red = kelvin - 60;
     color.red = 329.698727446 * (pow(color.red, -0.1332047592));
-      if(color.red < 0){
-        color.red = 0;
-      }
-      if(color.red > 255){
-        color.red = 255;
-      }
+    if(color.red < 0){
+      color.red = 0;
+    }
+    if(color.red > 255){
+      color.red = 255;
+    }
   }
 
   /* Calculate green */
   if(kelvin <= 6600){
     color.green = kelvin;
     color.green = 99.4708025861 * log(color.green) - 161.1195681661;
-      if(color.green < 0){
-        color.green = 0;
-      }
-      if(color.green > 255){
-        color.green = 255;
-      }
+    if(color.green < 0){
+      color.green = 0;
+    }
+    if(color.green > 255){
+      color.green = 255;
+    }
   }
   else{
     color.green = kelvin - 60;
     color.green = 288.1221695283 * (pow(color.green, -0.0755148492));
-      if(color.green < 0){
-        color.green = 0;
-      }
-      if(color.green > 255){
-        color.green = 255;
-      }
+    if(color.green < 0){
+      color.green = 0;
+    }
+    if(color.green > 255){
+      color.green = 255;
+    }
   }
 
   /* Calculate blue */
