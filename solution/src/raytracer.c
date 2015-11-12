@@ -7,7 +7,6 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
 
   image = new_image(camera->width, camera->height);
 
-
   for(x = 0; x < camera->width; x++) {
     for(y = 0; y < camera->height; y++) {
       // beregn ray
@@ -53,7 +52,42 @@ int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection **intersect
 }
 
 int raytracer_object_intersection(Ray ray, Object *object, Intersection **intersection) {
-  // Implementer intersections
+  // Find normal-vector to plane
+  // Crossproduct (AB, CA)
+  int i;
+  for(i = 0; i < object->n_triangles;i++)
+  {
+    Vector AB = vector_subtract(*object->triangles[i].verticies[1], *object->triangles[i].verticies[0]);
+    Vector CA = vector_subtract(*object->triangles[i].verticies[0], *object->triangles[i].verticies[2]);
+    Vector BC = vector_subtract(*object->triangles[i].verticies[2], *object->triangles[i].verticies[1]);
+
+    Vector normal_vector_plane = vector_normalize(vector_cross(AB, CA));
+    
+    Vector d = vector_cross(normal_vector_plane, AB);
+
+    double t = (vector_dot( vector_subtract(d, normal_vector_plane), ray.initial_point)) / vector_dot(normal_vector_plane, ray.direction);
+
+    // Q is a point on the plane n which triangles[i]->verticies lies, but not neccesarily inside the triangles[i]->verticies
+    Vector Q = ray_get_point_of_intersection(ray, t);
+
+    Vector AQ = vector_subtract(Q, *object->triangles[i].verticies[0]);
+    Vector BQ = vector_subtract(Q, *object->triangles[i].verticies[1]);
+    Vector CQ = vector_subtract(Q, *object->triangles[i].verticies[2]);
+
+    // Inside-outside test
+    if( (vector_dot(vector_cross(AB, AQ), normal_vector_plane) >= 0) &&
+      (vector_dot(vector_cross(BC, AQ), normal_vector_plane) >= 0) &&
+      (vector_dot(vector_cross(CA, AQ), normal_vector_plane) >= 0)) {
+      // Ray hits! Q is inside triangles[i]->verticies
+  
+      (*intersection)->surface_normal = normal_vector_plane;
+      (*intersection)->triangle = &object->triangles[i];
+      (*intersection)->t = t;
+      (*intersection)->material = object->material;
+      (*intersection)->color = object->color;
+      return 1;
+    }
+  }
   return 0;
 }
 

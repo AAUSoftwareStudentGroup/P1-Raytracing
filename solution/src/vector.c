@@ -29,5 +29,12 @@ double vector_angle_between(Vector v1, Vector v2) {
 }
 
 Vector vector_cross(Vector v1, Vector v2) {
-  return (Vector){(v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.x), (v1.x * v2.y) - (v1.y * v1.x)}; 
+  return (Vector){(v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.x), (v1.x * v2.y) - (v1.y * v1.x)};
+}
+
+Vector vector_rotate_around_z(Vector v, double angle){
+  return (Vector){cos(angle) * v.x - sin(angle) * v.y, sin(angle) * v.x + cos(angle) * v.y, v.z};
+}
+Vector vector_rotate_around_x(Vector v, double angle){
+  return (Vector){v.x, cos(angle) * v.y - sin(angle) * v.z, sin(angle) * v.y + cos(angle) * v.z};  
 }

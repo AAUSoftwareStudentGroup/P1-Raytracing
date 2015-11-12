@@ -6,6 +6,8 @@
 #include "image.h"
 #include "ray.h"
 
+#define EPSILON 0.000001
+
 typedef struct _intersection {
   Vector surface_normal;
   Material material;
