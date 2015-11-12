@@ -1,6 +1,9 @@
 #ifndef _PIXEL_
 #define _PIXEL_
 
+#include <stdio.h>
+#include <math.h>
+
 typedef struct _pixel {
   double red, green, blue;
 } Pixel;
