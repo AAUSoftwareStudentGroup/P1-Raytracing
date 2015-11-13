@@ -12,7 +12,7 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
       // beregn ray
       Vector direction;
       direction = vector_scale(camera->forward, camera->distance);
-      direction = vector_add(direction, vector_scale(camera->up, y-(double)(camera->height)/2));
+      direction = vector_add(direction, vector_scale(camera->up, -y+(double)(camera->height)/2));
       direction = vector_add(direction, vector_scale(camera->right, x-(double)(camera->width)/2));
 
       ray = create_ray(camera->position, direction);
@@ -105,6 +105,7 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection **inters
       }
     }
   }
+  (*intersection)->t = lowest_t;
   return lowest_t > 0;
 }
 
@@ -135,16 +136,17 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, double *time) {
             ) / denominator;
 
   // If time is positive: check if point is inside triangle
-  Vector p = ray_get_point_of_intersection(ray, *time);
-  Vector v0p = vector_subtract(p, *(triangle->verticies[0]));
-  Vector v1p = vector_subtract(p, *(triangle->verticies[1]));
-  Vector v2p = vector_subtract(p, *(triangle->verticies[2]));
-  if(
-    vector_dot(vector_cross(v02, v01), vector_cross(v02, v0p)) >= 0 &&
-    vector_dot(vector_cross(v10, v12), vector_cross(v10, v1p)) >= 0 &&
-    vector_dot(vector_cross(v21, v20), vector_cross(v21, v2p)) >= 0
-  ) {
-    return 1;
+  if(*time > 0) {
+
+    Vector p = ray_get_point_of_intersection(ray, *time);
+    Vector v0p = vector_subtract(p, *(triangle->verticies[0]));
+    Vector v1p = vector_subtract(p, *(triangle->verticies[1]));
+    Vector v2p = vector_subtract(p, *(triangle->verticies[2]));
+    if( vector_dot(vector_cross(v02, v01), vector_cross(v02, v0p)) >= 0 &&
+        vector_dot(vector_cross(v10, v12), vector_cross(v10, v1p)) >= 0 &&
+        vector_dot(vector_cross(v21, v20), vector_cross(v21, v2p)) >= 0 ) {
+      return 1;
+    }
   }
   return 0;
 }
