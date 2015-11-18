@@ -1,5 +1,3 @@
-*.pdf
-!graphics/*.pdf
 *.log
 *.fls
 *.out
