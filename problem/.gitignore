@@ -1,3 +1,5 @@
+*.pdf
+!graphics/*.pdf
 *.log
 *.fls
 *.out
@@ -5,3 +7,4 @@
 *.synctex.gz
 *.toc
 *.aux
+
