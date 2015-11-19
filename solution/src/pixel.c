@@ -4,19 +4,21 @@ Pixel create_pixel(double red, double green, double blue) {
   return (Pixel){red, green, blue};
 }
 
-Pixel create_from_color_temperature(unsigned int kelvin) {
-  
 /* 
- * Copyright(c)<17.9.2012>,<Tanner Helland>
- * All rights reserved.
- * Website: www.tannerhelland.com
- * URL: http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
- * Unless otherwise noted, all text, audio, and video content on this site
- * is licensed under a Creative Commons license permitting 
- * sharing with attribution (CC-BY-3.0). All source code samples and/or 
- * downloads are licensed under a simplified BSD license.
- * The programming code (section: 'The Algorithm') is modified (translated to C).
+ * Foelgende kode er implementeret fra 
+ * http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/ 
+ * (besoegt: 19-11-2015)
+ * hvor en algoritme, der omdanner farvetemperatur i kelvin til en RGB-vaerdi
+ * er lavet i pseudokode. Koden er 'oversat' til C. Algoritmen er ikke praecis
+ * nok til videnskabelig brug, men er taet nok paa et praecist resultat til 
+ * at blive benyttet i vores sammenhaeng. Algoritmen er kun ment til at blive 
+ * benyttet med farvetemperatur mellem 1000K og 40000K. Algoritmen er lavet ud
+ * fra at plotte Charity’s original blackbody values, som kan findes her:
+ * http://www.vendian.org/mncharity/dir3/blackbody/UnstableURLs/bbr_color.html
+ * (besoegt: 19-11-2015)
  */
+
+Pixel create_from_color_temperature(unsigned int kelvin) {
 
   Pixel color;
   kelvin = kelvin / 100;
