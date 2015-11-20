@@ -103,7 +103,7 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection **
 
   // If time is positive: check if point is inside triangle
   if(time > 0) {
-    Vector p = ray_get_point_of_intersection(ray, time);
+    Vector p = ray_get_point(ray, time);
     Vector v0p = vector_subtract(p, *(triangle->verticies[0]));
     Vector v1p = vector_subtract(p, *(triangle->verticies[1]));
     Vector v2p = vector_subtract(p, *(triangle->verticies[2]));
@@ -121,9 +121,43 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection **
 }
 
 Pixel raytracer_phong(Intersection *intersection, Scene *scene) {
-  Pixel result = create_from_color_temperature(1200);
   
-  return result;
+  Vector intersection_point = ray_get_point(intersection->ray, intersection->t);
+  
+  double m_a = intersection->material.ambient_coefficient;
+  Pixel C = intersection->color;
+  Pixel A = scene->ambient_intensity;
+  double m_l = intersection->material.diffuse_coefficient;
+  double m_s = intersection->material.specular_coefficient;
+  double m_sp = intersection->material.material_smoothness;
+  Vector vN = vector_normalize(intersection->normal);
+  Pixel S, ambient, diffuse, specular, I;
+  Vector vI, vR, vU;
+  double temp, temp2;
+  int i, j;
+  double m_sm = intersection->material.material_metalness;
+  Pixel P = create_pixel(0,0,0);
+  
+  
+  ambient = pixel_multiply(pixel_scale(C, m_a), A);
+  
+  P = pixel_add(P, ambient);
+  
+    for(i=0; i<scene->n_lights; i++){
+       
+        I = scene->lights[i]->intensity;
+        vI = vector_normalize(vector_subtract(scene->lights[i]->position, intersection_point));
+        vR = vector_normalize(vector_add(vector_scale(vI, -1), vector_scale(vN, vector_dot(vI, vN) * 2)));
+        vU = vector_scale(intersection->ray.direction, -1.0);
+        S = pixel_add(pixel_scale(C, m_sm), pixel_scale(create_pixel(1.0,1.0,1.0),(1-m_sm)));
+        diffuse = pixel_multiply(pixel_scale(C, m_l * MAX(vector_dot(vI, vN), 0)), I);
+        specular = pixel_multiply(S, pixel_scale(I, m_s * pow(MAX(vector_dot(vector_scale(vR, -1), vU), 0), m_sp)));
+        P = pixel_add(P, diffuse);
+        P = pixel_add(P, specular);
+    }   
+  
+  P = pixel_add(ambient, pixel_add(diffuse, specular));
+  return P;
 }
 
 Intersection *new_intersection(void){

@@ -93,3 +93,9 @@ Pixel pixel_scale(Pixel color, double scalar) {
 Pixel pixel_multiply(Pixel color1, Pixel color2) {
   return (Pixel){color1.red * color2.red, color1.green * color2.green, color1.blue * color2.blue};
 }
+
+Pixel pixel_add(Pixel color1, Pixel color2){
+  return (Pixel){MIN(color1.red + color2.red,1.0), MIN(color1.green + color2.green, 1.0), MIN(color1.blue + color2.blue,1.0)};
+}
+
+

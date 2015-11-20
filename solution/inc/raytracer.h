@@ -1,6 +1,10 @@
 #ifndef _RAYTRACER_
 #define _RAYTRACER_
 
+#ifndef MAX
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#endif
+
 #include "scene.h"
 #include "camera.h"
 #include "image.h"
