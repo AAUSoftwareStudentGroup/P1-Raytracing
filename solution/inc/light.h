@@ -4,9 +4,9 @@
 #include "vector.h"
 #include "pixel.h"
 
-typedef struct _light {
+typedef struct _pointlight {
   Vector position;
   Pixel intensity;
-} Light;
+} PointLight;
 
 #endif

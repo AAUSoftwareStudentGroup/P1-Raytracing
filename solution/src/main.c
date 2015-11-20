@@ -13,8 +13,9 @@ int main(int argc, char* argv[]) {
     fprintf(stderr, "Failed to initialize!\n");
     return -1;
   }
+  
   image = raytracer_render(scene, camera);
-
+  
   image_write(image, "out.ppm");
   
   return 0;

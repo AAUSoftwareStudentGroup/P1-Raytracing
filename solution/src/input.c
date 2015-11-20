@@ -37,6 +37,15 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   (*scene)->objects[0]->color.green = 0.75;  
   (*scene)->objects[0]->color.blue = 0.5; 
   (*scene)->objects[0]->material.ambient_coefficient = 0.85;
+  (*scene)->objects[0]->material.diffuse_coefficient = 0.75;
+  
+  (*scene)->ambient_intensity = create_from_color_temperature(10000);
+  (*scene)->lights = (PointLight**)malloc(sizeof(PointLight*));
+  (*scene)->lights[0] = (PointLight*)malloc(sizeof(PointLight));
+  (*scene)->n_lights = 1;
+  (*scene)->lights[0]->position = (Vector){0, 0, 0};
+  (*scene)->lights[0]->intensity = create_from_color_temperature(10000);
+  
   */
 
   return 1;
@@ -62,6 +71,7 @@ int ply_validate(int argc, char* argv[], FILE** fp_model) {
     printf("%s is not a ply file %d:%s", argv[1], __LINE__, __FILE__);
     return 0;
   }
+
   return 1;
 }
 
