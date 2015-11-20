@@ -4,6 +4,7 @@
 *.ppm
 *.png
 *.ply
+!model.ply
 *.d
 *.exe
 trace
