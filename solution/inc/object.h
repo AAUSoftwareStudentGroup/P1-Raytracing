@@ -7,12 +7,17 @@
 #include "material.h"
 #include "pixel.h"
 
+typedef struct _verticie {
+  Vector position;
+  Vector normal;
+} Vertex;
+
 typedef struct _triangle {
-  Vector *verticies[3];
+  Vertex *verticies[3];
 } Triangle;
 
 typedef struct _object {
-  Vector *verticies;
+  Vertex *verticies;
   int n_verticies;
   Triangle *triangles;
   int n_triangles;
