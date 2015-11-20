@@ -6,13 +6,12 @@
 #include "image.h"
 #include "ray.h"
 
-#define EPSILON 0.000001
-
 typedef struct _intersection {
   Vector normal;
   Material material;
   Pixel color;
   Triangle *triangle;
+  Ray ray;
   double t;
 } Intersection;
 

@@ -111,6 +111,7 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection **
         vector_dot(vector_cross(v10, v12), vector_cross(v10, v1p)) >= 0 &&
         vector_dot(vector_cross(v21, v20), vector_cross(v21, v2p)) >= 0 ) {
       (*intersection)->t = time;
+      (*intersection)->ray = ray;
       (*intersection)->normal = tri_normal;
       return 1;
     }
@@ -120,8 +121,7 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection **
 }
 
 Pixel raytracer_phong(Intersection *intersection, Scene *scene) {
-  Pixel result = create_pixel(1,0,0);
-  // calculate phong shading
+  Pixel result = create_from_color_temperature(1200);
   
   return result;
 }
