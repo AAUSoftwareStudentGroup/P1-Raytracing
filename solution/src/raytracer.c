@@ -20,6 +20,7 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
       // trace ray
       image->pixels[x][y] = raytracer_trace(ray, scene);
     }
+
   }
 
 
@@ -77,18 +78,18 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection **inters
 int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection **intersection) {
   double time = -1;
 
-  Vector v01 = vector_normalize(vector_subtract(*(triangle->verticies[1]), 
-                                *(triangle->verticies[0])));
-  Vector v02 = vector_normalize(vector_subtract(*(triangle->verticies[2]), 
-                                *(triangle->verticies[0])));
-  Vector v10 = vector_normalize(vector_subtract(*(triangle->verticies[0]), 
-                                *(triangle->verticies[1])));
-  Vector v12 = vector_normalize(vector_subtract(*(triangle->verticies[2]), 
-                                *(triangle->verticies[1])));
-  Vector v20 = vector_normalize(vector_subtract(*(triangle->verticies[0]), 
-                                *(triangle->verticies[2])));
-  Vector v21 = vector_normalize(vector_subtract(*(triangle->verticies[1]), 
-                                *(triangle->verticies[2])));
+  Vector v01 = vector_normalize(vector_subtract(triangle->verticies[1]->position, 
+                                triangle->verticies[0]->position));
+  Vector v02 = vector_normalize(vector_subtract(triangle->verticies[2]->position, 
+                                triangle->verticies[0]->position));
+  Vector v10 = vector_normalize(vector_subtract(triangle->verticies[0]->position, 
+                                triangle->verticies[1]->position));
+  Vector v12 = vector_normalize(vector_subtract(triangle->verticies[2]->position, 
+                                triangle->verticies[1]->position));
+  Vector v20 = vector_normalize(vector_subtract(triangle->verticies[0]->position, 
+                                triangle->verticies[2]->position));
+  Vector v21 = vector_normalize(vector_subtract(triangle->verticies[1]->position, 
+                                triangle->verticies[2]->position));
   Vector tri_normal = vector_normalize(vector_cross(v01, v02));
   
   if(vector_dot(ray.direction, tri_normal) > 0)
@@ -98,15 +99,15 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection **
   if(denominator == 0)
     return 0;
 
-  time = vector_dot(vector_subtract(*(triangle->verticies[0]), 
+  time = vector_dot(vector_subtract(triangle->verticies[0]->position, 
                      ray.initial_point), tri_normal) / denominator;
 
   // If time is positive: check if point is inside triangle
   if(time > 0) {
     Vector p = ray_get_point(ray, time);
-    Vector v0p = vector_subtract(p, *(triangle->verticies[0]));
-    Vector v1p = vector_subtract(p, *(triangle->verticies[1]));
-    Vector v2p = vector_subtract(p, *(triangle->verticies[2]));
+    Vector v0p = vector_subtract(p, triangle->verticies[0]->position);
+    Vector v1p = vector_subtract(p, triangle->verticies[1]->position);
+    Vector v2p = vector_subtract(p, triangle->verticies[2]->position);
     if( vector_dot(vector_cross(v02, v01), vector_cross(v02, v0p)) >= 0 &&
         vector_dot(vector_cross(v10, v12), vector_cross(v10, v1p)) >= 0 &&
         vector_dot(vector_cross(v21, v20), vector_cross(v21, v2p)) >= 0 ) {
@@ -140,21 +141,22 @@ Pixel raytracer_phong(Intersection *intersection, Scene *scene) {
   
   
   ambient = pixel_multiply(pixel_scale(C, m_a), A);
+  vU = vector_scale(intersection->ray.direction, 1.0);
+  S = pixel_add(pixel_scale(C, m_sm), pixel_scale(create_pixel(1.0,1.0,1.0),(1-m_sm)));
+
   
   P = pixel_add(P, ambient);
   
-    for(i=0; i<scene->n_lights; i++){
-       
-        I = scene->lights[i]->intensity;
-        vI = vector_normalize(vector_subtract(scene->lights[i]->position, intersection_point));
-        vR = vector_normalize(vector_add(vector_scale(vI, -1), vector_scale(vN, vector_dot(vI, vN) * 2)));
-        vU = vector_scale(intersection->ray.direction, -1.0);
-        S = pixel_add(pixel_scale(C, m_sm), pixel_scale(create_pixel(1.0,1.0,1.0),(1-m_sm)));
-        diffuse = pixel_multiply(pixel_scale(C, m_l * MAX(vector_dot(vI, vN), 0)), I);
-        specular = pixel_multiply(S, pixel_scale(I, m_s * pow(MAX(vector_dot(vector_scale(vR, -1), vU), 0), m_sp)));
-        P = pixel_add(P, diffuse);
-        P = pixel_add(P, specular);
-    }   
+  for(i=0; i<scene->n_lights; i++){
+    I = scene->lights[i]->intensity;
+    vI = vector_normalize(vector_subtract(scene->lights[i]->position, intersection_point));
+    vR = vector_normalize(vector_add(vector_scale(vI, -1), vector_scale(vN, vector_dot(vI, vN) * 2)));
+    diffuse = pixel_multiply(pixel_scale(C, m_l * MAX(vector_dot(vI, vN), 0)), I);
+    // specular = pixel_multiply(I, pixel_scale(S, m_s * MAX(0,vector_dot(vN, vector_bisector(vI, vU)))) );
+    specular = pixel_multiply(S, pixel_scale(I, m_s * pow(MAX(-vector_dot(vR, vU), 0), m_sp)));
+    P = pixel_add(P, diffuse);
+    P = pixel_add(P, specular);
+  }   
   
   P = pixel_add(ambient, pixel_add(diffuse, specular));
   return P;
