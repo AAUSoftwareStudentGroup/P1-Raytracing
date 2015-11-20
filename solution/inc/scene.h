@@ -9,7 +9,7 @@
 typedef struct _scene {
   Object **objects;
   unsigned int n_objects;
-  Light **lights;
+  PointLight **lights;
   unsigned int n_lights;
   Pixel ambient_intensity;
 } Scene;
