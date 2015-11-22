@@ -6,7 +6,7 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
   Ray ray;
 
   image = new_image(camera->width, camera->height);
-
+  printf("hej");
   for(x = 0; x < camera->width; x++) {
     for(y = 0; y < camera->height; y++) {
       // beregn ray
