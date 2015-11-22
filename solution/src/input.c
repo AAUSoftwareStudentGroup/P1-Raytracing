@@ -2,30 +2,34 @@
 
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   FILE *fp_model;
-  *camera = new_camera(1000, 1000);
+  *camera = new_camera(500, 500);
   if(ply_validate(argc, argv, &fp_model) == 0)
     return 0;
   if(ply_init(fp_model, scene) == 0)
     return 0;
 
 
-  (*scene)->objects[0]->color.red = 1.0;
-  (*scene)->objects[0]->color.green = 0.0;  
-  (*scene)->objects[0]->color.blue = 0.0; 
+  (*scene)->objects[0]->color = create_pixel(0.5, 0.5, 0.5);
   (*scene)->objects[0]->material.ambient_coefficient = 0.1;
-  (*scene)->objects[0]->material.diffuse_coefficient = 0.8;
+  (*scene)->objects[0]->material.diffuse_coefficient = 0.4;
   (*scene)->objects[0]->material.specular_coefficient = 0.5;
-  (*scene)->objects[0]->material.material_smoothness = 16;
-  (*scene)->objects[0]->material.material_metalness = 0.5;
+  (*scene)->objects[0]->material.material_smoothness = 32;
+  (*scene)->objects[0]->material.material_metalness = 0.2;
   
-  (*scene)->ambient_intensity = create_from_color_temperature(10000);
+  (*scene)->ambient_intensity = create_from_color_temperature(1500);
 
 
-  (*scene)->n_lights = 1;
-  (*scene)->lights = (PointLight**)malloc(sizeof(PointLight*));
+  (*scene)->n_lights = 3;
+  (*scene)->lights = (PointLight**)malloc(sizeof(PointLight*) * 3);
   (*scene)->lights[0] = (PointLight*)malloc(sizeof(PointLight));
-  (*scene)->lights[0]->position = (Vector){0, 3000, 0};
-  (*scene)->lights[0]->intensity = create_pixel(1,1,1);
+  (*scene)->lights[0]->position = (Vector){-1200, 6000, -400};
+  (*scene)->lights[0]->intensity = create_from_color_temperature(8000);
+  (*scene)->lights[1] = (PointLight*)malloc(sizeof(PointLight));
+  (*scene)->lights[1]->position = (Vector){800, 6000, 0};
+  (*scene)->lights[1]->intensity = create_from_color_temperature(1500);
+  (*scene)->lights[2] = (PointLight*)malloc(sizeof(PointLight));
+  (*scene)->lights[2]->position = (Vector){0, 4000, 500};
+  (*scene)->lights[2]->intensity = create_from_color_temperature(1500);
 
   return ply_parse(fp_model, scene);
 }

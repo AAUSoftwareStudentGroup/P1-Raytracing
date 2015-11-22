@@ -20,6 +20,7 @@ typedef struct _intersection {
 } Intersection;
 
 Image* raytracer_render(Scene *scene, Camera *camera);
+Ray calculate_ray(int x, int y, Camera *camera);
 Pixel raytracer_trace(Ray ray, Scene *scene);
 int raytracer_scene_intersection(Ray ray, Scene *scene, 
                                  Intersection **intersection);
