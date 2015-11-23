@@ -15,6 +15,7 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
       // trace ray
       image->pixels[x][y] = raytracer_trace(ray, scene);
     }
+    printf("%.1f\n", ((double)x + 1) / camera->width * 100);
   }
 
   return image;
