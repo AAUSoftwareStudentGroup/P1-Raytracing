@@ -1,0 +1,102 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1"
+ viewBox="100 0 600 302"
+ xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"
+ stroke-width="1" text-rendering="geometricPrecision">
+<text x="133" y="16" textLength="35" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Kunde
+</text>
+<text x="399" y="16" textLength="37" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+E-butik
+</text>
+<text x="665" y="16" textLength="35" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Server
+</text>
+<line x1="133" y1="22" x2="133" y2="50" stroke="black"/>
+<line x1="399" y1="22" x2="399" y2="50" stroke="black"/>
+<line x1="665" y1="22" x2="665" y2="50" stroke="black"/>
+<line x1="133" y1="33" x2="399" y2="33" stroke="black"/>
+<polygon fill="black" points="399,33 389,39 389,27"/>
+<text x="223" y="32" textLength="84" font-family="Helvetica" font-size="12" fill="black">
+Bes&#xf8;ger e-butik
+</text>
+<line x1="133" y1="50" x2="133" y2="78" stroke="black"/>
+<line x1="399" y1="50" x2="399" y2="78" stroke="black"/>
+<line x1="665" y1="50" x2="665" y2="78" stroke="black"/>
+<line x1="399" y1="61" x2="133" y2="61" stroke="black"/>
+<polygon fill="black" points="133,61 143,67 143,55"/>
+<text x="228" y="60" textLength="75" font-family="Helvetica" font-size="12" fill="black">
+Lampekatalog
+</text>
+<line x1="133" y1="78" x2="133" y2="106" stroke="black"/>
+<line x1="399" y1="78" x2="399" y2="106" stroke="black"/>
+<line x1="665" y1="78" x2="665" y2="106" stroke="black"/>
+<line x1="133" y1="89" x2="399" y2="89" stroke="black"/>
+<polygon fill="black" points="399,89 389,95 389,83"/>
+<text x="229" y="88" textLength="73" font-family="Helvetica" font-size="12" fill="black">
+Valg af lampe
+</text>
+<line x1="133" y1="106" x2="133" y2="134" stroke="black"/>
+<line x1="399" y1="106" x2="399" y2="134" stroke="black"/>
+<line x1="665" y1="106" x2="665" y2="134" stroke="black"/>
+<line x1="399" y1="117" x2="665" y2="117" stroke="black"/>
+<polygon fill="black" points="665,117 655,123 655,111"/>
+<text x="476" y="116" textLength="110" font-family="Helvetica" font-size="12" fill="black">
+Anmod om 3D-grafik
+</text>
+<line x1="133" y1="134" x2="133" y2="162" stroke="black"/>
+<line x1="399" y1="134" x2="399" y2="162" stroke="black"/>
+<line x1="665" y1="134" x2="665" y2="162" stroke="black"/>
+<line x1="665" y1="145" x2="399" y2="145" stroke="black"/>
+<polygon fill="black" points="399,145 409,151 409,139"/>
+<text x="507" y="144" textLength="49" font-family="Helvetica" font-size="12" fill="black">
+3D-grafik
+</text>
+<line x1="133" y1="162" x2="133" y2="190" stroke="black"/>
+<line x1="399" y1="162" x2="399" y2="190" stroke="black"/>
+<line x1="665" y1="162" x2="665" y2="190" stroke="black"/>
+<line x1="399" y1="173" x2="133" y2="173" stroke="black"/>
+<polygon fill="black" points="133,173 143,179 143,167"/>
+<text x="241" y="172" textLength="49" font-family="Helvetica" font-size="12" fill="black">
+3D-grafik
+</text>
+<line x1="133" y1="190" x2="133" y2="218" stroke="black"/>
+<line x1="399" y1="190" x2="399" y2="218" stroke="black"/>
+<line x1="665" y1="190" x2="665" y2="218" stroke="black"/>
+<line x1="133" y1="201" x2="399" y2="201" stroke="black"/>
+<polygon fill="black" points="399,201 389,207 389,195"/>
+<text x="184" y="200" textLength="162" font-family="Helvetica" font-size="12" fill="black">
+Skift vinkel og farvetemperatur
+</text>
+<line x1="133" y1="218" x2="133" y2="246" stroke="black"/>
+<line x1="399" y1="218" x2="399" y2="246" stroke="black"/>
+<line x1="665" y1="218" x2="665" y2="246" stroke="black"/>
+<line x1="399" y1="229" x2="665" y2="229" stroke="black"/>
+<polygon fill="black" points="665,229 655,235 655,223"/>
+<text x="476" y="228" textLength="110" font-family="Helvetica" font-size="12" fill="black">
+Anmod om 3D-grafik
+</text>
+<line x1="133" y1="246" x2="133" y2="274" stroke="black"/>
+<line x1="399" y1="246" x2="399" y2="274" stroke="black"/>
+<line x1="665" y1="246" x2="665" y2="274" stroke="black"/>
+<line x1="665" y1="257" x2="399" y2="257" stroke="black"/>
+<polygon fill="black" points="399,257 409,263 409,251"/>
+<text x="507" y="256" textLength="49" font-family="Helvetica" font-size="12" fill="black">
+3D-grafik
+</text>
+<line x1="133" y1="274" x2="133" y2="302" stroke="black"/>
+<line x1="399" y1="274" x2="399" y2="302" stroke="black"/>
+<line x1="665" y1="274" x2="665" y2="302" stroke="black"/>
+<line x1="399" y1="285" x2="133" y2="285" stroke="black"/>
+<polygon fill="black" points="133,285 143,291 143,279"/>
+<text x="241" y="284" textLength="49" font-family="Helvetica" font-size="12" fill="black">
+3D-grafik
+</text>
+<line x1="133" y1="296" x2="133" y2="302" stroke="black"/>
+<line x1="399" y1="296" x2="399" y2="302" stroke="black"/>
+<line x1="665" y1="296" x2="665" y2="302" stroke="black"/>
+</svg>
