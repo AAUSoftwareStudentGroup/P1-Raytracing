@@ -29,12 +29,13 @@ Herudfra kan man kortfattet sige, at visualisering af lamper gennem billeder, ta
 % Idag vil det være en dårlig ide for lampebutikker at forvente, at deres kunder har en 3D printer derhjemme. Et andet problem er, at lampebutikker også kommer i et dilemma, da lampebutikker skal bestemme om man kan udgive tegninger inden forbrugeren har købt lampen eller om de skal betale en form for depositum.
 
 \subsubsection{Computergrafik}
+\label{sec:computergrafik}
 I computergrafik, er en 3D model, en beskrivelse af objekters form og materiale.\cite{computergrafik_introduktion} Computergrafiske metoder kan bruges til at immitere hvordan lys interaktere med modellen og på den måde tegne et billede af modellen. Der eksisterer en mængde forskellige computergrafiske metoder, flere af hvilke kan bruges sammen med andre for, at opnå et mere realistisk eller effektivt resultat. Der findes flere produkter som kan visualisere produkter til salg på websites som f.eks. Cylindo\cite{Cylindo}. Men vi har ikke kendskab til at andre specialisere sig, eller markedsføre sig på nuværende tidspunkt med deres kompetencer med fokus på visualisering af lampers belysning.
 
 \paragraph{Rasterisering}
 er en metode til at visualisere miljøer med høj aktiv brugerinteraktion som f.eks. computerspil.\cite{rastarization} Metoden virker ved rent mattematisk at projektere modellen på et billedplan som repræsentere skærmen.\cite{rastarization}. Fordelen ved resterisering er at disse projektioner, kan foretages meget hurtigt af computerens grafikkort, som bygget specielt til formålet\cite{rastarization}. Dette kan dog mindske fleksibiliteten, og muligheden for mere avancerede visualisering, hvor der kræves refleksioner og refraktioner af lys, som ikke passer ind i den proces (graphics pipeline\cite{rastarization}, som de enkelte grafikkort danner billeder ud fra. 
 
-\paragraph{Ray tracing}\cite{raytracing_for_begyndere} forsøger, nøjagtigt at simulere lys i et viretuelt miljø, i modsætning til rasterisering hvor hastighed er den primære faktor. Raytracing bygger fundementalt på at følge stråler af lys og bygge en model for hvordan de stråler interaktere med forskællige objekter og materialer. Der skælnes mellem to typer af raytracing: Forwards raytracing og backwards raytracing.
+\paragraph{Ray tracing}\cite{raytracing_for_begyndere} forsøger, nøjagtigt at simulere lys i et virtuelt miljø, i modsætning til rasterisering hvor hastighed er den primære faktor. Raytracing bygger fundementalt på at følge stråler af lys og bygge en model for hvordan de stråler interaktere med forskællige objekter og materialer. Der skælnes mellem to typer af raytracing: Forwards raytracing og backwards raytracing.
 
 \subparagraph{Forwards raytracing}\cite{radiosity_by_wpi,radiosity_by_uob} er oftere kaldet radiosity og vil bliver reffereret til som sådan fremhenværende. Radiosity er hvad man kunne kalde en forwards raytracing metode. Her eksistere lyskilder ikke som specielle objekter i en 3D model, hvilket er tilfældet for de andre metoder, men her som objekter uden forskel fra de andre i modellen.
 
@@ -73,7 +74,7 @@ Computergrafik kan nemt indlejres i en hjemmeside. Hvilken Computergrafisk tekni
 
 \subsubsection{Raytracing}
 
-[Beskrivelse af raytracing]
+\input{./subsection/raytracing.tex}
 
 \subsubsection*{Opsummering}
 

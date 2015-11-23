@@ -146,14 +146,18 @@ Pixel raytracer_phong(Intersection *intersection, Scene *scene) {
 
   for(i=0; i<scene->n_lights; i++){
     pI = scene->lights[i]->intensity;
-    vI = vector_normalize(vector_subtract(scene->lights[i]->position, intersection_point));
-    vR = vector_normalize(vector_add(vector_scale(vI, -1), vector_scale(vN, vector_dot(vI, vN) * 2)));
+    vI = vector_normalize(vector_subtract(scene->lights[i]->position, 
+                          intersection_point));
+    vR = vector_normalize(vector_add(vector_scale(vI, -1), 
+                          vector_scale(vN, vector_dot(vI, vN) * 2)));
     
     /* diffuse light =  m_l * MAX(vI * vN, 0) * pC * pI*/
-    diffuse = pixel_add(diffuse, pixel_multiply(pixel_scale(pC, m_l * MAX(vector_dot(vI, vN), 0)), pI));
+    diffuse = pixel_add(diffuse, pixel_multiply(pixel_scale(pC, 
+                        m_l * MAX(vector_dot(vI, vN), 0)), pI));
     
     /* specular light = m_s * MAX(-vR * vU, 0) ^ m_sp * pI * pS */
-    specular = pixel_add(specular, pixel_multiply(pS, pixel_scale(pI, m_s * pow(MAX(-vector_dot(vR, vU), 0), m_sp))));
+    specular = pixel_add(specular, pixel_multiply(pS, pixel_scale(pI, 
+                         m_s * pow(MAX(-vector_dot(vR, vU), 0), m_sp))));
   }   
   
   /* return ambient + diffuse + specular */
