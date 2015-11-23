@@ -3,6 +3,7 @@
 Image *new_image(unsigned int width, unsigned int height) {
   int x, y;
   Image *image = (Image*)malloc(sizeof(Image));
+  
   image->width = width;
   image->height = height;
 

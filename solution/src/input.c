@@ -2,11 +2,12 @@
 
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   FILE *fp_model;
-  *camera = new_camera(1000, 1000);
+  *camera = new_camera(500, 500);
   if(ply_validate(argc, argv, &fp_model) == 0)
     return 0;
   if(ply_init(fp_model, scene) == 0)
     return 0;
+
 
   (*scene)->ambient_intensity = create_from_color_temperature(10000);
 
@@ -15,6 +16,7 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   (*scene)->lights[0] = (PointLight*)malloc(sizeof(PointLight));
   (*scene)->lights[0]->position = (Vector){0, 0, 0};
   (*scene)->lights[0]->intensity = create_pixel(1,1,1);
+
 
   return ply_parse(fp_model, scene);
 }
