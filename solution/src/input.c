@@ -7,48 +7,16 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
     return 0;
   if(ply_init(fp_model, scene) == 0)
     return 0;
-  return ply_parse(fp_model, scene);
 
-  /*
-  int i;
-
-  *scene = new_scene();
-  *camera = new_camera(1000, 1000);
-
-  (*scene)->n_objects = 1;
-
-  (*scene)->objects = (Object**)malloc((*scene)->n_objects * sizeof(Object*));
-  for(i = 0; i < (*scene)->n_objects; i++)
-    (*scene)->objects[i] = new_object();
-
-  (*scene)->objects[0]->verticies = (Vector*)malloc(3*sizeof(Vector));
-  (*scene)->objects[0]->verticies[0] = (Vector){-1000,1000,1000};
-  (*scene)->objects[0]->verticies[1] = (Vector){ 1000,1000,1000};
-  (*scene)->objects[0]->verticies[2] = (Vector){    0,1000,   0};
-  Triangle *ts = (Triangle*)malloc(1*sizeof(Triangle));
-  ts[0].verticies[0] = &((*scene)->objects[0]->verticies[0]);
-  ts[0].verticies[1] = &((*scene)->objects[0]->verticies[1]);
-  ts[0].verticies[2] = &((*scene)->objects[0]->verticies[2]);
-  (*scene)->objects[0]->n_verticies = 3;
-  (*scene)->objects[0]->n_triangles = 1;
-
-  (*scene)->objects[0]->triangles = ts;
-  (*scene)->objects[0]->color.red = 1.0;
-  (*scene)->objects[0]->color.green = 0.75;  
-  (*scene)->objects[0]->color.blue = 0.5; 
-  (*scene)->objects[0]->material.ambient_coefficient = 0.85;
-  (*scene)->objects[0]->material.diffuse_coefficient = 0.75;
-  
   (*scene)->ambient_intensity = create_from_color_temperature(10000);
+
+  (*scene)->n_lights = 1;
   (*scene)->lights = (PointLight**)malloc(sizeof(PointLight*));
   (*scene)->lights[0] = (PointLight*)malloc(sizeof(PointLight));
-  (*scene)->n_lights = 1;
   (*scene)->lights[0]->position = (Vector){0, 0, 0};
-  (*scene)->lights[0]->intensity = create_from_color_temperature(10000);
-  
-  */
+  (*scene)->lights[0]->intensity = create_pixel(1,1,1);
 
-  return 1;
+  return ply_parse(fp_model, scene);
 }
 
 int ply_validate(int argc, char* argv[], FILE** fp_model) {
@@ -76,19 +44,14 @@ int ply_validate(int argc, char* argv[], FILE** fp_model) {
 }
 
 int ply_init(FILE *fp_model, Scene **scene) {
-  int n_polygons, n_verticies, n_triangles;
+  int n_polygons, n_verticies, n_objects, n_triangles;
   int i, j;
 
-  // assumed valid as ply_validate() passed
-
   *scene = new_scene();
-  
-  (*scene)->n_objects = 1;
-  (*scene)->objects = (Object**)malloc((*scene)->n_objects * sizeof(Object*));
-  (*scene)->objects[0] = new_object();
 
   ply_scan_element(fp_model, "vertex", &n_verticies);
   ply_scan_element(fp_model, "face", &n_polygons);
+  ply_scan_element(fp_model, "object", &n_objects);
   input_file_find_first(fp_model, "end_header");
   input_jump_lines(fp_model, n_verticies+1);
 
@@ -98,11 +61,28 @@ int ply_init(FILE *fp_model, Scene **scene) {
     n_triangles += j-2;
     input_jump_lines(fp_model, 1); // discard rest of line
   }
+  
 
-  (*scene)->objects[0]->n_verticies = n_verticies;
+  (*scene)->n_objects = n_objects;
+  (*scene)->objects = (Object**)malloc((*scene)->n_objects * sizeof(Object*));
+
+  // assuming atleast one object
+  (*scene)->objects[0] = new_object();
+  input_read_int(fp_model, &((*scene)->objects[0]->n_verticies));
+  input_read_int(fp_model, &((*scene)->objects[0]->n_triangles));
+  input_jump_lines(fp_model, 1); // discard rest of line
   (*scene)->objects[0]->verticies = (Vertex*)malloc(n_verticies*sizeof(Vertex));
-  (*scene)->objects[0]->n_triangles = n_triangles;
   (*scene)->objects[0]->triangles = (Triangle*)malloc(n_triangles*sizeof(Triangle));
+  
+  for(i = 1; i < n_objects; i++) {
+    (*scene)->objects[i] = new_object();
+    input_read_int(fp_model, &((*scene)->objects[i]->n_verticies));
+    input_read_int(fp_model, &((*scene)->objects[i]->n_triangles));
+    input_jump_lines(fp_model, 1); // discard rest of line
+    (*scene)->objects[i]->verticies = (*scene)->objects[i-1]->verticies + (*scene)->objects[i-1]->n_verticies;
+    (*scene)->objects[i]->triangles = (*scene)->objects[i-1]->triangles + (*scene)->objects[i-1]->n_triangles;
+  }
+
   return 1;
 }
 
@@ -113,37 +93,66 @@ int ply_parse(FILE *fp_model, Scene **scene) {
   Triangle t;
   Vertex v;
 
-
   ply_scan_element(fp_model, "face", &n_faces);
 
+
   input_file_find_first(fp_model, "end_header");
-  for(i = 0; i < (*scene)->objects[0]->n_verticies; i++) {
-    input_read_double(fp_model, &(v.position.x));
-    input_read_double(fp_model, &(v.position.y));
-    input_read_double(fp_model, &(v.position.z));
-    input_read_double(fp_model, &(v.normal.x));
-    input_read_double(fp_model, &(v.normal.y));
-    input_read_double(fp_model, &(v.normal.z));
-    (*scene)->objects[0]->verticies[i] = v;
+  for(j = 0; j < (*scene)->n_objects; j++) {
+    for(i = 0; i < (*scene)->objects[j]->n_verticies; i++) {
+      input_read_double(fp_model, &(v.position.x));
+      input_read_double(fp_model, &(v.position.y));
+      input_read_double(fp_model, &(v.position.z));
+      input_read_double(fp_model, &(v.normal.x));
+      input_read_double(fp_model, &(v.normal.y));
+      input_read_double(fp_model, &(v.normal.z));
+      (*scene)->objects[j]->verticies[i] = v;
+    }
   }
 
 
   triangle_index = 0;
+  // foreach polygon in file
   for(i = 0, j = 0; i < n_faces; i++) {
+    // read number of vertices
     input_read_int(fp_model, &verticies_in_polygon);
     vertex_index_list = (int*)malloc(verticies_in_polygon * sizeof(int));
+    // read each vertex index into temporary storage
     for(j = 0; j < verticies_in_polygon; j++) {
       input_read_int(fp_model, &(vertex_index_list[j]));
     }
+    // split into triangles and store in objects list
     for(j = 0; j < verticies_in_polygon-2; j++) {
       Vertex *vertex_list = (*scene)->objects[0]->verticies;
-      Vertex **foo = ((*scene)->objects[0]->triangles[triangle_index].verticies);
+      Vertex **triangle = ((*scene)->objects[0]->triangles[triangle_index].verticies);
 
-      foo[0] = &(vertex_list[ vertex_index_list[0]   ]);
-      foo[1] = &(vertex_list[ vertex_index_list[j+1] ]);
-      foo[2] = &(vertex_list[ vertex_index_list[j+2] ]);
+      triangle[0] = &(vertex_list[ vertex_index_list[0]   ]);
+      triangle[1] = &(vertex_list[ vertex_index_list[j+1] ]);
+      triangle[2] = &(vertex_list[ vertex_index_list[j+2] ]);
       triangle_index++;
     }
+  }
+
+  for(i = 0; i < (*scene)->n_objects; i++) {
+    // skip two first numbers of each row
+    input_read_int(fp_model, &j);
+    input_read_int(fp_model, &j);
+    // read color
+    input_read_int(fp_model, &j);
+    (*scene)->objects[i]->color.red = (double)j / 255;
+    input_read_int(fp_model, &j);
+    (*scene)->objects[i]->color.green = (double)j / 255;
+    input_read_int(fp_model, &j);
+    (*scene)->objects[i]->color.blue = (double)j / 255;
+    /*
+    property float diffuse_coefficient
+    property float specular_coefficient
+    property float specular_hardness
+    */
+    (*scene)->objects[i]->material.ambient_coefficient = 0;
+    input_read_double(fp_model, &((*scene)->objects[i]->material.diffuse_coefficient));
+    input_read_double(fp_model, &((*scene)->objects[i]->material.specular_coefficient));
+    input_read_int(fp_model, &((*scene)->objects[i]->material.material_smoothness));
+    (*scene)->objects[i]->material.material_metalness = 0.5;
   }
 
   return 1;
