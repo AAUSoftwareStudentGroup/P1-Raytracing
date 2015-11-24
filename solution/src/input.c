@@ -8,15 +8,7 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   if(ply_init(fp_model, scene) == 0)
     return 0;
 
-
-  (*scene)->ambient_intensity = create_from_color_temperature(10000);
-
-  (*scene)->n_lights = 1;
-  (*scene)->lights = (PointLight**)malloc(sizeof(PointLight*));
-  (*scene)->lights[0] = (PointLight*)malloc(sizeof(PointLight));
-  (*scene)->lights[0]->position = (Vector){0, 0, 0};
-  (*scene)->lights[0]->intensity = create_pixel(1,1,1);
-
+  (*scene)->ambient_intensity = create_pixel(0,0,0);
 
   return ply_parse(fp_model, scene);
 }
@@ -46,7 +38,7 @@ int ply_validate(int argc, char* argv[], FILE** fp_model) {
 }
 
 int ply_init(FILE *fp_model, Scene **scene) {
-  int n_polygons, n_verticies, n_objects, n_triangles;
+  int n_polygons, n_verticies, n_objects, n_lights, n_triangles;
   int i, j;
 
   *scene = new_scene();
@@ -54,6 +46,7 @@ int ply_init(FILE *fp_model, Scene **scene) {
   ply_scan_element(fp_model, "vertex", &n_verticies);
   ply_scan_element(fp_model, "face", &n_polygons);
   ply_scan_element(fp_model, "object", &n_objects);
+  ply_scan_element(fp_model, "light", &n_lights);
   input_file_find_first(fp_model, "end_header");
   input_jump_lines(fp_model, n_verticies+1);
 
@@ -84,6 +77,15 @@ int ply_init(FILE *fp_model, Scene **scene) {
     (*scene)->objects[i]->verticies = (*scene)->objects[i-1]->verticies + (*scene)->objects[i-1]->n_verticies;
     (*scene)->objects[i]->triangles = (*scene)->objects[i-1]->triangles + (*scene)->objects[i-1]->n_triangles;
   }
+
+
+  (*scene)->n_lights = n_lights;
+  (*scene)->lights = (PointLight**)malloc(n_lights*sizeof(PointLight*));
+  for(i = 0; i < n_lights; i++) {
+    (*scene)->lights[i] = (PointLight*)malloc(sizeof(PointLight));
+    
+  }
+
 
   return 1;
 }
@@ -155,6 +157,23 @@ int ply_parse(FILE *fp_model, Scene **scene) {
     input_read_double(fp_model, &((*scene)->objects[i]->material.specular_coefficient));
     input_read_int(fp_model, &((*scene)->objects[i]->material.material_smoothness));
     (*scene)->objects[i]->material.material_metalness = 0.5;
+  }
+
+  for(i = 0; i < (*scene)->n_lights; i++) {
+    Vector position;
+    input_read_double(fp_model, &(position.x));
+    input_read_double(fp_model, &(position.y));
+    input_read_double(fp_model, &(position.z));
+    (*scene)->lights[i]->position = position;
+    
+    input_read_double(fp_model, &((*scene)->lights[i]->intensity));
+
+    input_read_int(fp_model, &j);
+    (*scene)->lights[i]->color.red = (double)j / 255;
+    input_read_int(fp_model, &j);
+    (*scene)->lights[i]->color.green = (double)j / 255;
+    input_read_int(fp_model, &j);
+    (*scene)->lights[i]->color.blue = (double)j / 255;
   }
 
   return 1;

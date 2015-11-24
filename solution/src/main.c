@@ -8,9 +8,8 @@ int main(int argc, char* argv[]) {
   Scene *scene;
   Camera *camera;
   Image *image;
-  char* w[] = {"woot", "untitled.ply"};
 
-  if(input_parse(2, w, &scene, &camera) == 0) {
+  if(input_parse(argc, argv, &scene, &camera) == 0) {
     fprintf(stderr, "Failed to initialize!\n");
     return -1;
   }

@@ -6,7 +6,8 @@
 
 typedef struct _pointlight {
   Vector position;
-  Pixel intensity;
+  Pixel color;
+  double intensity;
 } PointLight;
 
 #endif

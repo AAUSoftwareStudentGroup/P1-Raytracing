@@ -57,6 +57,7 @@ def tri_mesh(mesh):
 def save_mesh(filepath,
               mesh,
               meshes,
+              lights,
               use_normals=True,
               use_uv_coords=True,
               use_colors=True,
@@ -204,6 +205,14 @@ def save_mesh(filepath,
     fw("property float diffuse_coefficient\n")
     fw("property float specular_coefficient\n")
     fw("property float specular_hardness\n")
+    fw("element light %d\n" % len(lights))
+    fw("property float x\n")
+    fw("property float y\n")
+    fw("property float z\n")
+    fw("property float intensity\n")
+    fw("property uchar red\n"
+       "property uchar green\n"
+       "property uchar blue\n")
     fw("end_header\n")
 
     # for i, v in enumerate(ply_verts):
@@ -254,6 +263,13 @@ def save_mesh(filepath,
         fw("%.6f "  % m.materials[0].specular_intensity)
         fw("%d\n" % m.materials[0].specular_hardness)
 
+    for l in lights:
+        fw("%.6f %.6f %.6f " % l.location[:])
+        fw("%.6f " % l.data.energy)
+        fw("%d "  % int(l.data.color[0] * 255.0 +0.5))
+        fw("%d "  % int(l.data.color[1] * 255.0 +0.5))
+        fw("%d\n"  % int(l.data.color[2] * 255.0 +0.5))
+
     file.close()
     print("writing %r done" % filepath)
 
@@ -276,12 +292,15 @@ def save(operator,
     # meshes = bpy.data.meshes
     objs = []
     meshes = []
+    lights = []
     # for o in bpy.data.meshes:
         # if o.users > 0 :
             # tri_mesh(o)
             # meshes.append(o)
 
-
+    for l in bpy.data.objects:
+        if l.users > 0 and l.type == 'LAMP' and l.data.type == 'POINT':
+            lights.append(l)
 
     if global_matrix is None:
         from mathutils import Matrix
@@ -311,7 +330,7 @@ def save(operator,
             tri_mesh(mesh)
             meshes.append(mesh)
 
-    ret = save_mesh(filepath, mesh, meshes,
+    ret = save_mesh(filepath, mesh, meshes, lights,
                     use_normals=use_normals,
                     use_uv_coords=use_uv_coords,
                     use_colors=use_colors,
