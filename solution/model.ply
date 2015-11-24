@@ -19,6 +19,14 @@ property uchar blue
 property float diffuse_coefficient
 property float specular_coefficient
 property float specular_hardness
+element light 1
+property float x
+property float y
+property float z
+property float intensity
+property int r
+property int g
+property int b
 end_header
 113.569702 523.258179 -22.712080 0.472945 0.841151 -0.262246
 154.091553 431.836182 -22.712080 0.940855 -0.214484 -0.262246
@@ -83,3 +91,5 @@ end_header
 8 12 34 204 35 0.800000 0.500000 50
 8 12 32 36 204 0.800000 0.500000 16
 8 12 204 20 25 0.800000 0.500000 50
+80.0 80.0 80.0 1.0 255 255 255
+comment x y z intensity r g b

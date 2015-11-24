@@ -147,7 +147,7 @@ Pixel raytracer_phong(Intersection *intersection, Scene *scene) {
   pS = pixel_add(pixel_scale(pC, m_sm), pixel_scale(create_pixel(1.0,1.0,1.0),(1-m_sm)));
 
   for(i = 0; i < scene->n_lights; i++) {
-    pI = scene->lights[i]->intensity;
+    pI = scene->lights[i]->color;
     vI = vector_normalize(vector_subtract(scene->lights[i]->position, 
                           intersection_point));
     Intersection* inter = new_intersection();

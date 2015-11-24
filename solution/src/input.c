@@ -2,7 +2,7 @@
 
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   FILE *fp_model;
-  *camera = new_camera(50, 50);
+  *camera = new_camera(500, 500);
   if(ply_validate(argc, argv, &fp_model) == 0)
     return 0;
   if(ply_init(fp_model, scene) == 0)
@@ -15,7 +15,6 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
 
 int ply_validate(int argc, char* argv[], FILE** fp_model) {
   char str[256];
-  
   
   if(argc != 2) {
     printf("Usage: %s [FILE]\n\n  FILE: Path to input-file in ply format\n\n", argv[0]);
@@ -48,7 +47,7 @@ int ply_init(FILE *fp_model, Scene **scene) {
   ply_scan_element(fp_model, "object", &n_objects);
   ply_scan_element(fp_model, "light", &n_lights);
   input_file_find_first(fp_model, "end_header");
-  input_jump_lines(fp_model, n_verticies+1);
+  input_jump_lines(fp_model, n_verticies+1); // A COMMENT WILL POSSIBLY FUCK THIS UP
 
   n_triangles = 0;
   for(i = 0; i < n_polygons; i++) {
@@ -160,11 +159,11 @@ int ply_parse(FILE *fp_model, Scene **scene) {
   }
 
   for(i = 0; i < (*scene)->n_lights; i++) {
-    Vector position;
-    input_read_double(fp_model, &(position.x));
-    input_read_double(fp_model, &(position.y));
-    input_read_double(fp_model, &(position.z));
-    (*scene)->lights[i]->position = position;
+    Vector light_position;
+    input_read_double(fp_model, &(light_position.x));
+    input_read_double(fp_model, &(light_position.y));
+    input_read_double(fp_model, &(light_position.z));
+    (*scene)->lights[i]->position = light_position;
     
     input_read_double(fp_model, &((*scene)->lights[i]->intensity));
 
@@ -197,9 +196,10 @@ int ply_scan_element(FILE *file, const char *element_name, int *out) {
       return 1;
     }
     else {
-      input_jump_lines(file, 1);
+        input_jump_lines(file, 1);
     }
   }
+  print_warning(1==1, "scan_element reached EOF while searching for: \"%s\"", element_name);
   return 0;
 }
 
@@ -234,9 +234,27 @@ int input_jump_lines(FILE *file, int lines) {
 }
 
 int input_read_int(FILE *file, int *out) {
-  return fscanf(file, " %d", out);
+  int res = fscanf(file, " %d", out);
+  print_warning(res != 1, "Didn't read int when int was expected");
+  return res;
 }
 
 int input_read_double(FILE *file, double *out) {
-  return fscanf(file, " %lf", out);
+  int res = fscanf(file, " %lf", out);
+  print_warning(res != 1,"Didn't read double when double was expected");
+  return res;
+}
+
+int print_warning(int statement, char* warning, ...) {
+  if(statement) {
+    va_list args;
+    va_start( args, warning );
+
+    printf("WARNING: ");
+    vprintf(warning, args );
+    printf("!\n");
+
+    va_end( args );
+  }
+  return statement;
 }
