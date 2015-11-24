@@ -18,19 +18,19 @@ int ply_validate(int argc, char* argv[], FILE** fp_model) {
   
   
   if(argc != 2) {
-    printf("Not exactly two arguments %d:%s", __LINE__, __FILE__);
+    printf("Usage: %s [FILE]\n\n  FILE: Path to input-file in ply format\n\n", argv[0]);
     return 0;
   }
 
   *fp_model = fopen(argv[1], "r");
   
   if(*fp_model == NULL) {
-    printf("file %s, could not be opened %d:%s", argv[1], __LINE__, __FILE__);
+    printf("ERROR: file %s, could not be opened! %s:%d\n", argv[1], __FILE__, __LINE__);
     return 0;
   }
 
   if(fscanf(*fp_model, "%s", str) != EOF && strcmp(str,"ply") != 0) {
-    printf("%s is not a ply file %d:%s", argv[1], __LINE__, __FILE__);
+    printf("ERROR: %s is not a ply file! %s:%d\n", argv[1], __FILE__, __LINE__);
     return 0;
   }
 
