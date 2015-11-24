@@ -143,7 +143,7 @@ Pixel raytracer_phong(Intersection *intersection, Scene *scene) {
   ambient = pixel_multiply(pixel_scale(pC, m_a), pA);
   
   intersection_point = ray_get_point(intersection->ray, intersection->t);
-  vU = vector_scale(intersection->ray.direction, 1.0);
+  vU = vector_scale(intersection->ray.direction, -1.0);
   pS = pixel_add(pixel_scale(pC, m_sm), pixel_scale(create_pixel(1.0,1.0,1.0),(1-m_sm)));
 
   for(i = 0; i < scene->n_lights; i++) {
@@ -151,10 +151,10 @@ Pixel raytracer_phong(Intersection *intersection, Scene *scene) {
     vI = vector_normalize(vector_subtract(scene->lights[i]->position, 
                           intersection_point));
     Intersection* inter = new_intersection();
-    Ray r = create_ray(vector_add(intersection_point, vector_scale(intersection->normal, 0.001)), vI);
-    // r.initial_point = ray_get_point(r, 0.01);
-    raytracer_scene_intersection(r, scene, &inter);
-    if(inter->t <= 0) {
+    Ray r = create_ray(intersection_point, vI);
+    r.initial_point = ray_get_point(r, 0.01);
+    
+    if(!raytracer_scene_intersection(r, scene, &inter) || vector_norm(vector_subtract(scene->lights[i]->position, r.initial_point)) < vector_norm(vector_subtract(ray_get_point(r, inter->t), r.initial_point))) {
       vR = vector_normalize(vector_add(vector_scale(vI, -1), 
                             vector_scale(vN, vector_dot(vI, vN) * 2)));
       
@@ -164,7 +164,7 @@ Pixel raytracer_phong(Intersection *intersection, Scene *scene) {
       
       /* specular light = m_s * MAX(-vR * vU, 0) ^ m_sp * pI * pS */
       specular = pixel_add(specular, pixel_multiply(pS, pixel_scale(pI, 
-                           m_s * pow(MAX(-vector_dot(vR, vU), 0), m_sp))));
+                           m_s * pow(MAX(vector_dot(vR, vU), 0), m_sp))));
     }
   }  
   
