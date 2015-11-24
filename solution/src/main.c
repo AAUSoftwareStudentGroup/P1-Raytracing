@@ -10,7 +10,6 @@ int main(int argc, char* argv[]) {
   Image *image;
 
   if(input_parse(argc, argv, &scene, &camera) == 0) {
-    fprintf(stderr, "Failed to initialize!\n");
     return -1;
   }
   image = raytracer_render(scene, camera);
