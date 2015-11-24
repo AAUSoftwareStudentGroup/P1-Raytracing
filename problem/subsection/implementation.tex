@@ -26,6 +26,8 @@ Som en del af vores top-down fremgangsmåde har vi struktureret opgaven i header
 
 \subsubsection{Vektorregning}
 
+En vigtig del af vores raytracer består af vektorregning. For at regne med vektorer, er det først nødvendigt at lave en struct vector, der fortæller programmet hvad en vektor består af. Som set på programmet (skriv nummer på program) kan det ses at en vektor består af tre koordinater, x, y og z. 
+
 \begin{lstlisting}[language=C, caption=Vektorprototyper og struct]
 
 typedef struct _vector {
@@ -47,7 +49,7 @@ Vector vector_rotate_around_x(Vector v, double angle);
 
 Et eksempel på én af vores vektorudregninger er vector_add. Denne funktion adderer to vektorer, som det ses på (program nr bla). Her kan man se, at ved addition af to vektorer, adderer man x-koordinaterne med hinanden og det samme gælder for y- og z-koordinaterne. Resultatet vil også være en vektor.
 
-\begin{lstlisting}[language=C, caption=vector_add]
+\begin{lstlisting}[language=C, caption=vector add]
 
 Vector vector_add(Vector v1, Vector v2) {
   return (Vector){v1.x + v2.x, v1.y + v2.y, v1.z + v2.z};
@@ -57,7 +59,7 @@ Vector vector_add(Vector v1, Vector v2) {
 
 Et andet eksempel på en vektorudregning, vi gør brug af, er skalarproduktet af to vektorer. Det er vigtigt at kende skalarproduktet, da det benyttes i vector_norm for at finde længden af to vektorer og i vector_angle_between for at finde vinklen mellem to vektorer. Herunder kan det ses, at skalarproduktet simpelt findes ved at gange de tilsvarende koordinater med hinanden.
 
-\begin{lstlisting}[language=C, caption=vector_dot]
+\begin{lstlisting}[language=C, caption=vector dot]
 
 double vector_dot (Vector v1, Vector v2) {
   return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
