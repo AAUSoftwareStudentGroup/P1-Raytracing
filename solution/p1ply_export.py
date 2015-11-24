@@ -55,7 +55,6 @@ def tri_mesh(mesh):
     del bm
 
 def save_mesh(filepath,
-              mesh,
               meshes,
               lights,
               use_normals=True,
@@ -283,7 +282,8 @@ def save(operator,
          use_normals=True,
          use_uv_coords=True,
          use_colors=True,
-         global_matrix=None
+         global_matrix=None,
+         global_scale=1
          ):
 
     # scene = context.scene
@@ -298,9 +298,6 @@ def save(operator,
             # tri_mesh(o)
             # meshes.append(o)
 
-    for l in bpy.data.objects:
-        if l.users > 0 and l.type == 'LAMP' and l.data.type == 'POINT':
-            lights.append(l)
 
     if global_matrix is None:
         from mathutils import Matrix
@@ -312,6 +309,11 @@ def save(operator,
     for o in bpy.data.objects:
         if o.type == 'MESH':
             objs.append(o)
+  
+    for l in bpy.data.objects:
+        if l.users > 0 and l.type == 'LAMP' and l.data.type == 'POINT':
+            l.location *= global_scale
+            lights.append(l)
 
     for o in objs:
         if use_mesh_modifiers and o.modifiers:
@@ -330,11 +332,14 @@ def save(operator,
             tri_mesh(mesh)
             meshes.append(mesh)
 
-    ret = save_mesh(filepath, mesh, meshes, lights,
+    ret = save_mesh(filepath, meshes, lights,
                     use_normals=use_normals,
                     use_uv_coords=use_uv_coords,
                     use_colors=use_colors,
                     )
+
+    for l in lights:
+        l.location *= (1/global_scale)
 
     # for m in meshes:
         # if use_mesh_modifiers:
@@ -415,7 +420,6 @@ class ExportP1PLY(bpy.types.Operator, ExportHelper):
 
         keywords = self.as_keywords(ignore=("axis_forward",
                                             "axis_up",
-                                            "global_scale",
                                             "check_existing",
                                             "filter_glob",
                                             ))
@@ -423,6 +427,7 @@ class ExportP1PLY(bpy.types.Operator, ExportHelper):
                                         to_up=self.axis_up,
                                         ).to_4x4() * Matrix.Scale(self.global_scale, 4)
         keywords["global_matrix"] = global_matrix
+        keywords["global_scale"] = self.global_scale
 
         filepath = self.filepath
         filepath = bpy.path.ensure_ext(filepath, self.filename_ext)
