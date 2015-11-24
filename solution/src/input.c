@@ -2,7 +2,7 @@
 
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   FILE *fp_model;
-  *camera = new_camera(500, 500);
+  *camera = new_camera(200, 200);
   if(ply_validate(argc, argv, &fp_model) == 0)
     return 0;
   if(ply_init(fp_model, scene) == 0)
@@ -168,11 +168,11 @@ int ply_parse(FILE *fp_model, Scene **scene) {
     input_read_double(fp_model, &((*scene)->lights[i]->intensity));
 
     input_read_int(fp_model, &j);
-    (*scene)->lights[i]->color.red = (double)j / 255;
+    (*scene)->lights[i]->color.red = ((double)j*((*scene)->lights[i]->intensity)) / 255;
     input_read_int(fp_model, &j);
-    (*scene)->lights[i]->color.green = (double)j / 255;
+    (*scene)->lights[i]->color.green = ((double)j*((*scene)->lights[i]->intensity)) / 255;
     input_read_int(fp_model, &j);
-    (*scene)->lights[i]->color.blue = (double)j / 255;
+    (*scene)->lights[i]->color.blue = ((double)j*((*scene)->lights[i]->intensity)) / 255;
   }
 
   return 1;
