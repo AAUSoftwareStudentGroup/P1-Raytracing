@@ -7,5 +7,4 @@ Group B2-28:
   * Lasse Gadegaard
   * Mathias Ibsen
   * Morten Rask
-  * Kristian Træholt Sørensen
   * Christian Mønsted Grünberg
