@@ -65,11 +65,15 @@ double vector_dot (Vector v1, Vector v2) {
 \end{lstlisting}
 
 \subsubsection{Pixels}
-I programmet har vi valgt at indføre en algoritme, der kan ’oversætte’ en farvetemperatur, målt i kelvin, til en RGB-værdi (rød-, grøn-, blå-værdi), som tilsammen viser en bestemt farve. Dette program kan hjælpe kunden med at visualisere den farve, som en lampe vil udsende, da det er vigtigt (se afsnit \ref{sec:lys} om lys) hvilken farvetemperatur et lys fra en lampe har. Algoritmen er lånt og oversat fra pseudokoden fra følgende hjemmeside \href{<http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/>}{<http://www.tannerhelland.com/>}
+I programmet har vi valgt at indføre en algoritme, der kan ’oversætte’ en farvetemperatur, målt i kelvin, til en RGB-værdi (rød-, grøn-, blå-værdi), som tilsammen viser en bestemt farve. Dette program kan hjælpe kunden med at visualisere den farve, som en lampe vil udsende, da det er vigtigt (se afsnit \ref{sec:lys} om lys) hvilken farvetemperatur et lys fra en lampe har. Algoritmen er lånt og oversat fra pseudokoden fra følgende hjemmeside \href{http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/}{http://www.tannerhelland.com/} under afsnittet 'The Algorithm'. Algoritmen er lavet ud fra at plotte Charity’s original blackbody values, som kan findes her: \href{http://www.vendian.org/mncharity/dir3/blackbody/UnstableURLs/bbr_color.html}{http://www.vendian.org/}. Disse værdier rangerer fra 1000 til 40.000 kelvin, og det er derfor ikke sikket, at værdier ude for disse grænser er ligeså præcise i overgangen fra farvetemperatur til RGB-værdi. Copyright m.m. mht. algoritmen står i selve programmet som en kommentar i delen ’pixel.c’.
 
 
-
-
+For at beregne en farve af en pixel, er det først nødvendigt at lave en struct pixel, der fortæller programmet, hvad den består af. 
+\begin{lstlisting}[style=Cstyle, caption=vector dot]
+typedef struct _pixel {
+  double red, green, blue;
+} Pixel;
+\end{lstlisting}
 
 
 \subparagraph{Liste af funktioner i vektorregning}

@@ -2,7 +2,7 @@ DOCUMENT=main
 SVGGFX=$(wildcard graphics/*.svg)
 PDFGFX=$(addprefix graphics/,$(notdir $(SVGGFX:.svg=.pdf)))
 
-all: clean $(PDFGFX) $(DOCUMENT).tex
+all: $(PDFGFX) $(DOCUMENT).tex
 	latexmk -pdf $(DOCUMENT).tex -f -quiet --shell-escape -latexoption=-interaction=batchmode
 
 graphics/%.pdf: graphics/%.svg
