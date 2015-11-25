@@ -88,6 +88,24 @@ I modsætning til en perspektiv projektion af et punkt på et plan, er raytracin
 
 Der findes flere forskellige modeller for hvordan lysintensiteten for en lysstråle beregnes. En simpel model, er Phong-modellen, som opdeler lys i forskellige kategorier: ambient, diffuse og specular.
 
+\subsubsection{Konvertering fra farvetemperatur til RGB}
+Farvetemperatur, som også er beskrevet nederst i \ref{sec:lys}, er temperaturen af et udsendt lys og måles i kelvin. Denne temperatur kan bruges til at finde ud af, om et lys er varmt eller koldt. 
+RGB-værdien er en værdi for en given farves indhold af rød, grøn og blå. Værdien angives normalt ved et tal mellem 0 og 255, altså er 0 128 255 ingen rød, en del grøn og fuld blå, hvilket, blandet sammen, giver en blålig farve.
+Der findes ingen direkte og 100\% præcis formel for at ’oversætte’ en kelvintemperaturværdi til en RGB-værdi, derfor har rapporten taget udgangspunkt i en forholdsvis præcis algoritme, som er lavet ud fra 800 målinger, men som stadig ikke er præcis nok til videnskabelig brug.
+Måden hvorpå algoritmen er lavet, er ved at tage disse 800 målinger, og lave en funktion ud fra dem. Der er lavet to målinger per 100 kelvin, der starter ved 1000 kelvin og slutter ved 40.000 kelvin. Ved at kigge på funktionen set her: \href{http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/raw_temperature_vs_rgb_chart/}{http://www.tannerhelland.com/}har Tanner Helland  kunne konkludere  tre ting:
+
+
+•	Røde værdier under 6600 kelvin er altid 255.
+
+
+•	Blå værdier under 2000 kelvin er altid 0.
+
+
+•	Blå værdier over 6500 kelvin er altid 255.
+
+
+Disse tre, forholdsvis simple, konklusioner har hjulpet med at gøre algoritmen meget kortere og mere simpel. Algoritmen tager et input i kelvin, af typen unsigned int, beregner de tre RBG-værdier hver for sig, og returnerer herefter RGB-værdien, af typen pixel, til sidst. 
+
 
 \subsubsection*{Opsummering}
 
