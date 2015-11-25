@@ -1,5 +1,7 @@
 \subsection{Teori}
 
+Dette afsnit vil omhandle de teorier samt videnskabelige principper som er relevante i forhold til at lave den tidligere beskrevet løsning. Der vil derfor i afsnittet være fokus på de principper, formler og algoritmer som der bruges i udviklingsfasen. Teoriafsnittet vil primært fokusere på at beskrive og undersøge tekniske og matematiske principper som ellers ville være svære at forstå og arbejde med. Efter en diskussion har gruppen valgt at undersøge og diskutere følgende fænomener og principper: Rotationsmatricer, fra 3D-model til billede, perspektiv projektion, raytracing og konvertering af farvetemperatur til RGB-værdier. I slutningen af afsnittet vil der fremgå, hvordan de enkelte teorier bidrager til løsningen.
+
 \subsubsection{Rotationsmatricer}
 Hvis vi vil roterer et punkt eller en vektor omkring nul-punktet i et koordinatsystem kan vi bruge en rotationsmatrix\cite{rotationsmatricer}.
 En rotationsmatrix er en matrix der, hvis ganget sammen med en anden matrix, roterer en vektor eller et punkt i et koordinatsystem.
@@ -89,7 +91,7 @@ I modsætning til en perspektiv projektion af et punkt på et plan, er raytracin
 
 Der findes flere forskellige modeller for hvordan lysintensiteten for en lysstråle beregnes. En simpel model, er Phong-modellen, som opdeler lys i forskellige kategorier: ambient, diffuse og specular.
 
-\subsubsection{Konvertering fra farvetemperatur til RGB}
+\subsubsection{Konvertering fra farvetemperatur til RGB-værdier}
 Farvetemperatur, som også er beskrevet nederst i \ref{sec:lys}, er temperaturen af et udsendt lys og måles i kelvin. Denne temperatur kan bruges til at finde ud af, om et lys er varmt eller koldt. 
 RGB-værdien er en værdi for en given farves indhold af rød, grøn og blå. Værdien angives normalt ved et tal mellem 0 og 255, altså er 0 128 255 ingen rød, en del grøn og fuld blå, hvilket, blandet sammen, giver en blålig farve.
 Der findes ingen direkte og 100\% præcis formel for at ’oversætte’ en kelvintemperaturværdi til en RGB-værdi, derfor har rapporten taget udgangspunkt i en forholdsvis præcis algoritme, som er lavet ud fra 800 målinger, men som stadig ikke er præcis nok til videnskabelig brug.
