@@ -2,84 +2,11 @@
 
 Dette afsnit vil omhandle de teorier samt videnskabelige principper som er relevante i forhold til at lave den tidligere beskrevet løsning. Der vil derfor i afsnittet være fokus på de principper, formler og algoritmer som der bruges i udviklingsfasen. Teoriafsnittet vil primært fokusere på at beskrive og undersøge tekniske og matematiske principper som ellers ville være svære at forstå og arbejde med. Efter en diskussion har gruppen valgt at undersøge og diskutere følgende fænomener og principper: Rotationsmatricer, fra 3D-model til billede, perspektiv projektion, raytracing og konvertering af farvetemperatur til RGB-værdier. I slutningen af afsnittet vil der fremgå, hvordan de enkelte teorier bidrager til løsningen.
 
-\subsubsection{Rotationsmatricer}
-Hvis vi vil roterer et punkt eller en vektor omkring nul-punktet i et koordinatsystem kan vi bruge en rotationsmatrix\cite{rotationsmatricer}.
-En rotationsmatrix er en matrix der, hvis ganget sammen med en anden matrix, roterer en vektor eller et punkt i et koordinatsystem.
-\begin{align}\label{eu_eqn}
-  R_x(\theta) = 
-  \begin{bmatrix}
-    1 & 0 & 0\\ 
-    0 & cos \theta & - sin \theta\\ 
-    0 & sin \theta & cos \theta
-  \end{bmatrix}\\
-    R_y(\theta) = 
-  \begin{bmatrix}
-    cos \theta  & 0 & sin \theta\\ 
-    0           & 1 & 0\\ 
-    -sin \theta & 0 & cos \theta
-  \end{bmatrix}\\
-    R_z(\theta) = 
-  \begin{bmatrix}
-    cos \theta & - sin \theta & 0\\ 
-    sin \theta & cos \theta & 0\\
-    0 & 0 & 1
-  \end{bmatrix}
-\end{align}
-Indsætter vi mængden af radianer vi vil dreje vores vektor og ganger dem sammen, burde vektoren bliver drejet omkring nul-punktet med netop den mængde radianer.
-For at sikre at vi har forstået brugen korrekt, vil vi nu forsøge at dreje en vektor i rummet omkring x-aksen ved hjælp af $R_x$. 
-Vi har en vektor u:
-\begin{equation}
-  U=
-  \begin{bmatrix}
-    0 & 1 & 5
-  \end{bmatrix}
-\end{equation}
-og rotationsvektor \begin{math}R_x\end{math}
-\begin{equation}
-  R_x(\theta) = 
-  \begin{bmatrix}
-    1 & 0 & 0\\ 
-    0 & cos \theta & - sin \theta\\ 
-    0 & sin \theta & cos \theta
-  \end{bmatrix}
-\end{equation}
-Vi tager prik-produktet af dem, og indsætter 1 Radian i $R_x$:
-\begin{align}
-  0*0+1*0+5*0&=0\\
-  0*0+1*cos(1)+5*sin(1)&=4.75\\
-  0*0+1*(-sin(1))+5*cos(1)&=1.86
-\end{align}
-Og kalder det for vektor V og indsætter både U og V i Geogebra og får den til at udregne vinklen mellem dem:
-\begin{figure}[H]
-  \center
-  \includegraphics[width=12cm]{rotationsmatrix_eksempel.png}
-  \caption{Eksempel på en rotationsmatrix}
-  \label{fig:rotationsmatrix_eksempel}
-\end{figure}
-Geogebra udregner vinkler i grader, så vi omregner grader til radianer ved hjælp af ligningen:
-\begin{equation}
-  R=d/2*\pi/360=57,31/2*\pi/360\approx1
-\end{equation}
-Dette viser os at vektor $U$ blev drejet 1 radian, som forventet.
+\input{./subsubsection/rotationsmatricer.tex}
 
-\subsubsection{Konvertering fra farvetemperatur til RGB}
-Farvetemperatur, som også er beskrevet nederst i \ref{sec:lys}, er temperaturen af et udsendt lys og måles i kelvin. Denne temperatur kan bruges til at finde ud af, om et lys er varmt eller koldt. 
-RGB-værdien er en værdi for en given farves indhold af rød, grøn og blå. Værdien angives normalt ved et tal mellem 0 og 255, altså er 0 128 255 ingen rød, en del grøn og fuld blå, hvilket, blandet sammen, giver en blålig farve.
-Der findes ingen direkte og 100\% præcis formel for at ’oversætte’ en kelvintemperaturværdi til en RGB-værdi, derfor har rapporten taget udgangspunkt i en forholdsvis præcis algoritme, som er lavet ud fra 800 målinger, men som stadig ikke er præcis nok til videnskabelig brug.
-Måden hvorpå algoritmen er lavet, er ved at tage disse 800 målinger, og lave en funktion ud fra dem. Der er lavet to målinger per 100 kelvin, der starter ved 1000 kelvin og slutter ved 40.000 kelvin. Ved at kigge på funktionen set her: \href{http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/raw_temperature_vs_rgb_chart/}{http://www.tannerhelland.com/}har Tanner Helland  kunne konkludere  tre ting:
+\input{./subsubsection/konvertering_fra_farvetemperatur_til_RGB.tex}
 
-
-•	Røde værdier under 6600 kelvin er altid 255.
-
-
-•	Blå værdier under 2000 kelvin er altid 0.
-
-
-•	Blå værdier over 6500 kelvin er altid 255.
-
-
-Disse tre, forholdsvis simple, konklusioner har hjulpet med at gøre algoritmen meget kortere og mere simpel. Algoritmen tager et input i kelvin, af typen unsigned int, beregner de tre RBG-værdier hver for sig, og returnerer herefter RGB-værdien, af typen pixel, til sidst. 
-
+\input{./subsubsection/fra_3d-model_til_billede.tex}
 
 \subsubsection*{Opsummering}
 
