@@ -7,17 +7,26 @@ For at udlede en model for billeddannelsen, tages der udgangspunkt i en perspekt
 \begin{figure}[H]
   \label{fig:perspektiv_projektion}
   \centering
-  \includegraphics[width=5cm]{perspektiv_projektion}
-  \caption{Viser princippet bag perspektiv projektion af et punkt på et billedplan.}
-\end{figure}
-
-\tdplotsetmaincoords{60}{130}
+  \tdplotsetmaincoords{60}{130}
 \begin{tikzpicture}[tdplot_main_coords]
 \draw (0,0,0) -> (2,-8,2);
 \path[fill=gray!30, draw=gray] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
-\draw[blue,thick,->, arrows={-Triangle[angle=90:10pt,blue]}] (0,0,0) -- (1,-4,1);
-\fill[black] (0, 0, 0) circle (0.1);
+\draw (0,0,0) -- (1,-4,1);
+\foreach \p in {(2,-8,2),(1,-4,1),(0,0,0)}{
+	\draw plot [mark=*, mark size=2] coordinates{\p } ; 
+	\node [above right] at \p {P};
+}
+\draw plot [mark=*, mark size=2] coordinates{(2,-8,2) } ; 
+\draw plot [mark=*, mark size=2] coordinates{(1,-4,1) }; 
+\draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
+\node [above right] at (2,-8,2) {P};
+\node [above right] at (1,-4,1) {B};
+\node [above right] at (0,0,0) {C};
 \end{tikzpicture}
+  \caption{Viser princippet bag perspektiv projektion af et punkt på et billedplan.}
+\end{figure}
+
+
 
 Som vist på figur \ref{fig:perspektiv_projektion} kan et punkt $P\in \mathbb{R}^3$ projekteres ned på billedplanen $\alpha$ ved at finde skæringspunktet $B$ mellem billedplanen $\alpha$ og en lysstråle $L$, som går fra punktet $P$ mod kameraets position $C$. Gør man nu dette for alle punkter på et objekt i rummet, og tegner skæringspunkterne på billedplanen, dannes et billede af objektet. Udfordringen er så at afgøre hvilken farve punkterne på billedplanen skal have, da dette afhænger af objektets egenskaber, samt hvilket udefrakommende lys der rammer objektet. 
 
