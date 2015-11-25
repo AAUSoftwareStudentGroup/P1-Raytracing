@@ -14,6 +14,10 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{listings}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{courier}
+
 
  \geometry{
  % a4paper,
@@ -41,11 +45,12 @@
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
  
-\lstdefinestyle{codestyle}{
-    %backgroundcolor=\color{backcolour},   
+\lstdefinestyle{Cstyle}{
+    %backgroundcolor=\color{backcolour},
+    language=C,   
     commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
+    keywordstyle=\color{blue},
+    numberstyle=\color{codegray},
     stringstyle=\color{codepurple},
     basicstyle=\footnotesize,
     breakatwhitespace=false,         
@@ -56,11 +61,14 @@
     numbersep=5pt,                  
     showspaces=false,                
     showstringspaces=false,
-    showtabs=false,                  
+    showtabs=false,     
+    basicstyle=\ttfamily,breaklines=true,           
+    morekeywords={Vector},  
     tabsize=2
 }
- 
-\lstset{style=codestyle}
+
+
+
 
 % supresses errors during compilation
 % \batchmode
