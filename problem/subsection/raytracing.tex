@@ -12,16 +12,13 @@ For at udlede en model for billeddannelsen, tages der udgangspunkt i en perspekt
 \draw (0,0,0) -> (2,-8,2);
 \path[fill=gray!30, draw=gray] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
 \draw (0,0,0) -- (1,-4,1);
-\foreach \p in {(2,-8,2),(1,-4,1),(0,0,0)}{
-	\draw plot [mark=*, mark size=2] coordinates{\p } ; 
-	\node [above right] at \p {P};
-}
+
 \draw plot [mark=*, mark size=2] coordinates{(2,-8,2) } ; 
 \draw plot [mark=*, mark size=2] coordinates{(1,-4,1) }; 
 \draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
-\node [above right] at (2,-8,2) {P};
-\node [above right] at (1,-4,1) {B};
-\node [above right] at (0,0,0) {C};
+\node [above right] at (2,-8,2) {$P$};
+\node [above right] at (1,-4,1) {$B$};
+\node [above right] at (0,0,0) {$C$};
 \end{tikzpicture}
   \caption{Viser princippet bag perspektiv projektion af et punkt på et billedplan.}
 \end{figure}
@@ -38,7 +35,19 @@ I modsætning til en perspektiv projektion af et punkt på et plan, er raytracin
 \begin{figure}[H]
   \label{fig:raytracing_skitse}
   \centering
-  \includegraphics[width=5cm]{drawing}
+  \tdplotsetmaincoords{60}{130}
+  \begin{tikzpicture}[tdplot_main_coords]
+\draw (0,0,0) -> (2,-8,2);
+\path[fill=gray!30, draw=gray] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
+\draw (0,0,0) -- (1,-4,1);
+
+\draw plot [mark=*, mark size=2] coordinates{(1,-4,1) }; 
+\draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
+\node [above right] at (1,-4,1) {$B$};
+\node [above right] at (0,0,0) {$C$};
+\draw[blue, -{Latex[width=3mm, length=3mm]}] (0,0,0) -- (1,-4,1);
+\node [above right] at (0.5,-2,0.5) {$\vv{r}$};
+\end{tikzpicture}
   \caption{Viser hvordan en der kan opstilles retningsvektor mellem kameraets position $C$ og punktet $P$ på billedplanen, som sammen med startpunktet $C$ beskriver lysstrålen i omvendt retning.}
 \end{figure}
 
