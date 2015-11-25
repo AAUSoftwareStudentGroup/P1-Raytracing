@@ -1,6 +1,7 @@
 #ifndef _INPUT_
 #define _INPUT_
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,5 +19,6 @@ int input_file_find_next(FILE *file, char *search_str);
 int input_jump_lines(FILE *file, int lines);
 int input_read_int(FILE *file, int *out);
 int input_read_double(FILE *file, double *out);
+int print_warning(int statement, char* warning, ...);
 
 #endif
