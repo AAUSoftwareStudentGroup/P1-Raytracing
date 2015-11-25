@@ -9,14 +9,84 @@ Nedenstående figur viser et billede af renderingen fra det færdige program
 
 \#Indsæt rendering fra det færdige program
 \#nærmere beskrivelse af billede
+
+\subsubsection{Programmets opbygning}
+
+Programmet er opbygget efter desginprincippet "top-down programmering". Princippet går ud på at dele programmet og i mindre dele, og derefter løse de mindre dele i hver deres funktion. Funktionerne samles i main, som kun bruges til kommunikation med brugeren. 
+\ref{fig:topdown} viser tankegangen bag top-down programmering, hvor de enkelte problemer deles op og løses som delproblemer. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{topdown}
     \caption{Tankegangen bag top-down programmering.}
     \label{fig:topdown}
-\end{figure} 
+\end{figure}
 
-\subsubsection{Programmets opbygning}
+Som en del af vores top-down fremgangsmåde har vi struktureret opgaven i header-filer som blandt andet indeholder prototyper og structs. Header-filerne hjælper os med, at få bedre overblik over koden. 
 
-Programmet er opbygget efter desginprincippet "Top-down programmering". Princippet går ud på at dele programmet og i mindre dele, og derefter løse de mindre dele i hver deres funktion. Funktionerne samles i main, som kun bruges til kommunikation med brugeren. 
+\subsubsection{Vektorregning}
 
+En vigtig del af vores raytracer består af vektorregning. For at regne med vektorer, er det først nødvendigt at lave en struct vector, der fortæller programmet hvad en vektor består af. Som set på programmet (skriv nummer på program) kan det ses at en vektor består af tre koordinater, x, y og z. 
+
+\begin{lstlisting}[style=Cstyle, caption=Vektorprototyper og struct]
+
+typedef struct _vector {
+    double x,y,z;
+} Vector;
+
+Vector vector_add(Vector v1, Vector v2);
+Vector vector_subtract(Vector v1, Vector v2);
+Vector vector_scale(Vector v, double s);
+double vector_dot(Vector v1, Vector v2);
+double vector_norm(Vector v);
+Vector vector_normalize(Vector v);
+double vector_angle_between(Vector v1, Vector v2);
+Vector vector_cross(Vector v1, Vector v2);
+Vector vector_rotate_around_z(Vector v, double angle);
+Vector vector_rotate_around_x(Vector v, double angle);
+
+\end{lstlisting}
+
+Et eksempel på én af vores vektorudregninger er vector\_add. Denne funktion adderer to vektorer, som det ses på (program nr bla). Her kan man se, at ved addition af to vektorer, adderer man x-koordinaterne med hinanden og det samme gælder for y- og z-koordinaterne. Resultatet vil også være en vektor.
+
+\begin{lstlisting}[style=Cstyle, caption=vector add]
+Vector vector_add(Vector v1, Vector v2) {
+  return (Vector){v1.x + v2.x, v1.y + v2.y, v1.z + v2.z};
+}
+
+\end{lstlisting}
+
+Et andet eksempel på en vektorudregning, vi gør brug af, er skalarproduktet af to vektorer. Det er vigtigt at kende skalarproduktet, da det benyttes i vector\_norm for at finde længden af to vektorer og i vector\_angle\_between for at finde vinklen mellem to vektorer. Herunder kan det ses, at skalarproduktet simpelt findes ved at gange de tilsvarende koordinater med hinanden.
+
+\begin{lstlisting}[style=Cstyle, caption=vector dot]
+double vector_dot (Vector v1, Vector v2) {
+  return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+}
+\end{lstlisting}
+
+\subsubsection{Pixels}
+I programmet har vi valgt at indføre en algoritme, der kan ’oversætte’ en farvetemperatur, målt i kelvin, til en RGB-værdi (rød-, grøn-, blå-værdi), som tilsammen viser en bestemt farve. Dette program kan hjælpe kunden med at visualisere den farve, som en lampe vil udsende, da det er vigtigt (se afsnit \ref{sec:lys} om lys) hvilken farvetemperatur et lys fra en lampe har. Algoritmen er lånt og oversat fra pseudokoden fra følgende hjemmeside \href{http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/}{http://www.tannerhelland.com/} under afsnittet 'The Algorithm'. Algoritmen er lavet ud fra at plotte Charity’s original blackbody values, som kan findes her: \href{http://www.vendian.org/mncharity/dir3/blackbody/UnstableURLs/bbr_color.html}{http://www.vendian.org/}. Disse værdier rangerer fra 1000 til 40.000 kelvin, og det er derfor ikke sikket, at værdier ude for disse grænser er ligeså præcise i overgangen fra farvetemperatur til RGB-værdi. Copyright m.m. mht. algoritmen står i selve programmet som en kommentar i delen ’pixel.c’.
+
+
+For at beregne en farve af en pixel, er det først nødvendigt at lave en struct pixel, der fortæller programmet, hvad den består af. 
+\begin{lstlisting}[style=Cstyle, caption=vector dot]
+typedef struct _pixel {
+  double red, green, blue;
+} Pixel;
+\end{lstlisting}
+
+
+\subparagraph{Liste af funktioner i vektorregning}
+\begin{enumerate}
+
+  \item vector add adderer to vektorer.
+  \item vector subtract –subtraherer to vektorer.
+  \item vector scale skalerer en given vektor.
+  \item vector dot prikker to vektorer sammen. Resultat bruges i vector norm og vector angle between.
+  \item vector norm finder længden af to vektorer.
+  \item vector normalize normaliserer vektoren (ændrer længden til 1), så man kun har retningen af vektoren tilbage.
+  \item vector angle between finder vinklen mellem to vektorer.
+  \item vector cross Udregner krydsproduktet og finder dermed normalvektoren.
+  \item vector rotate around z og vector rotate around x roterer en given vektor omkring hhv. z- eller x-aksen.
+
+\end{enumerate}
