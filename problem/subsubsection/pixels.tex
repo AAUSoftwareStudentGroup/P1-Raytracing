@@ -9,7 +9,7 @@ typedef struct _pixel {
 } Pixel;
 \end{lstlisting}
 
-Herefter laves der funktionen create_from_color_temperature(), som er af typen Pixel, og som tager en unsigned int kelvin som input. Ud fra de konklusioner, der blev omtalt i teoriafsnittet \ref{sec:temp_til_rgb}, som omhandlede konvertering fra farvetemperatur til RGB, har man ud fra da benyttede data kunne opstille nogle konklusioner, der har gjort algoritmen mere simpel. Det er derfor muligt at beregne en given farve på følgende måde: 
+Herefter laves der funktionen create\_from\_color\_temperature(), som er af typen Pixel, og som tager en unsigned int kelvin som input. Ud fra de konklusioner, der blev omtalt i teoriafsnittet \ref{sec:temp_til_rgb}, som omhandlede konvertering fra farvetemperatur til RGB, har man ud fra da benyttede data kunne opstille nogle konklusioner, der har gjort algoritmen mere simpel. Det er derfor muligt at beregne en given farve på følgende måde: 
 \begin{lstlisting}[style=Cstyle, caption=Beregning af rød farve]
 if(kelvin <= 66){
   color.red = 255;
@@ -25,3 +25,6 @@ else{
   }
 }
 \end{lstlisting}
+
+Algoritmen benytter sig af konklusionen 'røde værdier under 6600 kelvin, er altid 255' fra afsnit \ref{sec:temp_til_rgb}. Grunden til at der står 66 og ikke 6600, er fordi programmet er indledt med at dividere kelvin-inputtet med 100. Længere i det nestede if-statement beregner programmet farven rød, vha. funktionen, som er lavet ud fra dataene, og der afsluttes med at sørge for, at hvis værdien overskrider maksimummet på 255, sættes det til at være lig med 255.
+
