@@ -37,12 +37,13 @@ Algoritmen benytter sig af konklusionen 'røde værdier under 6600 kelvin, er al
   \item pixel\_scale - skalerer en given pixel.
   \item pixel\_multiply - ganger to pixels sammen, der bruges til colorblending og udregning af, hvor meget farve der optages 								  ift. intensitet.
   \item pixel\_add - adderer to pixels, for at kunne udregne gennemsnittet senere (eller hvad???????????). I denne funktion er 							 det vigtigt at den returnerede værdi ikke overskrider 1, hvilket er hvorfor vi har implementeret MIN, der 							 sørger for at returnere den mindste funktion, der er 1, hvis en farve overskrider 1. Funktionen kan ses her:
+  
  \lstinline$
-#ifndef MIN
+\#ifndef MIN
 
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+\#define MIN(a, b) ((a) < (b) ? (a) : (b))
 
-#endif$  					
+\#endif$  					
 
 \end{enumerate}
 
