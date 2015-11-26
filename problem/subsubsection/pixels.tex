@@ -29,6 +29,8 @@ else{
 Algoritmen benytter sig af konklusionen 'røde værdier under 6600 kelvin, er altid 255' fra afsnit \ref{sec:temptilrgb}. Grunden til at der står 66 og ikke 6600, er fordi programmet er indledt med at dividere kelvin-inputtet med 100. Længere i det nestede if-statement beregner programmet farven rød, vha. funktionen, som er lavet ud fra dataene, og der afsluttes med at sørge for, at hvis værdien overskrider maksimummet på 255, sættes det til at være lig med 255.
 
 
+Her ses en liste over de resterende funktioner i pixel.c, og nedenunder forklares deres benyttelse:
+
 \subparagraph{Liste af andre funktioner i pixel}
 \begin{lstlisting}[style=Cstyle, caption=Andre funktioner i pixel]
 Pixel create_pixel(double red, double green, double blue);
