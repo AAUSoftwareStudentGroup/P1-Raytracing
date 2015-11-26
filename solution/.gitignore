@@ -4,6 +4,7 @@
 *.ppm
 *.png
 *.ply
+!gallery/*.png
 !model.ply
 *.d
 *.exe
