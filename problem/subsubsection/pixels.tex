@@ -9,3 +9,19 @@ typedef struct _pixel {
 } Pixel;
 \end{lstlisting}
 
+Herefter laves der funktionen create_from_color_temperature(), som er af typen Pixel, og som tager en unsigned int kelvin som input. Ud fra de konklusioner, der blev omtalt i teoriafsnittet \ref{sec:temp_til_rgb}, som omhandlede konvertering fra farvetemperatur til RGB, har man ud fra da benyttede data kunne opstille nogle konklusioner, der har gjort algoritmen mere simpel. Det er derfor muligt at beregne en given farve på følgende måde: 
+\begin{lstlisting}[style=Cstyle, caption=Beregning af rød farve]
+if(kelvin <= 66){
+  color.red = 255;
+}
+else{
+  color.red = kelvin - 60;
+  color.red = 329.698727446 * (pow(color.red, -0.1332047592));
+  if(color.red < 0){
+    color.red = 0;
+  }
+  if(color.red > 255){
+    color.red = 255;
+  }
+}
+\end{lstlisting}
