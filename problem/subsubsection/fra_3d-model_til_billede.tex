@@ -1,6 +1,17 @@
 \subsubsection{Fra 3D-model til billede}
 I dette afsnit er det vist, hvordan der kan udledes en model, der beskriver en billeddannelsen af objekter i rummet, også kaldt rendering. Dette er essentielt da billeddannelsen danner grundlag for, hvordan 3D-modellen for en lampe omdannes til et billede, der kan vises for kunderne på e-butikken. Til sidst i afsnittet udledes en model for, hvordan belysningen fra en lampe kan simuleres og visualiseres vha. raytracing. 
 
+\paragraph{3D-model}
+[BESKRIV EVT. HVAD EN 3D-MODEL ER (BESTÅR AF TREKANTER)]
+
+\paragraph{Kamera}
+[BESKRIV HVORDAN KAMERAET ER EN MODEL FOR HVORDAN DER LAVES ET BILLEDE AF ET KAMERA]
+For at beskrive kameraet er det nødvendigt at fastlægge dets position og orientering i rummet[KILDE]. Hvordan dette kan modelleres er vist på figur [INDSÆT REF]
+
+[LAV FIGUR DER VISER VEKTORER DER BESKRIVER KAMERAET]
+
+[FIGUR TILFØJ VEKTORER DER BESKRIVER PUNKTET B, SOM LINEAR KOMBINATION. TILFØJ NORMALVEKTOR FRA BILLEDPLANEN TIL KAMERAET]
+
 \paragraph{Perspektiv projektion}
 For at udlede en model for billeddannelsen, tages der udgangspunkt i en perspektiv projektion. Perspektiv projektion er en måde at danne et billede af 3D-objekter ved at projektere objekterne hen på et plan mod et kameraes position\cite{fig:perspective_projection}. Princippet bag perspektiv projektion er vist på figur \ref{fig:perspektiv_projektion}.
 
@@ -23,14 +34,16 @@ For at udlede en model for billeddannelsen, tages der udgangspunkt i en perspekt
   \caption{Viser princippet bag perspektiv projektion af et punkt på et billedplan.}
 \end{figure}
 
+[TEGN TO PUNKTER MERE PÅ FIGUREN OVENOVER OG TAG UDGANGSPUNKT I AFBILDNING AF EN TREKANT I STEDET FOR ET PUNKT.]
 
+Som vist på figur \ref{fig:perspektiv_projektion} kan et punkt $P\in \mathbb{R}^3$ projekteres ned på billedplanen $\alpha$ ved at finde skæringspunktet $B$ mellem billedplanen $\alpha$ og en lysstråle $L$, som går fra punktet $P$ mod kameraets position $C$. Gør man nu dette for alle punkter på et objekt i rummet, og tegner skæringspunkterne på billedplanen, dannes et billede af objektet. For at omdanne 3D-objekter i rummet til et billede, er det nødvendigt at have en model for kameraet der danner billedet. 
 
-Som vist på figur \ref{fig:perspektiv_projektion} kan et punkt $P\in \mathbb{R}^3$ projekteres ned på billedplanen $\alpha$ ved at finde skæringspunktet $B$ mellem billedplanen $\alpha$ og en lysstråle $L$, som går fra punktet $P$ mod kameraets position $C$. Gør man nu dette for alle punkter på et objekt i rummet, og tegner skæringspunkterne på billedplanen, dannes et billede af objektet. Udfordringen er så at afgøre hvilken farve punkterne på billedplanen skal have, da dette afhænger af objektets egenskaber, samt hvilket udefrakommende lys der rammer objektet. 
+Udfordringen er så at afgøre hvilken farve punkterne på billedplanen skal have, da dette afhænger af objektets egenskaber, samt hvilket udefrakommende lys der rammer objektet. 
 
 For at løse denne udfordring, benytter vi i dette projekt raytracing, der som beskrevet under afsnit \ref{sec:computergrafik}, bygger på at simulere lysstrålers interaktion med forskellige objekter i rummet. Hvordan dette fungere er beskrevet i næste afsnit, hvor der er beskrevet en model for backwards raytracing.
 
-\paragraph{Raytracing}
-I modsætning til en perspektiv projektion af et punkt på et plan, er raytracing, hvor man i stedet for punktet i rummet, tager udgangspunkt i de lysstråler der danner billedet. Ved backwards raytracing følger man lysstrålerne baglæns og ser på, hvor stor en lysintensitet, den pågældende lysstråle har efter den har interageret med objekterne i rummet. Ud fra dette farves det tilhørende punkt på billedet, og på den måde kan man rendere et helt billede. På figur \ref{fig:raytracing_skitse} er det vist hvordan man kan konstruere en lysstråle ud fra et bestemt punkt på billedplanen, hvor lysstrålen er beskrevet ved en retningsvektor og et startpunkt.
+\paragraph{Backwards raytracing}
+I modsætning til en perspektiv projektion af et punkt på et plan, er backwards raytracing, hvor man i stedet for punktet i rummet, tager udgangspunkt i de lysstråler der danner billedet. Ved backwards raytracing følger man lysstrålerne baglæns og ser på, hvor stor en lysintensitet, den pågældende lysstråle har efter den har interageret med objekterne i rummet. Ud fra dette farves det tilhørende punkt på billedet, og på den måde kan man rendere et helt billede. På figur \ref{fig:raytracing_skitse} er det vist hvordan man kan konstruere en lysstråle ud fra et bestemt punkt på billedplanen, hvor lysstrålen er beskrevet ved en retningsvektor og et startpunkt.
 
 \begin{figure}[H]
   \label{fig:raytracing_skitse}
@@ -51,4 +64,23 @@ I modsætning til en perspektiv projektion af et punkt på et plan, er raytracin
   \caption{Viser hvordan en der kan opstilles retningsvektor mellem kameraets position $C$ og punktet $P$ på billedplanen, som sammen med startpunktet $C$ beskriver lysstrålen i omvendt retning.}
 \end{figure}
 
-Der findes flere forskellige modeller for hvordan lysintensiteten for en lysstråle beregnes. En simpel model, er Phong-modellen, som opdeler lys i forskellige kategorier: ambient, diffuse og specular.
+[TEGN TO PUNKTER MERE PÅ FIGUREN OVENOVER OG TAG UDGANGS PUNKT I AFBILDNING AF EN TREKANT I STEDET FOR ET PUNKT HVOR DEN SKÆRES I MIDTEN]
+
+Retningsvektoren $\vv{r}$ for lysstrålen kan heraf beskrives som følgende.
+
+$$ \vv{r} = \vv{B} - \vv{C} $$
+
+Hvor $\vv{B}$ og $\vv{C}$ er stedvektorer for hhv. punktet på billedplanen $B$ og kameraets position $C$.
+
+Lysstrålen kan på den måde beskrives ved følgende vektorfunktion.
+
+$$ \vv{l}(t) = \vv{r} * t + \vv{C}$$
+
+Hvor $t$ er en skalar i $\mathbb{R}$.
+
+For at finde ud af hvilken farve punktet på billedplanen $B$ skal have, ser man hvordan lysstrålen rammer de forskellige objekter der skal renderes.
+
+Der findes flere forskellige modeller for hvordan lysintensiteten for en lysstråle beregnes. Én model, er Phong-modellen, som opdeler lys i forskellige kategorier: ambient, diffuse og specular.
+
+\paragraph{Phong-modellen}
+Med udgangspunktet i 

@@ -1,5 +1,5 @@
 \subsubsection{ray}
-For at man kan arbejde med raytracing er man nødt til at konstruere rays. Dette gøres ved at lave en struct som indeholder rayens startpunkt beskrevet som en vektor, samt en direction beskrevet med en retningsvektor. 
+For at man kan arbejde med raytracing er man nÃ¸dt til at konstruere rays. Dette gÃ¸res ved at lave en struct som indeholder rayens startpunkt beskrevet som en vektor, samt en direction beskrevet med en retningsvektor. 
 
 \begin{lstlisting}[style=Cstyle, caption=ray funktioner og struct]
 
@@ -12,7 +12,7 @@ Vector ray_get_point(Ray ray, double t);
 
 \end{lstlisting}
 
-Nedenstående kode viser vores to ray funktioner, først create\_ray som returnerer en ray lavet ud fra en startvektor og en retningsvektor.\newline Ray\_get\_point skalerer vores retningsvektor op med en skaler, t, og adderer denne vektor med rayens startpunkt. Vi får nu en ny repræsentation af vores ray, som returneres i funktionen.
+NedenstÃ¥ende kode viser vores to ray funktioner, fÃ¸rst create\_ray som returnerer en ray lavet ud fra en startvektor og en retningsvektor.\newline Ray\_get\_point skalerer vores retningsvektor op med en skaler, t, og adderer denne vektor med rayens startpunkt. Vi fÃ¸r nu en ny reprÃ¦sentation af vores ray, som returneres i funktionen.
 
 \begin{lstlisting}[style=Cstyle, caption=funktionerne create\_ray og ray\_get\_point]
 
