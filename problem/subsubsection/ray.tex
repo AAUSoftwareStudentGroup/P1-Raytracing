@@ -1,0 +1,34 @@
+\subsubsection{ray}
+For at man kan arbejde med raytracing er man nødt til at konstruere rays. Dette gøres ved at lave en struct som indeholder rayens startpunkt beskrevet som en vektor, samt en direction beskrevet med en retningsvektor. 
+
+\begin{lstlisting}[style=Cstyle, caption=ray funktioner og struct]
+
+typedef struct _ray {
+  Vector initial_point, direction;
+} Ray;
+
+Ray create_ray(Vector p1, Vector p2);
+Vector ray_get_point(Ray ray, double t);
+
+\end{lstlisting}
+
+Nedenstående kode viser vores to ray funktioner, først create\_ray som returnerer en ray lavet ud fra en startvektor og en retningsvektor.\newline Ray\_get\_point skalerer vores retningsvektor op med en skaler, t, og adderer denne vektor med rayens startpunkt. Vi får nu en ny repræsentation af vores ray, som returneres i funktionen.
+
+\begin{lstlisting}[style=Cstyle, caption=funktionerne create\_ray og ray\_get\_point]
+
+Ray create_ray(Vector p1, Vector p2) {
+  return (Ray){p1, vector_normalize(p2)};
+}
+
+Vector ray_get_point(Ray ray, double t) {
+    return vector_add(ray.initial_point, vector_scale(ray.direction, t));
+}
+\end{lstlisting}
+
+\subparagraph{Liste af funktioner i vektorregning}
+\begin{enumerate}
+  
+  \item create\_ray laver en ray ud fra to vektorer
+  \item ray\_get\_point skalerer rayens retningsvektor og adderer den med rayens startpunkt
+  
+\end{enumerate}
