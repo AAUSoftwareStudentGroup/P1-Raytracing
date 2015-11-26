@@ -30,6 +30,14 @@ Algoritmen benytter sig af konklusionen 'røde værdier under 6600 kelvin, er al
 
 
 \subparagraph{Liste af andre funktioner i pixel}
+\begin{lstlisting}[style=Cstyle, caption=Andre funktioner i pixel]
+Pixel create_pixel(double red, double green, double blue);
+char pixel_component_to_byte(double);
+Pixel pixel_scale(Pixel color, double scalar);
+Pixel pixel_multiply(Pixel color1, Pixel color2);
+Pixel pixel_add(Pixel color1, Pixel color2);
+\end{lstlisting}
+
 \begin{enumerate}
 
   \item create\_pixel - opretter en pixel af typen Pixel med en RGB-værdi.
