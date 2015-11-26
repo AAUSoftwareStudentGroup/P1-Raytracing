@@ -1,0 +1,30 @@
+\subsubsection{Camera}
+I ray-structen skal den have et punkt som vores ray skal "starte" fra. Når vi begynder at render vores scene skyder vi rays fra kameraet og ud i scenen. For nemt at kunne flytte kameraet og gøre programmet mere læsbart, har vi en række funktioner til at manipulerer kameraet.
+
+\begin{lstlisting}[style=Cstyle, caption=Definition af Camera struct ]
+typedef struct _camera {
+  Vector up;
+  Vector right;
+  Vector forward;
+  Vector position;
+  unsigned int width, height;
+  double distance;
+} Camera;
+\end{lstlisting}
+
+[Forklar om vector up, right og forward]
+
+position bruger vi til at definerer hvor kameraet er i vores scene i forhold til (0, 0, 0). I kombination med up, right og forward ved vi hvor vores rays skal skyde hen og kan dermed renderer et billede.
+
+width og height definerer hvor høj opløsning vores billede skal være i pixels, og hvor tæt vores rays skal skydes.
+
+distance er hvor langt væk vores kamera er fra vores skærm-gitteret. Flytter man f.eks. skærm-gitteret længere væk fra kameraet uden at gøre den større vil man få en mindre FOV\cite{fov}, og få effekten af at "zoome ind".
+
+\begin{lstlisting}[style=Cstyle, caption=Prototyper for funktioner der manipulerer camera-structen ]
+int camera_look_at_point(Camera *camera, Vector *point);
+int camera_set_angle(Camera *camera, double vertical_angle, double horizontal_angle);
+\end{lstlisting}
+
+camera\_look\_at\_point tager et camera og en vektor. 'camera' parameteren tager et camera og ændrer dens up, right, forward vektorer til at pege mod punktet defineret af 'point'.
+
+[camera\_set\_angle er ikke skrevet på nuværende tidspunkt]
