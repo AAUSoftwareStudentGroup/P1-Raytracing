@@ -9,7 +9,24 @@ I dette afsnit er det vist, hvordan der kan udledes en model, der beskriver en b
 For at beskrive kameraet er det nødvendigt at fastlægge dets position og orientering i rummet[KILDE]. Hvordan dette kan modelleres er vist på figur [INDSÆT REF]
 
 [LAV FIGUR DER VISER VEKTORER DER BESKRIVER KAMERAET]
-
+\begin{figure}[H]
+  \label{fig:kamera}
+  \centering
+  \tdplotsetmaincoords{60}{130}
+\begin{tikzpicture}[tdplot_main_coords]
+\path[fill=gray!20, draw=gray!40] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
+\draw (0,0,0) -- (0,-4,0);
+\draw[blue!50, thick, -{Stealth[width=2mm, length=2mm]}] (0,0,0) -- (0,-2,0);
+\draw[blue!50, thick, -{Stealth[width=2mm, length=3mm]}] (0,-4,0) -- (-2,-4,0);
+\draw[blue!50, thick, -{Stealth[width=2mm, length=2mm]}] (0,-4,0) -- (0,-4,2);
+\draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
+\node [above right] at (0,0,0) {$C$};
+\node [above right] at (0,-1,0) {$\vv{f}$};
+\node [above] at (-1,-4,0) {$\vv{r}$};
+\node [left] at (0,-4,1) {$\vv{u}$};
+\end{tikzpicture}
+  \caption{Viser hvordan kameraet kan beskrives ved tre vektorer $\protect\vv{r}$, $\protect\vv{u}$ og $\protect\vv{f}$, der repræsentere hhv. op, højre og frem retninger for kameraet.}
+\end{figure}
 [FIGUR TILFØJ VEKTORER DER BESKRIVER PUNKTET B, SOM LINEAR KOMBINATION. TILFØJ NORMALVEKTOR FRA BILLEDPLANEN TIL KAMERAET]
 
 \paragraph{Perspektiv projektion}
@@ -20,15 +37,17 @@ For at udlede en model for billeddannelsen, tages der udgangspunkt i en perspekt
   \centering
   \tdplotsetmaincoords{60}{130}
 \begin{tikzpicture}[tdplot_main_coords]
-\draw (0,0,0) -> (2,-8,2);
-\path[fill=gray!30, draw=gray] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
+\path[fill=blue!50, draw=gray!20] (2,-8,2) -- (-2,-8,2) -- (0,-8,0) -- (2,-8,2);
+\draw (0,0,0) -- (2,-8,2);
+\path[fill=gray!20, draw=gray!40] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
+\path[fill=blue!50, draw=gray!20] (1,-4,1) -- (-1,-4,1) -- (0,-4,0) -- (1,-4,1);
 \draw (0,0,0) -- (1,-4,1);
 
 \draw plot [mark=*, mark size=2] coordinates{(2,-8,2) } ; 
 \draw plot [mark=*, mark size=2] coordinates{(1,-4,1) }; 
 \draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
-\node [above right] at (2,-8,2) {$P$};
-\node [above right] at (1,-4,1) {$B$};
+\node [above left] at (2,-8,2) {$P$};
+\node [above left] at (1,-4,1) {$B$};
 \node [above right] at (0,0,0) {$C$};
 \end{tikzpicture}
   \caption{Viser princippet bag perspektiv projektion af et punkt på et billedplan.}
@@ -51,14 +70,14 @@ I modsætning til en perspektiv projektion af et punkt på et plan, er backwards
   \tdplotsetmaincoords{60}{130}
   \begin{tikzpicture}[tdplot_main_coords]
 \draw (0,0,0) -> (2,-8,2);
-\path[fill=gray!30, draw=gray] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
+\path[fill=gray!10, draw=gray!20] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
 \draw (0,0,0) -- (1,-4,1);
 
 \draw plot [mark=*, mark size=2] coordinates{(1,-4,1) }; 
 \draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
 \node [above right] at (1,-4,1) {$B$};
 \node [above right] at (0,0,0) {$C$};
-% \draw [blue, -{Latex[width=3mm, length=3mm]}] (0,0,0) -- (1,-4,1);
+\draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (0,0,0) -- (1,-4,1);
 \node [above right] at (0.5,-2,0.5) {$\vv{r}$};
 \end{tikzpicture}
   \caption{Viser hvordan en der kan opstilles retningsvektor mellem kameraets position $C$ og punktet $P$ på billedplanen, som sammen med startpunktet $C$ beskriver lysstrålen i omvendt retning.}
