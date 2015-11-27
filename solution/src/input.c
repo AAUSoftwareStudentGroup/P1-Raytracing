@@ -1,8 +1,15 @@
 #include "input.h"
 
+#ifndef MAX
+#define MAX(a,b) (((a) > (b) ? (a) : (b)))
+#endif
+#ifndef MIN
+#define MIN(a,b) (((a) < (b) ? (a) : (b)))
+#endif
+
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   FILE *fp_model;
-  *camera = new_camera(200, 200);
+  *camera = new_camera(1000, 1000);
   if(ply_validate(argc, argv, &fp_model) == 0)
     return 0;
   if(ply_init(fp_model, scene) == 0)
@@ -15,14 +22,14 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
 
 int ply_validate(int argc, char* argv[], FILE** fp_model) {
   char str[256];
-  
+
   if(argc != 2) {
     printf("Usage: %s [FILE]\n\n  FILE: Path to input-file in ply format\n\n", argv[0]);
     return 0;
   }
 
   *fp_model = fopen(argv[1], "r");
-  
+
   if(*fp_model == NULL) {
     printf("ERROR: file %s, could not be opened! %s:%d\n", argv[1], __FILE__, __LINE__);
     return 0;
@@ -55,7 +62,7 @@ int ply_init(FILE *fp_model, Scene **scene) {
     n_triangles += j-2;
     input_jump_lines(fp_model, 1); // discard rest of line
   }
-  
+
 
   (*scene)->n_objects = n_objects;
   (*scene)->objects = (Object**)malloc((*scene)->n_objects * sizeof(Object*));
@@ -67,7 +74,7 @@ int ply_init(FILE *fp_model, Scene **scene) {
   input_jump_lines(fp_model, 1); // discard rest of line
   (*scene)->objects[0]->verticies = (Vertex*)malloc(n_verticies*sizeof(Vertex));
   (*scene)->objects[0]->triangles = (Triangle*)malloc(n_triangles*sizeof(Triangle));
-  
+
   for(i = 1; i < n_objects; i++) {
     (*scene)->objects[i] = new_object();
     input_read_int(fp_model, &((*scene)->objects[i]->n_verticies));
@@ -82,7 +89,7 @@ int ply_init(FILE *fp_model, Scene **scene) {
   (*scene)->lights = (PointLight**)malloc(n_lights*sizeof(PointLight*));
   for(i = 0; i < n_lights; i++) {
     (*scene)->lights[i] = (PointLight*)malloc(sizeof(PointLight));
-    
+
   }
 
 
@@ -90,11 +97,13 @@ int ply_init(FILE *fp_model, Scene **scene) {
 }
 
 int ply_parse(FILE *fp_model, Scene **scene) {
-  int i, j, triangle_index;
+  int i, j, k, triangle_index;
   int n_faces, verticies_in_polygon;
   int *vertex_index_list;
   Triangle t;
   Vertex v;
+  Vector min, max, avg;
+
 
   ply_scan_element(fp_model, "face", &n_faces);
 
@@ -156,6 +165,22 @@ int ply_parse(FILE *fp_model, Scene **scene) {
     input_read_double(fp_model, &((*scene)->objects[i]->material.specular_coefficient));
     input_read_int(fp_model, &((*scene)->objects[i]->material.material_smoothness));
     (*scene)->objects[i]->material.material_metalness = 0.5;
+
+    // calculate bounding sphere
+    min = max = (*scene)->objects[i]->triangles[0].verticies[0]->position;
+    for(j = 0; j < (*scene)->objects[i]->n_triangles; j++) {
+      for(k = 0; k < 3; k++) {
+        min.x = MIN(min.x, (*scene)->objects[i]->triangles[j].verticies[k]->position.x);
+        min.y = MIN(min.y, (*scene)->objects[i]->triangles[j].verticies[k]->position.y);
+        min.z = MIN(min.z, (*scene)->objects[i]->triangles[j].verticies[k]->position.z);
+        max.x = MAX(max.x, (*scene)->objects[i]->triangles[j].verticies[k]->position.x);
+        max.y = MAX(max.y, (*scene)->objects[i]->triangles[j].verticies[k]->position.y);
+        max.z = MAX(max.z, (*scene)->objects[i]->triangles[j].verticies[k]->position.z);
+      }
+    }
+    avg = vector_add(min, vector_scale(vector_subtract(max, min), 0.5));
+    (*scene)->objects[i]->bounding_volume.center = avg;
+    (*scene)->objects[i]->bounding_volume.radius = vector_norm(vector_scale(vector_subtract(max, min), 0.5));
   }
 
   for(i = 0; i < (*scene)->n_lights; i++) {
@@ -164,7 +189,7 @@ int ply_parse(FILE *fp_model, Scene **scene) {
     input_read_double(fp_model, &(light_position.y));
     input_read_double(fp_model, &(light_position.z));
     (*scene)->lights[i]->position = light_position;
-    
+
     input_read_double(fp_model, &((*scene)->lights[i]->intensity));
 
     input_read_int(fp_model, &j);
@@ -183,7 +208,7 @@ int ply_scan_element(FILE *file, const char *element_name, int *out) {
   int result;
   int fscan_result;
   fseek(file, 0, SEEK_SET);
-  
+
   char *search_string = (char*)malloc(12+strlen(element_name));
   strcpy(search_string, "element ");
   strcpy(search_string+8, element_name);
@@ -228,9 +253,9 @@ int input_jump_lines(FILE *file, int lines) {
     while((c = fgetc(file)) != '\n') {
       if(c == EOF)
         return 0;
-    } 
+    }
   }
-  return 1;  
+  return 1;
 }
 
 int input_read_int(FILE *file, int *out) {
