@@ -114,8 +114,13 @@ Phong-modellen er en såkaldt 'local illumination model', der fremviser samspill
 
 http://www.gameprogrammer.net/delphi3dArchive/phongfordummies.htm 
 
+\begin{equation}
+  \rho = m_a CA + \sum\limits_{lights}  m_l CI max(\hat{I}*\hat{n}, 0) + m_s SI max(-\hat{r}*\hat{u},0)^{m_sp}
+\end{equation}
 
-
+\begin{equation}
+  S = (m_{sm})C + (1-m_{sm})(1,1,1)
+\end{equation}
 
 
 
