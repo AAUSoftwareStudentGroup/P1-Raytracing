@@ -102,4 +102,25 @@ For at finde ud af hvilken farve punktet på billedplanen $B$ skal have, ser man
 Der findes flere forskellige modeller for hvordan lysintensiteten for en lysstråle beregnes. Én model, er Phong-modellen, som opdeler lys i forskellige kategorier: ambient, diffuse og specular.
 
 \paragraph{Phong-modellen}
-Med udgangspunktet i 
+Phong-modellen er en såkaldt 'local illumination model', der fremviser samspillet mellem lys og overfladen af et objekt. Med udgangspunktet i Phong-modellen er det muligt at lave fotorealistiske 3D-billeder, ved at kombinere tre elementer; 
+
+\begin{enumerate}
+
+  \item Omgivende lys: En konstant mængde lys, som bliver tilføjet til scenen. Formålet med dette, er at undgå at skyggerne bliver kulsorte, da dette ville være urealistisk.
+  \item Spredt lys: Lyset, som rammer en overflade, og bliver spredt i alle retninger. Intensiteten af dette lys afhænger af vinklen mellem lysvektoren og overfladenormalen.
+  \item Spejlende lys: Lyset, som bliver reflekteret i en bestemt retning. Grundet dette, er det spejlende lys afhænig af vinklen mellem kameravektoren og lysvektoren. Det spejlende lys hjælper med at få et objekt til at have højglanspunkter.
+
+\end{enumerate}
+
+http://www.gameprogrammer.net/delphi3dArchive/phongfordummies.htm 
+
+
+
+
+
+
+
+
+
+
+
