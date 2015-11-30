@@ -1,20 +1,31 @@
 \subsection{Teknologier til visualisering}
-Vi ser en tydelig mulighed for at assistere forbrugere med at træffe et valg, når det kommer til køb af varer på nettet. For at undersøge hvilke teknologier, der kan anvendes til visualisering, er der i dette afsnit en række teknologier og metoder, som alle er relevante i forhold til at visualisere en lampe. Teknologierne er udvalgt på baggrund af diskussion i gruppen, hvor mindre relevante teknologier, som f.eks. 3D-print blev fravalgt. Formålet med afsnittet er, at få en forståelse af hvilke teknologier der allerede eksisterer inden for visualisering, og finde ud af hvilke metoder, der er bedst i forhold til visualisering af lamper for brugere der handler via internettet.
+Vi ser en tydelig mulighed for at assistere forbrugere med at træffe et valg, når det kommer til køb af varer på nettet. For at undersøge hvilke teknologier, der kan anvendes til visualisering, er der i dette afsnit en række teknologier og metoder, som alle er relevante i forhold til at visualisere en lampe. Teknologierne er udvalgt på baggrund af diskussion i gruppen, hvor mindre relevante teknologier, som f.eks. 3D-print blev fravalgt. Formålet med afsnittet er, at få en forståelse af hvilke teknologier der allerede eksisterer inden for visualisering, og finde ud af hvilke metoder, der er bedst i forhold til visualisering af lamper for brugere der handler via internettet. De enkelte teknologier vurderes på baggrund af teknologiens fordele og ulemper i forhold til at besvare den endelige problemformulering.
 
 \input{./subsubsection/digitale_billeder_taget_med_et_fysisk_kamera.tex}
 
-% \subsubsection{3D print}
-% En teknologi, som lampebutikker vil kunne bruge, er 3D printere. 3D printere anvender plastik istedet for blæk, som bliver varmet op til knap 200 grader \cite{hvordan_3Dprinter}. Den flydende plastik bliver lagt i tynde lag og størkner hurtigt efter at have bundet sig med det underliggende lag. 
-
-% Sælgeren kan give forbrugeren en fil, så forbrugeren selv vil være i stand til at lave et 3D print af en bestemt lampe. Dette forudsætter dog, at forbrugeren har en 3D printer og, at brugeren er dedikeret nok til at få printet lampen, da store objekter kan tage dage at printe og ofte skal deles op i mindre dele.\cite{hvordan_3Dprinter}. Derudover er 3D printere stadig en så ny teknologi, og de er stadig primært rettet mod hobbyfolk som vil bruge lang tid på, at få kallibreret printeren korrekt, da et print ellers nemt kan fejle. 3D printer er heller ikke en billig inverstering, da nogle modeller koster over titusinde kroner\cite{3D_printer}. 
-
-% Idag vil det være en dårlig ide for lampebutikker at forvente, at deres kunder har en 3D printer derhjemme. Et andet problem er, at lampebutikker også kommer i et dilemma, da lampebutikker skal bestemme om man kan udgive tegninger inden forbrugeren har købt lampen eller om de skal betale en form for depositum.
+\input{./subsubsection/augmented_reality_app.tex}
 
 \input{./subsubsection/computergrafik.tex}
 
-\input{./subsubsection/augmented_reality_app.tex}
-
 \subsubsection*{Opsummering}
-Billeder af den fysiske lampe er gode til akkurat at gengive lampen, men det er et problem at der ofte ikke er billeder nok fra forskællige vinkler, at billederne kun viser lampens form og ikke dens lys og at det er for besværligt at tage billeder af lampen med forskællige pærer for at vise forskællige farvetemperature og at det også er bbesværligt at udskifte den kontekst som lampen bliver vist i. 
+Ud fra ovenstående afsnit er der udledt følgende fordele og ulemper for de enkelte teknologier.
+\begin{table}[h!]
+  \centering
+  
+\center
+    \begin{tabular}{ | p{3cm} | p{5cm} | p{5cm} |}
+    
+    \hline
+    Teknologi & Fordele & Ulemper \\ \hline
+    Kamerabilleder & Realistisk visualisering. & Tidskrævende. Begrænset kombinationer af lampen, synsvinkel, farvetemperatur og kontekst. \\ \hline
+    Augmented Reality & Lampen er i konteksten & Manglende realisme af lampens belysning \\ \hline
+   Computergrafik & Nemt at integrere på lampebtuikker hjemmesider. Kan opnå høj realisme af lampen og dens belysning. Nemt at ændre vinkel, farvetemperatur og kontekst hvorfra lampen visualiseres. & Kræver 3D-model af lampen og konteksten. Kræver meget computerkraft ved høj realisme. \\ \hline
+    \end{tabular}
+\caption{Viser fordele og ulemper ved de tre teknologier til visualisering.}
+\label{tab:fordele_ulemper_teknologier}
+\end{table}
 
-Computergrafik kan nemt indlejres i en hjemmeside. Hvilken Computergrafisk teknik der er den korrekte er et case til case valg eftersom det helt afhænger af hvor meget fleksibilitet versus kvalitet der er nødvendigt. Rasterisering og radiosity kan begge implementeres på en måde hvorved der opnås et højt niveau af bruger interaktion som kan gøre værktøjet mere naturligt at anvende for forbrugeren. Eftersom at målet er at simulere lamper og ikke møbler som borde og stole, er langt mere komplekst at lave en god visualisation med rasterisering. Radiosity falder også til kort hvis der er behov for mere komplekse materialer som metalliske overflader eller f.eks. klar plast og glas. Billeder tegnet med raytracing kan tage lang tid at rendere, men der er mulighed for stor fleksibilitet og komplekse materialer er relativt simple at rendere. Med det grundlag vil rapporten fremadrettet arbejde med raytracing som metode til visualisering.
+På baggrund af fordele og ulemper vist i tabel \ref{tab:fordele_ulemper_teknologier} har gruppen valgt at arbejde videre med computergrafik, herunder raytracing, som teknologi til visualisering. Dette skyldes at raytracing, til dels kan visualisere lamper og deres belysning, men også give muligheden for at skifte lampe,  farvetemperatur, synsvinkel og kontekst uden at hverken producenten, e-butikken eller brugeren skal udføre ekstra arbejde. 
+
+
+
