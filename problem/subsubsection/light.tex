@@ -2,11 +2,9 @@
 For at man overhovedet kan lave 3D-billeder kræver det at man har lys i scenen. Dette gøres ved at lave et objekt ud fra en struct. Dette objekt kaldes for pointlight, og indeholder objektets position beskrevet som en vektor, en farve beskrevet som RGB værdi og en lysintensitet som er lysets farve ganget med en skalar.
 
 \begin{lstlisting}[style=Cstyle, caption=light struct]
-
 typedef struct _pointlight {
   Vector position;
   Pixel color;
   double intensity;
 } PointLight;
-
 \end{lstlisting}

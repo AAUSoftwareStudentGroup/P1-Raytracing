@@ -2,7 +2,6 @@
 Formålet med image er at generer et billede som har en bestemt bredde og højde. Billedet er illusteret gennem pixels som er punkter på billedet der hver sine koordinater. Derfor er det nødvendigt at lave et struct til at beskrive billedet. Dette objekt består af bredden og højden af billedet beskrevet som en talværdi, og pixels som har en farveværdi.
 
 \begin{lstlisting}[style=Cstyle, caption=light struct]
-
 typedef struct _image {
   unsigned int width, height;
   Pixel **pixels;
@@ -11,13 +10,11 @@ typedef struct _image {
 Image *new_image(unsigned int width, unsigned int height);
 
 int image_write(Image *img, char *path);
-
 \end{lstlisting}
 
 Funktionen new\_image genererer et billede ved at modtage en bredde og en højde, som er defineret af input filen. Der allokeres plads til billedet for at undgå override, og herefter indlæses alle pixels i loops. Til sidst returneres billedet.
 
 \begin{lstlisting}[style=Cstyle, caption=light struct]
-
 Image *new_image(unsigned int width, unsigned int height) {
   int x, y;
   Image *image = (Image*)malloc(sizeof(Image));
@@ -40,7 +37,6 @@ Image *new_image(unsigned int width, unsigned int height) {
 Funktionen image\_write åbner det tidligere genereret billede i binær skrivemode og laver billedet om til filformatet P6, som er et format til ppm billeder. Vi er nu i stand til at ændre i billedfilen. Dette gøres igennem loops, som vha.\ fputc og funktionen pixel\_component\_to\_byte \ref{sec:pixel_component_to_byte}, tilskriver pixelværdierne rød, grøn og blå til billedet. Derefter lukkes billedfilen med fclose.  
 
 \begin{lstlisting}[style=Cstyle, caption=light struct]
-
 int image_write(Image *image, char *path) {
   int x, y;
   FILE *image_file;
