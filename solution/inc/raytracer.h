@@ -5,6 +5,8 @@
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #endif
 
+#include <stdlib.h>
+#include <time.h>
 #include "scene.h"
 #include "camera.h"
 #include "image.h"
@@ -28,6 +30,9 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection **inters
 int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection **intersection);
 int raytracer_ray_is_intersecting_bounding_sphere(Ray r, Sphere bounding_sphere);
 Pixel raytracer_phong(Intersection *intersection, Scene *scene);
+Pixel raytracer_phongv2(Intersection *intersection, Scene *scene);
+void get_sampled_lights(PointLight* lights, int n_lights, PointLight** light_out, int* n_sampled_lights);
+
 Intersection *new_intersection(void);
 
 #endif
