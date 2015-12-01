@@ -33,7 +33,7 @@ Pixel raytracer_trace(Ray ray, Scene *scene) {
   Intersection *intersection;
   Pixel pixel = {0.05, 0.05, 0.05};
   if( raytracer_scene_intersection(ray, scene, &intersection) ) {
-    pixel = raytracer_phong(intersection, scene);
+    pixel = raytracer_phongv2(intersection, scene);
   }
   return pixel;
 }
@@ -248,8 +248,9 @@ void get_sampled_lights(PointLight* lights, int n_lights, PointLight** light_out
   for (i = 0; i < n_lights; ++i) {
     *n_sampled_lights += lights->sampling_rate;
   }
+  printf("GAH");
   *light_out = (PointLight*)malloc(sizeof(PointLight) * (*n_sampled_lights));
-
+  printf("GAH2");
   Vector point;
   int sampled_points = 0;
 
