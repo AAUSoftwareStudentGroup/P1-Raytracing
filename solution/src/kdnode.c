@@ -39,15 +39,19 @@ int kdnode_build(KDNode *root, Object **objects, int n_objects) {
   for(i = j = 0; i < n_objects; i++) {
     j += objects[i]->n_triangles;
   }
-  root->n_geometry = j;
-  root->geometry = (Triangle**)malloc(j*sizeof(Triangle*));
+  root->n_triangles = j;
+  root->triangles = (Triangle**)malloc(j*sizeof(Triangle*));
   k = 0;
   for(i = 0; i < n_objects; i++) {
     for(j = 0; j < objects[i]->n_triangles; j++) {
-      root->geometry[k++] = &(objects[i]->triangles[j]);
+      root->triangles[k++] = &(objects[i]->triangles[j]);
     }
   }
 
 
   return 1;
+}
+
+int kdnode_is_leaf(KDNode *node) {
+  return node->low == NULL || node->high == NULL;
 }

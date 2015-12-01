@@ -7,6 +7,12 @@
 #include "material.h"
 #include "pixel.h"
 
+struct _verticie;
+struct _triangle;
+struct _sphere;
+struct _AABB;
+struct _object;
+
 typedef struct _verticie {
   Vector position;
   Vector normal;
@@ -14,6 +20,7 @@ typedef struct _verticie {
 
 typedef struct _triangle {
   Vertex *verticies[3];
+  struct _object *parent;
 } Triangle;
 
 typedef struct _sphere {

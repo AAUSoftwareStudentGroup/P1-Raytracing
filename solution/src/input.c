@@ -18,10 +18,10 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   if(ply_parse(fp_model, scene) == 0)
     return 0;
 
-  if(kdnode_build(&((*scene)->tree), (*scene)->objects, (*scene)->n_objects) == 0)
+  if(kdnode_build(&((*scene)->root), (*scene)->objects, (*scene)->n_objects) == 0)
     return 0;
 
-  (*scene)->ambient_intensity = create_pixel(0,0,0);
+  (*scene)->ambient_intensity = create_pixel(0.1,0.1,0.1);
 
   return 1;
 }
@@ -175,6 +175,8 @@ int ply_parse(FILE *fp_model, Scene **scene) {
     // calculate bounding sphere
     min = max = (*scene)->objects[i]->triangles[0].verticies[0]->position;
     for(j = 0; j < (*scene)->objects[i]->n_triangles; j++) {
+      // set triangle parrent pointer
+      (*scene)->objects[i]->triangles[j].parent = (*scene)->objects[i];
       for(k = 0; k < 3; k++) {
         min.x = MIN(min.x, (*scene)->objects[i]->triangles[j].verticies[k]->position.x);
         min.y = MIN(min.y, (*scene)->objects[i]->triangles[j].verticies[k]->position.y);

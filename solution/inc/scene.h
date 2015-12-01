@@ -13,7 +13,7 @@ typedef struct _scene {
   PointLight **lights;
   unsigned int n_lights;
   Pixel ambient_intensity;
-  KDNode tree;
+  KDNode root;
 } Scene;
 
 Scene *new_scene(void);
