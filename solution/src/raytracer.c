@@ -42,11 +42,13 @@ int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection **intersect
   double lowest_t = -1;
   Intersection* temporary_intersection = new_intersection();
 
-  for(i = 0; i < scene->n_objects; i++) {
-    if(raytracer_ray_is_intersecting_bounding_sphere(ray, scene->objects[i]->bounding_volume) && raytracer_object_intersection(ray, scene->objects[i], &temporary_intersection)) {
-      if(temporary_intersection->t < lowest_t || lowest_t == -1) {
-        *intersection = temporary_intersection;
-        lowest_t = temporary_intersection->t;
+  if(raytracer_aabb_is_instersecting(ray, scene->tree.box)) {
+    for(i = 0; i < scene->n_objects; i++) {
+      if(raytracer_ray_is_intersecting_bounding_sphere(ray, scene->objects[i]->bounding_volume) && raytracer_object_intersection(ray, scene->objects[i], &temporary_intersection)) {
+        if(temporary_intersection->t < lowest_t || lowest_t == -1) {
+          *intersection = temporary_intersection;
+          lowest_t = temporary_intersection->t;
+        }
       }
     }
   }
@@ -80,7 +82,7 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection **inters
 
 int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection **intersection) {
   double denominator, time;
-  Vector v01, v02, v10, v12, v20, v21, triangle_normal;
+  Vector v01, v12, v20, triangle_normal;
   time = -1;
 
   v01 = vector_normalize(vector_subtract(triangle->verticies[1]->position,
@@ -134,6 +136,10 @@ int raytracer_ray_is_intersecting_bounding_sphere(Ray r, Sphere bounding_sphere)
       return 1;
   }
   return 0;
+}
+
+int raytracer_aabb_is_instersecting(Ray r, AABB box) {
+  return 1;
 }
 
 Pixel raytracer_phong(Intersection *intersection, Scene *scene) {

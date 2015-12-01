@@ -5,6 +5,7 @@
 
 #include "object.h"
 #include "light.h"
+#include "kdnode.h"
 
 typedef struct _scene {
   Object **objects;
@@ -12,6 +13,7 @@ typedef struct _scene {
   PointLight **lights;
   unsigned int n_lights;
   Pixel ambient_intensity;
+  KDNode tree;
 } Scene;
 
 Scene *new_scene(void);

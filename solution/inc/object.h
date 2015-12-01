@@ -21,6 +21,10 @@ typedef struct _sphere {
   double radius;
 } Sphere;
 
+typedef struct _AABB {
+  Vector low, high;
+} AABB;
+
 typedef struct _object {
   Vertex *verticies;
   int n_verticies;

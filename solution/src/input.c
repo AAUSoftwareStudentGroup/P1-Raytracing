@@ -15,9 +15,15 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   if(ply_init(fp_model, scene) == 0)
     return 0;
 
+  if(ply_parse(fp_model, scene) == 0)
+    return 0;
+
+  if(kdnode_build(&((*scene)->tree), (*scene)->objects, (*scene)->n_objects) == 0)
+    return 0;
+
   (*scene)->ambient_intensity = create_pixel(0,0,0);
 
-  return ply_parse(fp_model, scene);
+  return 1;
 }
 
 int ply_validate(int argc, char* argv[], FILE** fp_model) {
