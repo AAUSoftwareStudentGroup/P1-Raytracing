@@ -98,11 +98,11 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
   time = -1;
 
   v01 = vector_normalize(vector_subtract(triangle->verticies[1]->position,
-                                triangle->verticies[0]->position));
+                                         triangle->verticies[0]->position));
   v12 = vector_normalize(vector_subtract(triangle->verticies[2]->position,
-                                triangle->verticies[1]->position));
+                                         triangle->verticies[1]->position));
   v20 = vector_normalize(vector_subtract(triangle->verticies[0]->position,
-                                triangle->verticies[2]->position));
+                                         triangle->verticies[2]->position));
   triangle_normal = vector_normalize(vector_cross(v01, v12));
 
   denominator = vector_dot(ray.direction, triangle_normal);

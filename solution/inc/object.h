@@ -42,6 +42,7 @@ typedef struct _object {
   Sphere bounding_volume;
 } Object;
 
+int object_is_point_inside_aabb(Vector v, AABB box);
 Object *new_object(void);
 int free_object(Object *object);
 
