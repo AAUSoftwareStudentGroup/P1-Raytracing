@@ -16,7 +16,10 @@ int main(int argc, char* argv[]) {
     return -1;
   }
   image = raytracer_render(scene, camera);
-  image_write(image, "out.ppm");
+  if(argc == 3)
+    image_write(image, argv[2]);
+  else
+    image_write(image, "out.ppm");
   printf("%lus\n", time(NULL) - t0);
   return 0;
 }
