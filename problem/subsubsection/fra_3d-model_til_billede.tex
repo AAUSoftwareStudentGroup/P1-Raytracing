@@ -69,8 +69,9 @@ I modsætning til en perspektiv projektion af et punkt på et plan, er backwards
   \centering
   \tdplotsetmaincoords{60}{130}
   \begin{tikzpicture}[tdplot_main_coords]
-\draw (0,0,0) -> (2,-8,2);
-\path[fill=gray!10, draw=gray!20] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
+  \path[fill=blue!50, draw=gray!20] (2,-8,2) -- (-2,-8,2) -- (0,-8,0) -- (2,-8,2);
+\draw (0,0,0) -- (0,-8,1);
+\path[fill=gray!20, draw=gray!40] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
 \draw (0,0,0) -- (1,-4,1);
 
 \draw plot [mark=*, mark size=2] coordinates{(1,-4,1) }; 
@@ -93,34 +94,76 @@ Hvor $\vv{B}$ og $\vv{C}$ er stedvektorer for hhv. punktet på billedplanen $B$ 
 
 Lysstrålen kan på den måde beskrives ved følgende vektorfunktion.
 
-$$ \vv{l}(t) = \vv{r} * t + \vv{C}$$
+$$ \vv{l}(t) = \vv{r} t + \vv{C}$$
 
 Hvor $t$ er en skalar i $\mathbb{R}$.
 
 For at finde ud af hvilken farve punktet på billedplanen $B$ skal have, ser man hvordan lysstrålen rammer de forskellige objekter der skal renderes.
 
-Der findes flere forskellige modeller for hvordan lysintensiteten for en lysstråle beregnes. Én model, er Phong-modellen, som opdeler lys i forskellige kategorier: ambient, diffuse og specular.
+Der findes flere forskellige modeller for hvordan lysintensiteten for en lysstråle beregnes. En simpel model, er Phong-modellen, som opdeler lys i forskellige kategorier: ambient, diffuse og specular.
 
 \paragraph{Phong-modellen}
-Phong-modellen er en såkaldt 'local illumination model', der fremviser samspillet mellem lys og overfladen af et objekt. Med udgangspunktet i Phong-modellen er det muligt at lave fotorealistiske 3D-billeder, ved at kombinere tre elementer; 
+Phong-modellen er en såkaldt \textit{shading} funktion, som beskriver lyset fra punkter på et objekt på baggrund af lyskilden, objektet og kameraets synsvinkel\cite{phong_paper}. Der findes flere forskellige variationer af phong-modellen. Da vi som vist i afsnit \ref{sec:temptilrgb} kan arbejde med farvetemperaturer via rgb-værdier, så har vi valgt en variation af phong-modellen, som beskriver lys via rgb-værdier. 
 
-\begin{enumerate}
-
-  \item Omgivende lys: En konstant mængde lys, som bliver tilføjet til scenen. Formålet med dette, er at undgå at skyggerne bliver kulsorte, da dette ville være urealistisk.
-  \item Spredt lys: Lyset, som rammer en overflade, og bliver spredt i alle retninger. Intensiteten af dette lys afhænger af vinklen mellem lysvektoren og overfladenormalen.
-  \item Spejlende lys: Lyset, som bliver reflekteret i en bestemt retning. Grundet dette, er det spejlende lys afhænig af vinklen mellem kameravektoren og lysvektoren. Det spejlende lys hjælper med at få et objekt til at have højglanspunkter.
-
-\end{enumerate}
-
-http://www.gameprogrammer.net/delphi3dArchive/phongfordummies.htm 
-
-\begin{equation}
-  \rho = m_a CA + \sum\limits_{lights}  m_l CI max(\hat{I}*\hat{n}, 0) + m_s SI max(-\hat{r}*\hat{u},0)^{m_sp}
+Modellen bygger på følgende \textit{shading} funktion\cite{stanford_phong}.
+\begin{equation} \label{eq:phong}
+  \rho = \rho_a + \sum\limits_{lights} (\rho_d + \rho_s)
 \end{equation}
+Hvor $\rho_a$, $\rho_d$ og $\rho_s$ er hhv. \textit{ambient}, \textit{diffuse} og \textit{specular} lys beregnet som følgende\cite{stanford_phong}.
+\begin{align}
+	\rho_a &= m_a CA  \\
+	\rho_l &= m_l CI max(\vv{I}\bullet\vv{n}, 0) \\
+	\rho_s &= m_s S I max(-\vv{r}\bullet\vv{u},0)^{m_{sp}} \\
+	S &= m_{sm} C + (1 - m_sm)(1,1,1)
+\end{align}
 
-\begin{equation}
-  S = (m_{sm})C + (1-m_{sm})(1,1,1)
-\end{equation}
+
+
+
+
+
+
+
+På figur \ref{fig:phong_skitse} er 
+
+\begin{figure}[H]
+  \label{fig:phong_skitse}
+  \centering
+  \tdplotsetmaincoords{60}{130}
+  \begin{tikzpicture}[tdplot_main_coords]
+\draw (0,0,0) -> (2,-8,2);
+\path[fill=gray!20, draw=gray!40] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
+\draw (0,0,0) -- (0,-4,0.5);
+\path[fill=blue!50, draw=gray!20] (1,-4,1) -- (-1,-4,1) -- (0,-4,0) -- (1,-4,1);
+\draw plot [mark=*, mark size=2] coordinates{(1,-4,1) }; 
+\draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
+\node [above right] at (1,-4,1) {$B$};
+\node [above right] at (0,0,0) {$C$};
+
+\draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (0,0,0) -- (0,-4,0.5);
+\node [above right] at (0.5,-2,0.5) {$\vv{r}$};
+\end{tikzpicture}
+  \caption{Viser de forskellige vektorer der indgår i beregning af lysintensiteten fra et punkt $p$ på et objekt.}
+\end{figure}
+
+
+
+
+%\begin{enumerate}
+
+%  \item Omgivende lys (eng. \textit{ambient light}): En konstant belysning, som bliver tilføjet til alle objekter i scenen. Formålet med dette, er at undgå at skyggerne bliver helt sorte. Da der i et normalt rum altid vil være en lille lysmængde ved alle overflader. 
+%  \item Spredt lys (eng. \textit{diffuse light}): Lyset, som rammer en overflade, og bliver spredt i alle retninger. Intensiteten af dette lys afhænger af vinklen mellem lysvektoren og overfladenormalen.
+%  \item Spejlende lys (eng. \textit{specular light}): Lyset, som bliver reflekteret i en bestemt retning. Grundet dette, er det spejlende lys afhænig af vinklen mellem kameravektoren og lysvektoren. Det spejlende lys hjælper med at få et objekt til at have højglanspunkter.
+
+%\end{enumerate}
+
+%http://www.gameprogrammer.net/delphi3dArchive/phongfordummies.htm 
+
+
+
+%\begin{equation}
+%  S = (m_{sm})C + (1-m_{sm})(1,1,1)
+%\end{equation}
 
 
 
