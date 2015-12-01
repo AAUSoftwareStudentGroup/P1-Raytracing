@@ -189,10 +189,11 @@ Pixel raytracer_phong(Intersection *intersection, Scene *scene) {
 }
 
 Pixel raytracer_phongv2(Intersection *intersection, Scene *scene) {
-  int i, j;
-  double m_a, m_l, m_s, m_sp, m_sm;
+  int i, j, samples_reached_light;
+  double m_a, m_l, m_s, m_sp, m_sm, sampled_light_intensity;
   Vector vN, vI, vR, vU, intersection_point;
   Pixel pA, pS, pC, pI, ambient, diffuse, specular;
+  Vector light_sample_position;
 
   /* initialize */
   m_a = intersection->material.ambient_coefficient;
@@ -213,19 +214,50 @@ Pixel raytracer_phongv2(Intersection *intersection, Scene *scene) {
   vU = vector_scale(intersection->ray.direction, -1.0);
   pS = pixel_add(pixel_scale(pC, m_sm), pixel_scale(create_pixel(1.0,1.0,1.0),(1-m_sm)));
 
-  PointLight* sampled_lights;
-  int n_sampled_lights;
-  get_sampled_lights(*scene->lights, scene->n_lights, &sampled_lights, &n_sampled_lights);
 
-  for(i = 0; i < n_sampled_lights; i++) {
-    pI = sampled_lights[i].color;
-    vI = vector_normalize(vector_subtract(sampled_lights[i].position,
-                          intersection_point));
-    Intersection* inter = new_intersection();
-    Ray r = create_ray(intersection_point, vI);
-    r.initial_point = ray_get_point(r, 0.01);
+  for(i = 0; i < scene->n_lights; i++) {
+    pI = scene->lights[i]->color;
 
-    if(!raytracer_scene_intersection(r, scene, &inter) || vector_norm(vector_subtract(sampled_lights[i].position, r.initial_point)) < vector_norm(vector_subtract(ray_get_point(r, inter->t), r.initial_point))) {
+    samples_reached_light = 0;
+    if(scene->lights[i]->sampling_rate > 1) {
+
+      for(j = 0; j < scene->lights[i]->sampling_rate; j++) {
+        light_sample_position = point_light_get_sample(scene->lights[i]);
+        
+        vI = vector_normalize(vector_subtract(light_sample_position,
+                      intersection_point));
+        Intersection* inter = new_intersection();
+        Ray r = create_ray(intersection_point, vI);
+        r.initial_point = ray_get_point(r, 0.01);
+
+        if(!raytracer_scene_intersection(r, scene, &inter) || vector_norm(vector_subtract(scene->lights[i]->position, r.initial_point)) < vector_norm(vector_subtract(ray_get_point(r, inter->t), r.initial_point))) {
+          samples_reached_light++;
+        }
+      }
+      sampled_light_intensity = samples_reached_light / scene->lights[i]->sampling_rate;
+    }
+    else {
+      light_sample_position = scene->lights[i]->position;
+    
+      vI = vector_normalize(vector_subtract(light_sample_position,
+                    intersection_point));
+      Intersection* inter = new_intersection();
+      Ray r = create_ray(intersection_point, vI);
+      r.initial_point = ray_get_point(r, 0.01);
+      
+      if(!raytracer_scene_intersection(r, scene, &inter) || vector_norm(vector_subtract(scene->lights[i]->position, r.initial_point)) < vector_norm(vector_subtract(ray_get_point(r, inter->t), r.initial_point))) {
+        sampled_light_intensity = 1;
+      }
+      else
+        sampled_light_intensity = 0;
+    }
+
+
+
+    if(sampled_light_intensity > 0) {
+      pI = pixel_scale(pI, sampled_light_intensity);
+      vI = vector_normalize(vector_subtract(scene->lights[i]->position,
+                    intersection_point));
       vR = vector_normalize(vector_add(vector_scale(vI, -1),
                             vector_scale(vN, vector_dot(vI, vN) * 2)));
 
@@ -241,38 +273,6 @@ Pixel raytracer_phongv2(Intersection *intersection, Scene *scene) {
 
   /* return ambient + diffuse + specular */
   return pixel_add(ambient, pixel_add(diffuse, specular));
-}
-
-void get_sampled_lights(PointLight* lights, int n_lights, PointLight** light_out, int* n_sampled_lights) {
-  int i;
-  for (i = 0; i < n_lights; ++i) {
-    *n_sampled_lights += lights->sampling_rate;
-  }
-  printf("GAH");
-  *light_out = (PointLight*)malloc(sizeof(PointLight) * (*n_sampled_lights));
-  printf("GAH2");
-  Vector point;
-  int sampled_points = 0;
-
-  for (i = 0; i < n_lights; ++i) {
-    if(lights[i].sampling_rate > 1) {
-      while(sampled_points < lights[i].sampling_rate) {
-        point.x = ((double)rand()/(double)RAND_MAX) * lights[i].radius;
-        point.y = ((double)rand()/(double)RAND_MAX) * lights[i].radius;
-        point.z = ((double)rand()/(double)RAND_MAX) * lights[i].radius;
-
-        if(vector_norm(point) <= lights[i].radius) {
-          (*light_out)[sampled_points] = lights[i];
-          (*light_out)[sampled_points].intensity /= (*light_out)[sampled_points].sampling_rate;
-          (*light_out)[sampled_points].position = point;
-          sampled_points++;
-        }
-      }
-    } else {
-      (*light_out[sampled_points]) = lights[i];
-      sampled_points++;
-    }
-  }
 }
 
 Intersection *new_intersection(void){

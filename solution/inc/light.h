@@ -12,4 +12,6 @@ typedef struct _pointlight {
   int sampling_rate;
 } PointLight;
 
+Vector point_light_get_sample(PointLight *l);
+
 #endif
