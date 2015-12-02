@@ -4,6 +4,7 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
   int x, y;
   Image *image;
   Ray ray;
+  srand(time(NULL));
 
   image = new_image(camera->width, camera->height);
   for(x = 0; x < camera->width; x++) {
@@ -191,10 +192,11 @@ int raytracer_aabb_is_instersecting(Ray r, AABB box) {
 }
 
 Pixel raytracer_phong(Intersection intersection, Scene *scene) {
-  int i, j;
-  double m_a, m_l, m_s, m_sp, m_sm;
+  int i, j, samples_reached_light;
+  double m_a, m_l, m_s, m_sp, m_sm, sampled_light_intensity;
   Vector vN, vI, vR, vU, intersection_point;
   Pixel pA, pS, pC, pI, ambient, diffuse, specular;
+  Vector light_sample_position;
 
   /* initialize */
   m_a = intersection.material.ambient_coefficient;
@@ -217,24 +219,40 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
 
   for(i = 0; i < scene->n_lights; i++) {
     pI = scene->lights[i]->color;
+
+    samples_reached_light = 0;
+    for(j = 0; j < scene->lights[i]->sampling_rate; j++) {
+      light_sample_position = point_light_get_sample(scene->lights[i]);
+      
+      vI = vector_normalize(vector_subtract(light_sample_position,
+                    intersection_point));
+      Intersection inter = create_intersection();
+      Ray r = create_ray(intersection_point, vI);
+      r.initial_point = ray_get_point(r, 0.01);
+
+      if(!raytracer_scene_intersection(r, scene, &inter) || vector_norm(vector_subtract(scene->lights[i]->position, r.initial_point)) < vector_norm(vector_subtract(ray_get_point(r, inter.t), r.initial_point))) {
+        samples_reached_light++;
+      }
+    }
+    sampled_light_intensity = (double)samples_reached_light / scene->lights[i]->sampling_rate;
+
+    pI = pixel_scale(pI, sampled_light_intensity);
     vI = vector_normalize(vector_subtract(scene->lights[i]->position,
-                          intersection_point));
-    Intersection inter = create_intersection();
+                  intersection_point));
+
     Ray r = create_ray(intersection_point, vI);
     r.initial_point = ray_get_point(r, 0.01);
 
-    if(!raytracer_scene_intersection(r, scene, &inter) || vector_norm(vector_subtract(scene->lights[i]->position, r.initial_point)) < vector_norm(vector_subtract(ray_get_point(r, inter.t), r.initial_point))) {
-      vR = vector_normalize(vector_add(vector_scale(vI, -1),
-                            vector_scale(vN, vector_dot(vI, vN) * 2)));
+    vR = vector_normalize(vector_add(vector_scale(vI, -1),
+                          vector_scale(vN, vector_dot(vI, vN) * 2)));
 
-      /* diffuse light =  m_l * MAX(vI * vN, 0) * pC * pI*/
-      diffuse = pixel_add(diffuse, pixel_multiply(pixel_scale(pC,
-                          m_l * MAX(vector_dot(vI, vN), 0)), pI));
+    /* diffuse light =  m_l * MAX(vI * vN, 0) * pC * pI*/
+    diffuse = pixel_add(diffuse, pixel_multiply(pixel_scale(pC,
+                        m_l * MAX(vector_dot(vI, vN), 0)), pI));
 
-      /* specular light = m_s * MAX(-vR * vU, 0) ^ m_sp * pI * pS */
-      specular = pixel_add(specular, pixel_multiply(pS, pixel_scale(pI,
-                           m_s * pow(MAX(vector_dot(vR, vU), 0), m_sp))));
-    }
+    /* specular light = m_s * MAX(-vR * vU, 0) ^ m_sp * pI * pS */
+    specular = pixel_add(specular, pixel_multiply(pS, pixel_scale(pI,
+                         m_s * pow(MAX(vector_dot(vR, vU), 0), m_sp))));
   }
 
   /* return ambient + diffuse + specular */

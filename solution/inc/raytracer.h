@@ -10,6 +10,8 @@
 
 #include <float.h>
 
+#include <stdlib.h>
+#include <time.h>
 #include "scene.h"
 #include "camera.h"
 #include "image.h"
@@ -35,6 +37,7 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
 int raytracer_ray_is_intersecting_bounding_sphere(Ray r, Sphere bounding_sphere);
 int raytracer_aabb_is_instersecting(Ray r, AABB box);
 Pixel raytracer_phong(Intersection intersection, Scene *scene);
+Pixel raytracer_phongv2(Intersection *intersection, Scene *scene);
 Intersection *new_intersection(void);
 Intersection create_intersection(void);
 
