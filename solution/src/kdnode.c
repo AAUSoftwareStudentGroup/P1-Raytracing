@@ -86,6 +86,10 @@ int kdnode_build_subnodes(KDNode *node, int level) {
   }
 
   for(i = 0; i < node->n_triangles; i++) {
+    // if(object_is_triangle_in_aabb(node->triangles[i])) {
+    //     node->low->triangles[node->low->n_triangles++] = node->triangles[i];
+    // }
+
     for(j = 0; j < 3; j++) {
       if(!(node->low->n_triangles && 
            node->low->triangles[node->low->n_triangles-1] == node->triangles[i]) &&
@@ -102,7 +106,7 @@ int kdnode_build_subnodes(KDNode *node, int level) {
     if(node->low->n_triangles && node->high->n_triangles && node->low->triangles[node->low->n_triangles-1] == node->high->triangles[node->high->n_triangles-1])
       n_same_triangles++;
   }
-  if(++level > 10 || n_same_triangles > node->n_triangles/2 || node->low->n_triangles <= 2 || node->high->n_triangles <= 2) {
+  if(++level > 1000 || n_same_triangles > node->n_triangles/2 || node->low->n_triangles <= 2 || node->high->n_triangles <= 2) {
     // return -- more than 50% of triangles appear in both branches
     return 1;
   }

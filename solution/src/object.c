@@ -6,6 +6,10 @@ int object_is_point_inside_aabb(Vector v, AABB box) {
          v.z >= box.low.z && v.z <= box.high.z;
 }
 
+int object_is_triangle_in_aabb(Triangle t, AABB box) {
+  
+}
+
 Object *new_object(void) {
   Object *object = (Object*)malloc(sizeof(Object));
   return object;

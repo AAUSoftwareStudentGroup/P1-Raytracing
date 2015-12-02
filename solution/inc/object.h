@@ -43,6 +43,7 @@ typedef struct _object {
 } Object;
 
 int object_is_point_inside_aabb(Vector v, AABB box);
+int object_is_triangle_in_aabb(Triangle t, AABB box);
 Object *new_object(void);
 int free_object(Object *object);
 
