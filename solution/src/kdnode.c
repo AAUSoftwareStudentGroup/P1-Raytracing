@@ -1,47 +1,5 @@
 #include "kdnode.h"
 
-int kdnode_build(KDNode *root, Object **objects, int n_objects) {
-  int i, j, k;
-  Vector lowest, highest;
-
-
-  root->low = NULL;
-  root->high = NULL;
-
-  lowest = highest = objects[0]->verticies[0].position;
-
-  for(i = 0; i < n_objects; i++){
-    for(j = 0; j < objects[i]->n_verticies; j++){
-      lowest.x = MIN(lowest.x, objects[i]->verticies[j].position.x);
-      lowest.y = MIN(lowest.y, objects[i]->verticies[j].position.y);
-      lowest.z = MIN(lowest.z, objects[i]->verticies[j].position.z);
-      highest.x = MAX(highest.x, objects[i]->verticies[j].position.x);
-      highest.y = MAX(highest.y, objects[i]->verticies[j].position.y);
-      highest.z = MAX(highest.z, objects[i]->verticies[j].position.z);
-    }
-  }
-
-  root->box.low = lowest;
-  root->box.high = highest;
-
-  for(i = j = 0; i < n_objects; i++) {
-    j += objects[i]->n_triangles;
-  }
-  root->n_triangles = j;
-  root->triangles = (Triangle**)malloc(j*sizeof(Triangle*));
-  k = 0;
-  for(i = 0; i < n_objects; i++) {
-    for(j = 0; j < objects[i]->n_triangles; j++) {
-      root->triangles[k++] = &(objects[i]->triangles[j]);
-    }
-  }
-
-  if(root->n_triangles > 2)
-    kdnode_build_subnodes(root, 0);
-
-  return 1;
-}
-
 int kdnode_build_subnodes(KDNode *node, int level) {
   double cut_position;
   int i, j, n_same_triangles;
@@ -86,27 +44,31 @@ int kdnode_build_subnodes(KDNode *node, int level) {
   }
 
   for(i = 0; i < node->n_triangles; i++) {
-    // if(object_is_triangle_in_aabb(node->triangles[i])) {
-    //     node->low->triangles[node->low->n_triangles++] = node->triangles[i];
-    // }
-
+    if(intersection_triangle_aabb(*(node->triangles[i]), node->low->box)) {
+        node->low->triangles[node->low->n_triangles++] = node->triangles[i];
+    }
+    if(intersection_triangle_aabb(*(node->triangles[i]), node->high->box)) {
+        node->high->triangles[node->high->n_triangles++] = node->triangles[i];
+    }
+/*
     for(j = 0; j < 3; j++) {
       if(!(node->low->n_triangles && 
            node->low->triangles[node->low->n_triangles-1] == node->triangles[i]) &&
-         object_is_point_inside_aabb(node->triangles[i]->verticies[j]->position, node->low->box)) {
+         aabb_is_point_inside(node->triangles[i]->verticies[j]->position, node->low->box)) {
         node->low->triangles[node->low->n_triangles++] = node->triangles[i];
       }
       if(!(node->high->n_triangles && 
            node->high->triangles[node->high->n_triangles-1] == node->triangles[i]) && 
-         object_is_point_inside_aabb(node->triangles[i]->verticies[j]->position, node->high->box)) {
+         aabb_is_point_inside(node->triangles[i]->verticies[j]->position, node->high->box)) {
         node->high->triangles[node->high->n_triangles++] = node->triangles[i];
       }
     }
+*/
     // if last triangle in both nodes is same
     if(node->low->n_triangles && node->high->n_triangles && node->low->triangles[node->low->n_triangles-1] == node->high->triangles[node->high->n_triangles-1])
       n_same_triangles++;
   }
-  if(++level > 1000 || n_same_triangles > node->n_triangles/2 || node->low->n_triangles <= 2 || node->high->n_triangles <= 2) {
+  if(++level > 30 || n_same_triangles > node->n_triangles/2 || node->low->n_triangles <= 2 || node->high->n_triangles <= 2) {
     // return -- more than 50% of triangles appear in both branches
     return 1;
   }

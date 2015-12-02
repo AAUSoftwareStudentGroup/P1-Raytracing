@@ -1,7 +1,7 @@
 #include "ray.h"
 
-Ray create_ray(Vector p1, Vector p2) {
-  return (Ray){p1, vector_normalize(p2)};
+Ray create_ray(Vector origin, Vector direction) {
+  return (Ray){origin, vector_normalize(direction)};
 }
 
 Vector ray_get_point(Ray ray, double t) {

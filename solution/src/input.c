@@ -10,7 +10,9 @@
 
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   FILE *fp_model;
-  *camera = new_camera(500, 500);
+  *camera = new_camera(1000, 1000);
+  int i;
+
   if(ply_validate(argc, argv, &fp_model) == 0)
     return 0;
   if(ply_init(fp_model, scene) == 0)
@@ -19,8 +21,9 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   if(ply_parse(fp_model, scene) == 0)
     return 0;
 
-  if(kdnode_build(&((*scene)->root), (*scene)->objects, (*scene)->n_objects) == 0)
-    return 0;
+  for(i = 0; i < (*scene)->n_objects; i++) {
+    input_build_root_node((*scene)->objects[i]);
+  }
 
   (*scene)->ambient_intensity = create_pixel(0.1,0.1,0.1);
 
@@ -96,7 +99,6 @@ int ply_init(FILE *fp_model, Scene **scene) {
   (*scene)->lights = (PointLight**)malloc(n_lights*sizeof(PointLight*));
   for(i = 0; i < n_lights; i++) {
     (*scene)->lights[i] = (PointLight*)malloc(sizeof(PointLight));
-
   }
 
 
@@ -109,7 +111,6 @@ int ply_parse(FILE *fp_model, Scene **scene) {
   int *vertex_index_list;
   Triangle t;
   Vertex v;
-  Vector min, max, avg;
 
 
   ply_scan_element(fp_model, "face", &n_faces);
@@ -147,6 +148,11 @@ int ply_parse(FILE *fp_model, Scene **scene) {
       triangle[0] = &(vertex_list[ vertex_index_list[0]   ]);
       triangle[1] = &(vertex_list[ vertex_index_list[j+1] ]);
       triangle[2] = &(vertex_list[ vertex_index_list[j+2] ]);
+
+      (*scene)->objects[0]->triangles[triangle_index].edges[0] = vector_subtract(triangle[1]->position, triangle[0]->position);
+      (*scene)->objects[0]->triangles[triangle_index].edges[1] = vector_subtract(triangle[2]->position, triangle[1]->position);
+      (*scene)->objects[0]->triangles[triangle_index].edges[2] = vector_subtract(triangle[0]->position, triangle[2]->position);
+
       triangle_index++;
     }
   }
@@ -172,24 +178,6 @@ int ply_parse(FILE *fp_model, Scene **scene) {
     input_read_double(fp_model, &((*scene)->objects[i]->material.specular_coefficient));
     input_read_int(fp_model, &((*scene)->objects[i]->material.material_smoothness));
     (*scene)->objects[i]->material.material_metalness = 0.5;
-
-    // calculate bounding sphere
-    min = max = (*scene)->objects[i]->triangles[0].verticies[0]->position;
-    for(j = 0; j < (*scene)->objects[i]->n_triangles; j++) {
-      // set triangle parrent pointer
-      (*scene)->objects[i]->triangles[j].parent = (*scene)->objects[i];
-      for(k = 0; k < 3; k++) {
-        min.x = MIN(min.x, (*scene)->objects[i]->triangles[j].verticies[k]->position.x);
-        min.y = MIN(min.y, (*scene)->objects[i]->triangles[j].verticies[k]->position.y);
-        min.z = MIN(min.z, (*scene)->objects[i]->triangles[j].verticies[k]->position.z);
-        max.x = MAX(max.x, (*scene)->objects[i]->triangles[j].verticies[k]->position.x);
-        max.y = MAX(max.y, (*scene)->objects[i]->triangles[j].verticies[k]->position.y);
-        max.z = MAX(max.z, (*scene)->objects[i]->triangles[j].verticies[k]->position.z);
-      }
-    }
-    avg = vector_add(min, vector_scale(vector_subtract(max, min), 0.5));
-    (*scene)->objects[i]->bounding_volume.center = avg;
-    (*scene)->objects[i]->bounding_volume.radius = vector_norm(vector_scale(vector_subtract(max, min), 0.5));
   }
 
   for(i = 0; i < (*scene)->n_lights; i++) {
@@ -238,7 +226,6 @@ int ply_scan_element(FILE *file, const char *element_name, int *out) {
         input_jump_lines(file, 1);
     }
   }
-  print_warning(1==1, "scan_element reached EOF while searching for: \"%s\"", element_name);
   return 0;
 }
 
@@ -274,26 +261,43 @@ int input_jump_lines(FILE *file, int lines) {
 
 int input_read_int(FILE *file, int *out) {
   int res = fscanf(file, " %d", out);
-  print_warning(res != 1, "Didn't read int when int was expected");
   return res;
 }
 
 int input_read_double(FILE *file, double *out) {
   int res = fscanf(file, " %lf", out);
-  print_warning(res != 1,"Didn't read double when double was expected");
   return res;
 }
 
-int print_warning(int statement, char* warning, ...) {
-  if(statement) {
-    va_list args;
-    va_start( args, warning );
+int input_build_root_node(Object *object) {
+  int i;
+  KDNode *root;
 
-    printf("WARNING: ");
-    vprintf(warning, args );
-    printf("!\n");
+  root = &(object->root);
 
-    va_end( args );
+  root->low = NULL;
+  root->high = NULL;
+
+  root->box.low = root->box.high = object->verticies[0].position;
+
+  for(i = 0; i < object->n_verticies; i++){
+    root->box.low.x = MIN(root->box.low.x, object->verticies[i].position.x);
+    root->box.low.y = MIN(root->box.low.y, object->verticies[i].position.y);
+    root->box.low.z = MIN(root->box.low.z, object->verticies[i].position.z);
+    root->box.high.x = MAX(root->box.high.x, object->verticies[i].position.x);
+    root->box.high.y = MAX(root->box.high.y, object->verticies[i].position.y);
+    root->box.high.z = MAX(root->box.high.z, object->verticies[i].position.z);
   }
-  return statement;
+
+  root->n_triangles = object->n_triangles;
+  root->triangles = (Triangle**)malloc(object->n_triangles*sizeof(Triangle*));
+
+  for(i = 0; i < object->n_triangles; i++) {
+    root->triangles[i] = &(object->triangles[i]);
+  }
+
+  if(root->n_triangles > 2)
+    kdnode_build_subnodes(root, 0);
+
+  return 1;
 }

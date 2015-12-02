@@ -4,13 +4,12 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
   int x, y;
   Image *image;
   Ray ray;
-  srand(time(NULL));
 
   image = new_image(camera->width, camera->height);
   for(x = 0; x < camera->width; x++) {
     for(y = 0; y < camera->height; y++) {
       // beregn ray
-      ray = calculate_ray(x, y, camera);
+      ray = raytracer_calculate_ray(x, y, camera);
 
       // trace ray
       image->pixels[x][y] = raytracer_trace(ray, scene);
@@ -21,7 +20,7 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
   return image;
 }
 
-Ray calculate_ray(int x, int y, Camera *camera){
+Ray raytracer_calculate_ray(int x, int y, Camera *camera){
   Vector direction;
   direction = vector_scale(camera->forward, camera->distance);
   direction = vector_add(direction, vector_scale(camera->up, -y + camera->height / 2.0));
@@ -39,15 +38,32 @@ Pixel raytracer_trace(Ray ray, Scene *scene) {
 }
 
 int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection *intersection) {
-  raytracer_kdtree_intersection(ray, &(scene->root), intersection);
+  int i;
+  Intersection temporary_intersection;
+
+  temporary_intersection = create_intersection();
+
+  for(i = 0; i < scene->n_objects; i++) {
+    if(raytracer_object_intersection(ray, scene->objects[i], &temporary_intersection))
+      if(temporary_intersection.t < intersection->t || intersection->t == -1)
+        *intersection = temporary_intersection;
+  }
+  return intersection->t > 0;
+}
+
+int raytracer_object_intersection(Ray ray, Object *object, Intersection *intersection) {
+  if(raytracer_kdtree_intersection(ray, &(object->root), intersection)) {
+    intersection->color = object->color;
+    intersection->material = object->material;
+  }
   return intersection->t > 0;
 }
 
 int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersection) {
   int i;
   Intersection temporary_intersection = create_intersection();
-
-  if(raytracer_aabb_is_instersecting(ray, node->box)) {
+  double tmin, tmax;
+  if(intersection_ray_aabb(ray, node->box, &tmin, &tmax)) {
     // if leaf
     if(kdnode_is_leaf(node)) {
       // test intersection with geometry
@@ -56,8 +72,6 @@ int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersect
           if(temporary_intersection.t < intersection->t || intersection->t == -1) {
             *intersection = temporary_intersection;
             intersection->triangle = node->triangles[i];
-            intersection->color = node->triangles[i]->parent->color;
-            intersection->material = node->triangles[i]->parent->material;
           }
         }
       }
@@ -68,28 +82,6 @@ int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersect
       raytracer_kdtree_intersection(ray, node->high, intersection);
     }
   }
-  return intersection->t > 0;
-}
-
-int raytracer_object_intersection(Ray ray, Object *object, Intersection *intersection) {
-  double lowest_t;
-  Intersection nearest_intersection, temporary_intersection;
-  int i;
-
-  temporary_intersection = nearest_intersection = create_intersection();
-
-  for(i = 0; i < object->n_triangles; i++) {
-    if(raytracer_triangle_intersection(ray, &(object->triangles[i]), &temporary_intersection)) {
-      if(temporary_intersection.t < nearest_intersection.t || nearest_intersection.t == -1) {
-        nearest_intersection = temporary_intersection;
-        nearest_intersection.triangle = &(object->triangles[i]);
-        nearest_intersection.color = object->color;
-        nearest_intersection.material = object->material;
-      }
-    }
-  }
-
-  *intersection = nearest_intersection;
   return intersection->t > 0;
 }
 
@@ -135,62 +127,6 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
   return 0;
 }
 
-int raytracer_ray_is_intersecting_bounding_sphere(Ray r, Sphere bounding_sphere) {
-  Vector difference, projection;
-
-  difference = vector_subtract(bounding_sphere.center, r.initial_point);
-  // ray_origin is inside sphere
-  if(vector_norm(difference) <= bounding_sphere.radius)
-    return 1;
-  // sphere is not behind ray
-  else if(vector_dot(difference, r.direction) > 0) {
-    projection = vector_scale(r.direction, vector_dot(difference, r.direction));
-    if(vector_norm(vector_subtract(difference, projection)) <= bounding_sphere.radius)
-      return 1;
-  }
-  return 0;
-}
-
-int raytracer_aabb_is_instersecting(Ray r, AABB box) {
-  double tmin =  -DBL_MAX;
-  double tmax = DBL_MAX;
-
-  if(r.direction.x == 0 && r.initial_point.x < box.low.x && r.initial_point.x > box.high.x) {
-    return 0;
-  }
-  else{
-    double tx1 = (box.low.x - r.initial_point.x) / r.direction.x;
-    double tx2 = (box.high.x - r.initial_point.x) / r.direction.x; 
-
-    tmin = MAX(tmin, MIN(tx1, tx2));
-    tmax = MIN(tmax, MAX(tx1, tx2));
-  }
-
-  if(r.direction.y == 0 && r.initial_point.y < box.low.y && r.initial_point.y > box.high.y) {
-    return 0;
-  }
-  else{
-    double ty1 = (box.low.y - r.initial_point.y) / r.direction.y;
-    double ty2 = (box.high.y - r.initial_point.y) / r.direction.y; 
-
-    tmin = MAX(tmin, MIN(ty1, ty2));
-    tmax = MIN(tmax, MAX(ty1, ty2));
-  }
-
-  if(r.direction.z == 0 && r.initial_point.z < box.low.z && r.initial_point.z > box.high.z) {
-    return 0;
-  }
-  else{
-    double tz1 = (box.low.z - r.initial_point.z) / r.direction.z;
-    double tz2 = (box.high.z - r.initial_point.z) / r.direction.z; 
-
-    tmin = MAX(tmin, MIN(tz1, tz2));
-    tmax = MIN(tmax, MAX(tz1, tz2));
-  }
-
-  return tmax >= tmin && tmax > 0;
-}
-
 Pixel raytracer_phong(Intersection intersection, Scene *scene) {
   int i, j, samples_reached_light;
   double m_a, m_l, m_s, m_sp, m_sm, sampled_light_intensity;
@@ -221,9 +157,10 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
     pI = scene->lights[i]->color;
 
     samples_reached_light = 0;
+
     for(j = 0; j < scene->lights[i]->sampling_rate; j++) {
       light_sample_position = point_light_get_sample(scene->lights[i]);
-      
+
       vI = vector_normalize(vector_subtract(light_sample_position,
                     intersection_point));
       Intersection inter = create_intersection();

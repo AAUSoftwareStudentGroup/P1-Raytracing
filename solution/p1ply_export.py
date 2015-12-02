@@ -211,7 +211,9 @@ def save_mesh(filepath,
     fw("property float intensity\n")
     fw("property uchar red\n"
        "property uchar green\n"
-       "property uchar blue\n")
+       "property uchar blue\n"
+       "property float radius\n"
+       "property uint sample_size\n")
     fw("end_header\n")
 
     # for i, v in enumerate(ply_verts):
@@ -267,7 +269,9 @@ def save_mesh(filepath,
         fw("%.6f " % l.data.energy)
         fw("%d "  % int(l.data.color[0] * 255.0 +0.5))
         fw("%d "  % int(l.data.color[1] * 255.0 +0.5))
-        fw("%d\n"  % int(l.data.color[2] * 255.0 +0.5))
+        fw("%d "  % int(l.data.color[2] * 255.0 +0.5))
+        fw("%.6f "  % l.data.shadow_soft_size)
+        fw("%d\n"  % l.data.shadow_ray_samples)
 
     file.close()
     print("writing %r done" % filepath)
@@ -469,4 +473,5 @@ def unregister():
 
 if __name__ == "__main__":
     register()
+
 

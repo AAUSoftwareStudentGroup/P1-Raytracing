@@ -7,7 +7,7 @@ typedef struct _ray {
   Vector initial_point, direction;
 } Ray;
 
-Ray create_ray(Vector p1, Vector p2);
+Ray create_ray(Vector origin, Vector direction);
 Vector ray_get_point(Ray ray, double t);
 
 #endif

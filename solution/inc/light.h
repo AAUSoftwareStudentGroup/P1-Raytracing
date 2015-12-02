@@ -1,6 +1,7 @@
 #ifndef _LIGHT_
 #define _LIGHT_
 
+#include <stdlib.h>
 #include "vector.h"
 #include "pixel.h"
 

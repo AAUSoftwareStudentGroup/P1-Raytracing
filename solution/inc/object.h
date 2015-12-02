@@ -6,31 +6,8 @@
 #include "vector.h"
 #include "material.h"
 #include "pixel.h"
-
-struct _verticie;
-struct _triangle;
-struct _sphere;
-struct _AABB;
-struct _object;
-
-typedef struct _verticie {
-  Vector position;
-  Vector normal;
-} Vertex;
-
-typedef struct _triangle {
-  Vertex *verticies[3];
-  struct _object *parent;
-} Triangle;
-
-typedef struct _sphere {
-  Vector center;
-  double radius;
-} Sphere;
-
-typedef struct _AABB {
-  Vector low, high;
-} AABB;
+#include "kdnode.h"
+#include "triangle.h"
 
 typedef struct _object {
   Vertex *verticies;
@@ -39,7 +16,7 @@ typedef struct _object {
   int n_triangles;
   Pixel color;
   Material material;
-  Sphere bounding_volume;
+  KDNode root;
 } Object;
 
 int object_is_point_inside_aabb(Vector v, AABB box);

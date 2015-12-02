@@ -19,6 +19,6 @@ int input_file_find_next(FILE *file, char *search_str);
 int input_jump_lines(FILE *file, int lines);
 int input_read_int(FILE *file, int *out);
 int input_read_double(FILE *file, double *out);
-int print_warning(int statement, char* warning, ...);
+int input_build_root_node(Object *objects);
 
 #endif
