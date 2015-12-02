@@ -234,7 +234,7 @@ Pixel raytracer_phongv2(Intersection *intersection, Scene *scene) {
           samples_reached_light++;
         }
       }
-      sampled_light_intensity = samples_reached_light / scene->lights[i]->sampling_rate;
+      sampled_light_intensity = (double)samples_reached_light / scene->lights[i]->sampling_rate;
     }
     else {
       light_sample_position = scene->lights[i]->position;
