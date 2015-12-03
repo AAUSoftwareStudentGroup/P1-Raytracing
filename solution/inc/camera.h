@@ -17,7 +17,7 @@ typedef struct _camera {
 Camera *new_camera(unsigned int width, unsigned int height);
 int free_camera(Camera *camera);
 
-int camera_look_at_point(Camera *camera, Vector *point);
+void camera_look_at_point(Camera *camera, Vector *point, double distance, double vertical_angle, double horizontal_angle);
 int camera_set_angle(Camera *camera, double vertical_angle, double horizontal_angle);
 
 
