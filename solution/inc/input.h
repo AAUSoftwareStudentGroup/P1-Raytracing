@@ -12,7 +12,7 @@
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera);
 int ply_validate(int argc, char* argv[], FILE **fp_model);
 int ply_init(FILE *fp_model, Scene **scene);
-int ply_parse(FILE *fp_model, Scene **scene);
+int ply_parse(FILE *fp_model, Scene **scene, Camera **camera);
 int ply_scan_element(FILE *file, const char *element_name, int *out);
 int input_file_find_first(FILE *file, char *search_str);
 int input_file_find_next(FILE *file, char *search_str);

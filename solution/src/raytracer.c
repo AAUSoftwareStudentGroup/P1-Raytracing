@@ -155,7 +155,7 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
 
   for(i = 0; i < scene->n_lights; i++) {
     pI = scene->lights[i]->color;
-
+    
     samples_reached_light = 0;
 
     for(j = 0; j < scene->lights[i]->sampling_rate; j++) {
@@ -172,7 +172,7 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
       }
     }
     sampled_light_intensity = (double)samples_reached_light / scene->lights[i]->sampling_rate;
-
+    
     pI = pixel_scale(pI, sampled_light_intensity);
     vI = vector_normalize(vector_subtract(scene->lights[i]->position,
                   intersection_point));
@@ -194,6 +194,7 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
 
   /* return ambient + diffuse + specular */
   return pixel_add(ambient, pixel_add(diffuse, specular));
+  // return ambient;
 }
 
 Intersection *new_intersection(void){
