@@ -1,0 +1,32 @@
+.tekst { 
+    text-align: center;
+    width: 500px;
+    margin-right: 5px; 
+    display: inline-block;
+    font-family: sans-serif; 
+}
+
+.billede {
+    display: inline;
+    
+    
+}
+
+.divborder {
+    border: 2px solid black;
+    color: black;
+    width: 500px;
+
+}
+.div3d {
+    border: 2px solid black;
+    color: black;
+    width: 70px;
+    display: inline-block;
+    float: left;
+    
+}
+
+.p_example {
+    width: 250px;
+}
