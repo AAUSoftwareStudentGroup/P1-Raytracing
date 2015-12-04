@@ -52,7 +52,8 @@ int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection *intersecti
 }
 
 int raytracer_object_intersection(Ray ray, Object *object, Intersection *intersection) {
-  if(raytracer_kdtree_intersection(ray, &(object->root), intersection)) {
+  double i, j;
+  if(intersection_ray_aabb(ray, object->root.box, &i, &j) && raytracer_kdtree_intersection(ray, &(object->root), intersection)) {
     intersection->color = object->color;
     intersection->material = object->material;
   }
@@ -63,23 +64,42 @@ int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersect
   int i;
   Intersection temporary_intersection = create_intersection();
   double tmin, tmax;
-  if(intersection_ray_aabb(ray, node->box, &tmin, &tmax)) {
-    // if leaf
-    if(kdnode_is_leaf(node)) {
-      // test intersection with geometry
-      for(i = 0; i < node->n_triangles; i++) {
-        if(raytracer_triangle_intersection(ray, node->triangles[i], &temporary_intersection)) {
-          if(temporary_intersection.t < intersection->t || intersection->t == -1) {
-            *intersection = temporary_intersection;
-            intersection->triangle = node->triangles[i];
-          }
+  // if leaf
+  if(kdnode_is_leaf(node)) {
+    // test intersection with geometry
+    for(i = 0; i < node->n_triangles; i++) {
+      if(raytracer_triangle_intersection(ray, node->triangles[i], &temporary_intersection)) {
+        if(temporary_intersection.t < intersection->t || intersection->t == -1) {
+          *intersection = temporary_intersection;
+          intersection->triangle = node->triangles[i];
         }
       }
     }
-    else {
-      // test intersection recursively
-      raytracer_kdtree_intersection(ray, node->low, intersection);
-      raytracer_kdtree_intersection(ray, node->high, intersection);
+  } else {
+    double t_minl, t_maxl;
+    double t_minh, t_maxh;
+    int retl, reth;
+    // test intersection recursively
+    retl = intersection_ray_aabb(ray, node->low->box, &t_minl, &t_maxl);
+    reth = intersection_ray_aabb(ray, node->high->box, &t_minh, &t_maxh);
+
+    if(retl && reth) {
+      if(t_minh < t_minl) {
+        if(!raytracer_kdtree_intersection(ray, node->high, intersection)) {
+          raytracer_kdtree_intersection(ray, node->low, intersection);
+        }
+      } else if(t_minh == t_minl) {
+        raytracer_kdtree_intersection(ray, node->low, intersection);
+        raytracer_kdtree_intersection(ray, node->high, intersection);
+      } else {
+        if(!raytracer_kdtree_intersection(ray, node->low, intersection)) {
+          raytracer_kdtree_intersection(ray, node->high, intersection);
+        }
+      }
+    } else if(retl) {
+        raytracer_kdtree_intersection(ray, node->low, intersection);
+    } else {
+        raytracer_kdtree_intersection(ray, node->high, intersection);
     }
   }
   return intersection->t > 0;
@@ -155,7 +175,7 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
 
   for(i = 0; i < scene->n_lights; i++) {
     pI = scene->lights[i]->color;
-
+    
     samples_reached_light = 0;
 
     for(j = 0; j < scene->lights[i]->sampling_rate; j++) {
@@ -172,7 +192,7 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
       }
     }
     sampled_light_intensity = (double)samples_reached_light / scene->lights[i]->sampling_rate;
-
+    
     pI = pixel_scale(pI, sampled_light_intensity);
     vI = vector_normalize(vector_subtract(scene->lights[i]->position,
                   intersection_point));
@@ -194,6 +214,7 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
 
   /* return ambient + diffuse + specular */
   return pixel_add(ambient, pixel_add(diffuse, specular));
+  // return ambient;
 }
 
 Intersection *new_intersection(void){

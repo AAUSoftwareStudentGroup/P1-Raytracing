@@ -17,5 +17,6 @@ double vector_angle_between(Vector v1, Vector v2);
 Vector vector_cross(Vector v1, Vector v2);
 Vector vector_rotate_around_z(Vector v, double angle);
 Vector vector_rotate_around_x(Vector v, double angle);
+Vector vector_rotate_around_xz(Vector v, double horizontal, double vertical);
 
 #endif

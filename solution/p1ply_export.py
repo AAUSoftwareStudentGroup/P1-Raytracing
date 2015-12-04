@@ -57,6 +57,7 @@ def tri_mesh(mesh):
 def save_mesh(filepath,
               meshes,
               lights,
+              camera,
               use_normals=True,
               use_uv_coords=True,
               use_colors=True,
@@ -214,6 +215,10 @@ def save_mesh(filepath,
        "property uchar blue\n"
        "property float radius\n"
        "property uint sample_size\n")
+    fw("element camera 1\n"
+       "property float x\n"
+       "property float y\n"
+       "property float z\n")
     fw("end_header\n")
 
     # for i, v in enumerate(ply_verts):
@@ -272,6 +277,8 @@ def save_mesh(filepath,
         fw("%d "  % int(l.data.color[2] * 255.0 +0.5))
         fw("%.6f "  % l.data.shadow_soft_size)
         fw("%d\n"  % l.data.shadow_ray_samples)
+        
+    fw("%.6f %.6f %.6f\n" % camera[0].location[:])
 
     file.close()
     print("writing %r done" % filepath)
@@ -297,6 +304,7 @@ def save(operator,
     objs = []
     meshes = []
     lights = []
+    camera = []
     # for o in bpy.data.meshes:
         # if o.users > 0 :
             # tri_mesh(o)
@@ -313,6 +321,8 @@ def save(operator,
     for o in bpy.data.objects:
         if o.type == 'MESH':
             objs.append(o)
+        elif o.type == 'CAMERA':
+            camera.append(o)
   
     for l in bpy.data.objects:
         if l.users > 0 and l.type == 'LAMP' and l.data.type == 'POINT':
@@ -336,7 +346,7 @@ def save(operator,
             tri_mesh(mesh)
             meshes.append(mesh)
 
-    ret = save_mesh(filepath, meshes, lights,
+    ret = save_mesh(filepath, meshes, lights, camera,
                     use_normals=use_normals,
                     use_uv_coords=use_uv_coords,
                     use_colors=use_colors,

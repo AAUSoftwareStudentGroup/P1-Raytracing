@@ -10,7 +10,7 @@
 
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   FILE *fp_model;
-  *camera = new_camera(1000, 1000);
+  *camera = new_camera(200, 200);
   int i;
 
   if(ply_validate(argc, argv, &fp_model) == 0)
@@ -18,14 +18,14 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   if(ply_init(fp_model, scene) == 0)
     return 0;
 
-  if(ply_parse(fp_model, scene) == 0)
+  if(ply_parse(fp_model, scene, camera) == 0)
     return 0;
 
   for(i = 0; i < (*scene)->n_objects; i++) {
     input_build_root_node((*scene)->objects[i]);
   }
 
-  (*scene)->ambient_intensity = create_pixel(0.1,0.1,0.1);
+  (*scene)->ambient_intensity = create_pixel(0.25,0.25,0.25);
 
   return 1;
 }
@@ -105,7 +105,8 @@ int ply_init(FILE *fp_model, Scene **scene) {
   return 1;
 }
 
-int ply_parse(FILE *fp_model, Scene **scene) {
+int ply_parse(FILE *fp_model, Scene **scene, Camera **camera) {
+  PointLight *lamp_source = NULL;
   int i, j, k, triangle_index;
   int n_faces, verticies_in_polygon;
   int *vertex_index_list;
@@ -163,17 +164,17 @@ int ply_parse(FILE *fp_model, Scene **scene) {
     input_read_int(fp_model, &j);
     // read color
     input_read_int(fp_model, &j);
-    (*scene)->objects[i]->color.red = (double)j / 255;
+    (*scene)->objects[i]->color.red = (double)j / 255.0;
     input_read_int(fp_model, &j);
-    (*scene)->objects[i]->color.green = (double)j / 255;
+    (*scene)->objects[i]->color.green = (double)j / 255.0;
     input_read_int(fp_model, &j);
-    (*scene)->objects[i]->color.blue = (double)j / 255;
+    (*scene)->objects[i]->color.blue = (double)j / 255.0;
     /*
     property float diffuse_coefficient
     property float specular_coefficient
     property float specular_hardness
     */
-    (*scene)->objects[i]->material.ambient_coefficient = 0;
+    (*scene)->objects[i]->material.ambient_coefficient = 1;
     input_read_double(fp_model, &((*scene)->objects[i]->material.diffuse_coefficient));
     input_read_double(fp_model, &((*scene)->objects[i]->material.specular_coefficient));
     input_read_int(fp_model, &((*scene)->objects[i]->material.material_smoothness));
@@ -196,11 +197,25 @@ int ply_parse(FILE *fp_model, Scene **scene) {
     input_read_int(fp_model, &j);
     (*scene)->lights[i]->color.blue = ((double)j*((*scene)->lights[i]->intensity)) / 255;
 
+    if((*scene)->lights[i]->color.red   == 0 && 
+       (*scene)->lights[i]->color.green == 0 &&
+       (*scene)->lights[i]->color.blue  == 0)
+      lamp_source = (*scene)->lights[i];
+
     input_read_double(fp_model, &((*scene)->lights[i]->radius) ); // Radius
     input_read_int(fp_model, &((*scene)->lights[i]->sampling_rate)); // sample_size
     if((*scene)->lights[i]->sampling_rate == 1)
       (*scene)->lights[i]->radius = 0;
   }
+
+  input_read_double(fp_model, &((*camera)->position.x));
+  input_read_double(fp_model, &((*camera)->position.y));
+  input_read_double(fp_model, &((*camera)->position.z));
+
+  // camera_set_angle(*camera, 3.14/8, -3.14/4.0);
+
+  if(lamp_source != NULL)
+    lamp_source->color = create_from_color_temperature(1500);
 
   return 1;
 }

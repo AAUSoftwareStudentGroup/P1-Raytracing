@@ -41,6 +41,13 @@ Vector vector_cross(Vector v1, Vector v2) {
 Vector vector_rotate_around_z(Vector v, double angle){
   return (Vector){cos(angle) * v.x - sin(angle) * v.y, sin(angle) * v.x + cos(angle) * v.y, v.z};
 }
+
 Vector vector_rotate_around_x(Vector v, double angle){
   return (Vector){v.x, cos(angle) * v.y - sin(angle) * v.z, sin(angle) * v.y + cos(angle) * v.z};  
+}
+
+Vector vector_rotate_around_xz(Vector v, double horizontal, double vertical) {
+  v = vector_rotate_around_x(v, horizontal);
+  v = vector_rotate_around_z(v, vertical);
+  return v;
 }
