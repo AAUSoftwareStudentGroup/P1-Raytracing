@@ -8,9 +8,9 @@ Image *new_image(unsigned int width, unsigned int height) {
   image->height = height;
 
   image->pixels = (Pixel**)malloc(width * sizeof(Pixel*));
-  for(x = 0; x < width; x++) { /* Looping through rows */
+  for(x = 0; x < width; x++) { /* Looping over all columns */
     image->pixels[x] = (Pixel*)malloc(height * sizeof(Pixel));
-    for(y = 0; y < height; y++) { /* Looping through coloums */
+    for(y = 0; y < height; y++) { /* Looping over all rows */
       image->pixels[x][y] = create_pixel(0.0, 0.0, 0.0);
     }
   }
