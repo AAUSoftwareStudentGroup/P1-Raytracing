@@ -16,7 +16,7 @@ int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
   *tmin = -DBL_MAX;
   *tmax =  DBL_MAX;
 
-  if(r.direction.x == 0 && r.initial_point.x < box.low.x && r.initial_point.x > box.high.x) {
+  if(r.direction.x == 0 && r.initial_point.x < box.low.x && r.initial_point.x > box.high.x){
     return 0;
   }
   else{
@@ -27,7 +27,7 @@ int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
     *tmax = MIN(*tmax, MAX(tx1, tx2));
   }
 
-  if(r.direction.y == 0 && r.initial_point.y < box.low.y && r.initial_point.y > box.high.y) {
+  if(r.direction.y == 0 && r.initial_point.y < box.low.y && r.initial_point.y > box.high.y){
     return 0;
   }
   else{
@@ -38,7 +38,7 @@ int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
     *tmax = MIN(*tmax, MAX(ty1, ty2));
   }
 
-  if(r.direction.z == 0 && r.initial_point.z < box.low.z && r.initial_point.z > box.high.z) {
+  if(r.direction.z == 0 && r.initial_point.z < box.low.z && r.initial_point.z > box.high.z){
     return 0;
   }
   else{
@@ -48,6 +48,5 @@ int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
     *tmin = MAX(*tmin, MIN(tz1, tz2));
     *tmax = MIN(*tmax, MAX(tz1, tz2));
   }
-
   return *tmax >= *tmin && *tmax > 0;
 }
