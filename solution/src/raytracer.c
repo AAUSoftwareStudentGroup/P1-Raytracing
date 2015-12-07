@@ -1,17 +1,21 @@
 #include "raytracer.h"
 
+/* Render an image of scene with perspective of camera */
 Image* raytracer_render(Scene* scene, Camera *camera) {
   int x, y;
   Image *image;
   Ray ray;
 
   image = new_image(camera->width, camera->height);
+  
+  /* For each column: */
   for(x = 0; x < camera->width; x++) {
+    /* For each pixel in column: */
     for(y = 0; y < camera->height; y++) {
-      // beregn ray
+      /* Calculate ray */
       ray = raytracer_calculate_ray(x, y, camera);
 
-      // trace ray
+      /* Trace ray and assign result to pixel */
       image->pixels[x][y] = raytracer_trace(ray, scene);
     }
     printf("%.1f\n", ((double)x + 1) / camera->width * 100);
@@ -20,31 +24,45 @@ Image* raytracer_render(Scene* scene, Camera *camera) {
   return image;
 }
 
+/* Calculate ray intersecting pixel (x, y) on camera's image plane */
 Ray raytracer_calculate_ray(int x, int y, Camera *camera){
   Vector direction;
   direction = vector_scale(camera->forward, camera->distance);
-  direction = vector_add(direction, vector_scale(camera->up, -y + camera->height / 2.0));
-  direction = vector_add(direction, vector_scale(camera->right, x - camera->width / 2.0));
+  direction = vector_add(direction, vector_scale(camera->up, 
+                                                 -y + camera->height / 2.0));
+  direction = vector_add(direction, vector_scale(camera->right, 
+                                                 x - camera->width / 2.0));
+                                                 
   return create_ray(camera->position, direction);
 }
 
+
 Pixel raytracer_trace(Ray ray, Scene *scene) {
   Intersection intersection = create_intersection();
-  Pixel pixel = {0.05, 0.05, 0.05};
-  if( raytracer_scene_intersection(ray, scene, &intersection) ) {
+  Pixel pixel = {0, 0, 0};
+  
+  /* If ray intersects with scene: */
+  if(raytracer_scene_intersection(ray, scene, &intersection)) {
+    /* Shade pixel */
     pixel = raytracer_phong(intersection, scene);
   }
+  
   return pixel;
 }
 
-int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection *intersection) {
+int raytracer_scene_intersection(Ray ray, Scene *scene, 
+                                 Intersection *intersection) {
   int i;
   Intersection temporary_intersection;
 
   temporary_intersection = create_intersection();
 
+  /* For each object in scene: */
   for(i = 0; i < scene->n_objects; i++) {
-    if(raytracer_object_intersection(ray, scene->objects[i], &temporary_intersection))
+    /* If ray intersects with object: */
+    if(raytracer_object_intersection(ray, scene->objects[i], 
+       &temporary_intersection))
+      /* Reassign intersection if current intersection is closer */
       if(temporary_intersection.t < intersection->t || intersection->t == -1)
         *intersection = temporary_intersection;
   }
@@ -53,7 +71,10 @@ int raytracer_scene_intersection(Ray ray, Scene *scene, Intersection *intersecti
 
 int raytracer_object_intersection(Ray ray, Object *object, Intersection *intersection) {
   double i, j;
-  if(intersection_ray_aabb(ray, object->root.box, &i, &j) && raytracer_kdtree_intersection(ray, &(object->root), intersection)) {
+  
+  /* if ray intersects with object's aabb: */
+  if(intersection_ray_aabb(ray, object->root.box, &i, &j) && 
+     raytracer_kdtree_intersection(ray, &(object->root), intersection)) {
     intersection->color = object->color;
     intersection->material = object->material;
   }
@@ -214,7 +235,6 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
 
   /* return ambient + diffuse + specular */
   return pixel_add(ambient, pixel_add(diffuse, specular));
-  // return ambient;
 }
 
 Intersection *new_intersection(void){

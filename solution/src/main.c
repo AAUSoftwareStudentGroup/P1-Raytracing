@@ -12,14 +12,18 @@ int main(int argc, char* argv[]) {
   Image *image;
 
   unsigned long t0 = time(NULL);
+  
   if(input_parse(argc, argv, &scene, &camera) == 0) {
     return -1;
   }
+  
   image = raytracer_render(scene, camera);
+  
   if(argc == 3)
     image_write(image, argv[2]);
   else
     image_write(image, "out.ppm");
+  
   printf("%lus\n", time(NULL) - t0);
   return 0;
 }
