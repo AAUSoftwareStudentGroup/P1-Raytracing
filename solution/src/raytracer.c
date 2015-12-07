@@ -1,7 +1,7 @@
 #include "raytracer.h"
 
 /* Render an image of scene with perspective of camera */
-Image* raytracer_render(Scene* scene, Camera *camera) {
+Image *raytracer_render(Scene *scene, Camera *camera) {
   int x, y;
   Image *image;
   Ray ray;
@@ -153,9 +153,9 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
     Vector v0p = vector_subtract(p, triangle->verticies[0]->position);
     Vector v1p = vector_subtract(p, triangle->verticies[1]->position);
     Vector v2p = vector_subtract(p, triangle->verticies[2]->position);
-    if( vector_dot(triangle_normal, vector_cross(v01, v0p)) >= -0.0000000000000001 &&
-        vector_dot(triangle_normal, vector_cross(v12, v1p)) >= -0.0000000000000001 &&
-        vector_dot(triangle_normal, vector_cross(v20, v2p)) >= -0.0000000000000001 ) {
+    if(vector_dot(triangle_normal, vector_cross(v01, v0p)) >= -0.0000000000000001 &&
+       vector_dot(triangle_normal, vector_cross(v12, v1p)) >= -0.0000000000000001 &&
+       vector_dot(triangle_normal, vector_cross(v20, v2p)) >= -0.0000000000000001 ) {
       intersection->t = time;
       intersection->ray = ray;
       if(vector_dot(ray.direction, triangle_normal) > 0)
@@ -179,8 +179,8 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
   m_a = intersection.material.ambient_coefficient;
   m_l = intersection.material.diffuse_coefficient;
   m_s = intersection.material.specular_coefficient;
-  m_sp = intersection.material.material_smoothness;
-  m_sm = intersection.material.material_metalness;
+  m_sp = intersection.material.smoothness;
+  m_sm = intersection.material.metalness;
   vN = intersection.normal;
   pC = intersection.color;
   pA = scene->ambient_intensity;
@@ -192,7 +192,8 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
 
   intersection_point = ray_get_point(intersection.ray, intersection.t);
   vU = vector_scale(intersection.ray.direction, -1.0);
-  pS = pixel_add(pixel_scale(pC, m_sm), pixel_scale(create_pixel(1.0,1.0,1.0),(1-m_sm)));
+  pS = pixel_add(pixel_scale(pC, m_sm), pixel_scale(create_pixel(1.0,1.0,1.0),
+                                                    (1-m_sm)));
 
   for(i = 0; i < scene->n_lights; i++) {
     pI = scene->lights[i]->color;
@@ -203,16 +204,19 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
       light_sample_position = point_light_get_sample(scene->lights[i]);
 
       vI = vector_normalize(vector_subtract(light_sample_position,
-                    intersection_point));
+                            intersection_point));
       Intersection inter = create_intersection();
       Ray r = create_ray(intersection_point, vI);
       r.initial_point = ray_get_point(r, 0.01);
 
-      if(!raytracer_scene_intersection(r, scene, &inter) || vector_norm(vector_subtract(scene->lights[i]->position, r.initial_point)) < vector_norm(vector_subtract(ray_get_point(r, inter.t), r.initial_point))) {
+      if(!raytracer_scene_intersection(r, scene, &inter) || 
+      vector_norm(vector_subtract(scene->lights[i]->position, r.initial_point)) < 
+      vector_norm(vector_subtract(ray_get_point(r, inter.t), r.initial_point))) {
         samples_reached_light++;
       }
     }
-    sampled_light_intensity = (double)samples_reached_light / scene->lights[i]->sampling_rate;
+    sampled_light_intensity = (double)samples_reached_light / 
+                              scene->lights[i]->sampling_rate;
     
     pI = pixel_scale(pI, sampled_light_intensity);
     vI = vector_normalize(vector_subtract(scene->lights[i]->position,
