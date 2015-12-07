@@ -220,7 +220,7 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
     
     pI = pixel_scale(pI, sampled_light_intensity);
     vI = vector_normalize(vector_subtract(scene->lights[i]->position,
-                  intersection_point));
+                          intersection_point));
 
     Ray r = create_ray(intersection_point, vI);
     r.initial_point = ray_get_point(r, 0.01);
