@@ -3,12 +3,10 @@
 
 #include <math.h>
 
-/* A vector consists of a x-, y- and z-coordinate */
 typedef struct _vector {
 	double x,y,z;
 } Vector;
 
-/* Prototypes */
 Vector vector_add(Vector v1, Vector v2);
 Vector vector_subtract(Vector v1, Vector v2);
 Vector vector_scale(Vector v, double s);
