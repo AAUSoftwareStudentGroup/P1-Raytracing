@@ -8,12 +8,10 @@
 #include <stdio.h>
 #include <math.h>
 
-/* En pixel bestaar af tre farve-vaerdier af typen double */
 typedef struct _pixel {
   double red, green, blue;
 } Pixel;
 
-/* Prototyper */
 Pixel create_pixel(double red, double green, double blue);
 Pixel create_from_color_temperature(unsigned int kelvin);
 char pixel_component_to_byte(double);

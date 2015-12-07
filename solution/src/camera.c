@@ -10,9 +10,6 @@ Camera *new_camera(unsigned int width, unsigned int height) {
   camera->forward  = (Vector){0,1,0};
   camera->up       = (Vector){0,0,1};
   camera->distance = width;
-
-  /* Initialiser resten af camera variablerne */
-  
   return camera; 
 }
 
