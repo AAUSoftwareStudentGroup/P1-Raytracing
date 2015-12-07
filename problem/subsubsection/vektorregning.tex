@@ -1,5 +1,5 @@
 \subsubsection{Vektorregning}
-En vigtig del af vores raytracer består af vektorregning. For at regne med vektorer, er det først nødvendigt at lave en struct vector, der fortæller programmet hvad en vektor består af. Som set på programmet (skriv nummer på program) kan det ses at en vektor består af tre koordinater, x, y og z. 
+En vigtig del af vores raytracer består af vektorregning. For at regne med vektorer har vi valgt at bruge en struct for at abstrahere over vektorer. Som angivet i programmet kan det ses at en vektor består af tre koordinater, x, y og z. 
 
 \begin{lstlisting}[style=Cstyle, caption=Vektorprototyper og struct]
 typedef struct _vector {
@@ -37,17 +37,4 @@ double vector_dot (Vector v1, Vector v2) {
 \end{lstlisting}
 
 
-\subparagraph{Liste af funktioner i vektorregning}
-\begin{enumerate}
-
-  \item vector\_add - adderer to vektorer.
-  \item vector\_subtract – subtraherer to vektorer.
-  \item vector\_scale - skalerer en given vektor.
-  \item vector\_dot - prikker to vektorer sammen. Resultat bruges i vector norm og vector angle between.
-  \item vector\_norm - finder længden af to vektorer.
-  \item vector\_normalize - normaliserer vektoren (ændrer længden til 1), så man kun har retningen af vektoren tilbage.
-  \item vector\_angle between - finder vinklen mellem to vektorer.
-  \item vector\_cross - Udregner krydsproduktet og finder dermed normalvektoren.
-  \item vector\_rotate\_around\_z og vector\_rotate\_around\_x - roterer en given vektor omkring hhv. z- eller x-aksen.
-
-\end{enumerate}
+Vores bibliotek til vektorregning indeholder funktioner til alle de almindelige vektoroperationer. 

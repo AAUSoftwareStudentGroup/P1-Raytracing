@@ -1,5 +1,6 @@
 #include "light.h"
 
+/* Create random position within radius */
 Vector point_light_get_sample(PointLight *l) {
   Vector rand_pos = {rand()-RAND_MAX/2, rand()-RAND_MAX/2, rand()-RAND_MAX/2};
   rand_pos = vector_normalize(rand_pos);

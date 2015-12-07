@@ -1,6 +1,6 @@
 \subsubsection{Rotationsmatricer}
-Hvis vi vil roterer et punkt eller en vektor omkring nul-punktet i et koordinatsystem kan vi bruge en rotationsmatrix\cite{perspective_projection}.
-En rotationsmatrix er en matrix der, hvis ganget sammen med en anden matrix, roterer en vektor eller et punkt i et koordinatsystem.
+Hvis vi vil roterer et punkt eller en vektor omkring nul-punktet i et koordinatsystem kan vi bruge en rotationsmatrix \cite{perspective_projection}.
+En rotationsmatrix er en matrix der, hvis multipliceret sammen med en anden matrix, roterer en vektor eller et punkt i et koordinatsystem.
 \begin{align}\label{eu_eqn}
   R_x(\theta) = 
   \begin{bmatrix}
@@ -8,7 +8,7 @@ En rotationsmatrix er en matrix der, hvis ganget sammen med en anden matrix, rot
     0 & cos \theta & - sin \theta\\ 
     0 & sin \theta & cos \theta
   \end{bmatrix}\\
-    R_y(\theta) = bil
+    R_y(\theta) =
   \begin{bmatrix}
     cos \theta  & 0 & sin \theta\\ 
     0           & 1 & 0\\ 
@@ -21,9 +21,9 @@ En rotationsmatrix er en matrix der, hvis ganget sammen med en anden matrix, rot
     0 & 0 & 1
   \end{bmatrix}
 \end{align}
-Indsætter vi mængden af radianer vi vil dreje vores vektor og ganger dem sammen, burde vektoren bliver drejet omkring nul-punktet med netop den mængde radianer.
-For at sikre at vi har forstået brugen korrekt, vil vi nu forsøge at dreje en vektor i rummet omkring x-aksen ved hjælp af $R_x$. 
-Vi har en vektor u:
+Vi indsætter den vinkel som vi vil drejse vektoren med i radianer og multiplicerer dem sammen som angivet i formlen. Vektoren bliver drejet omkring nul-punktet med netop den mængde radianer som er angivet.
+Nedenstående eksempel illustrerer princippet ved at dreje en vektor i rummet.
+
 \begin{equation}
   U=
   \begin{bmatrix}
