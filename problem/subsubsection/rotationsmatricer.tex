@@ -48,12 +48,34 @@ Vi tager prik-produktet af dem, og indsætter 1 Radian i $R_x$:
 Og kalder det for vektor V og indsætter både U og V i Geogebra og får den til at udregne vinklen mellem dem:
 \begin{figure}[H]
   \center
-  \includegraphics[width=12cm]{rotationsmatrix_eksempel.png}
+  \begin{tikzpicture}
+    \coordinate (O) at (0,0) ;
+    \coordinate (u) at (1, 5) ;
+    \coordinate (v) at (4.75, 1.86) ;
+
+    \draw[step=1cm,gray,very thin] (-1.9,-1.9) grid (5.9,5.9);
+    \foreach \x in {0,1,2,3,4}
+      \draw (\x cm,1pt) -- (\x cm,-1pt) node[anchor=north] {$\x$};
+    \foreach \y in {0,1,2,3,4}
+      \draw (1pt,\y cm) -- (-1pt,\y cm) node[anchor=east] {$\y$};
+    \draw[thick,->] (O) -- (4.5,0);
+    \draw[thick,->] (O) -- (0,4.5);
+    \draw[thick,->] (O) -- (4.5,0) node[anchor=north west] {x};
+    \draw[thick,->] (O) -- (0,4.5) node[anchor=south east] {y};
+
+    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (O) -- (u);
+    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (O) -- (v);
+    \node [below right] at (u) {$u$};
+    \node [below] at (v) {$v$};
+    \draw (1, 0.4) arc (10:77:1);
+    \node[] at (1,1.2)  {$\theta = 1$};
+  \end{tikzpicture}
+  % \includegraphics[width=12cm]{rotationsmatrix_eksempel.png}
   \caption{Eksempel på en rotationsmatrix}
   \label{fig:rotationsmatrix_eksempel}
 \end{figure}
-Geogebra udregner vinkler i grader, så vi omregner grader til radianer ved hjælp af ligningen:
-\begin{equation}
-  R=d/2*\pi/360=57,31/2*\pi/360\approx1
-\end{equation}
-Dette viser os at vektor $U$ blev drejet 1 radian, som forventet.
+% Geogebra udregner vinkler i grader, så vi omregner grader til radianer ved hjælp af ligningen:
+% \begin{equation}
+  % R=d/2*\pi/360=57,31/2*\pi/360\approx1
+% \end{equation}
+Vi ser at vektor $U$ blev drejet 1 radian, som forventet.
