@@ -10,7 +10,7 @@
 
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   FILE *fp_model;
-  *camera = new_camera(200, 200);
+  *camera = new_camera(1000, 1000);
   int i;
 
   if(ply_validate(argc, argv, &fp_model) == 0)
