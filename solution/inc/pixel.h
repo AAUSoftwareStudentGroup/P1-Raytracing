@@ -13,7 +13,7 @@ typedef struct _pixel {
   double red, green, blue;
 } Pixel;
 
-/* Prototyper */
+/* Prototypes */
 Pixel create_pixel(double red, double green, double blue);
 Pixel create_from_color_temperature(unsigned int kelvin);
 char pixel_component_to_byte(double);

@@ -83,7 +83,7 @@ Pixel create_from_color_temperature(unsigned int kelvin) {
 }
 
 /* Makes the pixel-value, that was previously between 0 and 1 into a normal
-   RGB-value, that, in this case, is between 0 and 256 */
+   RGB-value, that, in this case, is between 0 and 255 */
 char pixel_component_to_byte(double component) {
   return (char)((double)(component*255 + 0.5));
 }
