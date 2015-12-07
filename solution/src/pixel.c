@@ -82,6 +82,8 @@ Pixel create_from_color_temperature(unsigned int kelvin) {
   return color;
 }
 
+/* Laver pixelvardien, som foer var mellem 0 og 1 om til en normal RGB-vaerdi, 
+   som er mellem 0 og 256 */
 char pixel_component_to_byte(double component) {
   return (char)((double)(component*255 + 0.5));
 }
@@ -91,11 +93,13 @@ Pixel pixel_scale(Pixel color, double scalar) {
 }
 
 Pixel pixel_multiply(Pixel color1, Pixel color2) {
-  return (Pixel){color1.red * color2.red, color1.green * color2.green, color1.blue * color2.blue};
+  return (Pixel){color1.red * color2.red, color1.green * color2.green, 
+    color1.blue * color2.blue};
 }
 
 Pixel pixel_add(Pixel color1, Pixel color2){
-  return (Pixel){MIN(color1.red + color2.red,1.0), MIN(color1.green + color2.green, 1.0), MIN(color1.blue + color2.blue,1.0)};
+  return (Pixel){MIN(color1.red + color2.red,1.0), 
+    MIN(color1.green + color2.green, 1.0), MIN(color1.blue + color2.blue,1.0)};
 }
 
 

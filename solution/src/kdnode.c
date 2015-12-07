@@ -89,6 +89,5 @@ KDNode *new_kdnode(void) {
   n->low = NULL;
   n->high = NULL;
   n->triangles = NULL;
-  
   return n;
 }
