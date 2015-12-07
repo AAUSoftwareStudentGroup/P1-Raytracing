@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-/* En vektor bestaar af et x-, y og z-koordinat */
+/* A vector consists of a x-, y- and z-coordinate */
 typedef struct _vector {
 	double x,y,z;
 } Vector;

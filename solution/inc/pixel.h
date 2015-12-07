@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <math.h>
 
-/* En pixel bestaar af tre farve-vaerdier af typen double */
+/* A pixel consists of three color-values of type double */
 typedef struct _pixel {
   double red, green, blue;
 } Pixel;
