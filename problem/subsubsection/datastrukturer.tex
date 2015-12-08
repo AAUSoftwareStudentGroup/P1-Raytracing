@@ -64,7 +64,7 @@ På linje to i ovenstående kodeuddrag kan det ses, at et lys har en given posit
 \paragraph{Materiale}
 I virkeligheden har vi mange forskellige materialer der både syner og føles anderledes end andre. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere det i raytracing har vi brugt nogen værdier der ofte bruges i forbindelse med 3D-rendering og især raytracing. Vi har valgt at bruge Phong-modellen da den er relativ simpel og giver et godt resultat.
 
-\begin{lstlisting}[style=Cstyle, caption=Typedefinition af Material]
+\begin{lstlisting}[style=Cstyle, caption=Struct til Material]
 typedef struct _material {
   double ambient_coefficient;
   double diffuse_coefficient;
@@ -81,7 +81,7 @@ Specular_coefficient er værdien der viser hvor meget objektet spejler igen. Den
 \paragraph{Billede}
 Vi har en Image-struct for at simplificerer måden vi udskriver pixels på og forbedre læseligheden.
 
-\begin{lstlisting}[style=Cstyle, caption=Image definitionen]
+\begin{lstlisting}[style=Cstyle, caption=Struct til Image]
 typedef struct _image {
   unsigned int width, height;
   Pixel **pixels;
