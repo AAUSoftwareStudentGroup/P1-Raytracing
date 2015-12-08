@@ -11,6 +11,32 @@
  
 \paragraph{Skæring med scene}
 
+Funktionen raytracer\_scene\_intersection tjekker om en ray skærer med et objekt.
+
+\begin{lstlisting}[style=Cstyle, caption=Structs til objektet]
+int raytracer_scene_intersection(Ray ray, Scene *scene, 
+                                 Intersection *intersection) {
+  int i;
+  Intersection temporary_intersection;
+
+  temporary_intersection = create_intersection();
+
+  /* For each object in scene: */
+  for(i = 0; i < scene->n_objects; i++) {
+    /* If ray intersects with object: */
+    if(raytracer_object_intersection(ray, scene->objects[i], 
+       &temporary_intersection))
+      /* Reassign intersection if current intersection is closer */
+      if(temporary_intersection.t < intersection->t || intersection->t == -1)
+        *intersection = temporary_intersection;
+  }
+  return intersection->t > 0;
+}
+\end{lstlisting}
+
+If-sætningen på linje 11 assigner temporary\_intersection til en intersection hvis rayen rammer et objekt. If-sætningen på linje 14 sørger for at det er den intersection der er tættest på der bliver sendt tilbage. 
+
+
 \paragraph{Skæring med objekt}
 
 \paragraph{Skæring med KD-træ}
