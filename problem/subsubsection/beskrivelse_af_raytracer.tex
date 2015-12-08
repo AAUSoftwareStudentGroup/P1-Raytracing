@@ -31,12 +31,24 @@ Image *raytracer_render(Scene *scene, Camera *camera) {
 Funktionen vist herover, danner en lysstråle for hver pixel i billedet. lysstråle sendes videre sammen med scenen til funktionen raytracer\_trace, som returnere hvilken farve den pågældende pixel på billedet skal have. Til sidst returneres så det endelige billede.
 
 \paragraph{Tracer}
-[Indledning: Nævn funktionen der omtales, og beskriv med én sætning, kort og præcist hvad funktione gør]
+Funktionen raytracer\_trace er den funktion som starter raytraceren samt returnerer en pixelfarve hvis en ray skærer med et objekt i scenen. Funktionen er vist herunder.  
 
-[Indsæt funktionen hvis den fylder mindre end ca. en halv side, ellers henvis til bilag]
+\begin{lstlisting} 
+Pixel raytracer_trace(Ray ray, Scene *scene) {
+  Intersection intersection = create_intersection();
+  Pixel pixel = {0, 0, 0};
+  
+  /* If ray intersects with scene: */
+  if(raytracer_scene_intersection(ray, scene, &intersection)) {
+    /* Shade pixel */
+    pixel = raytracer_phong(intersection, scene);
+  }
+  
+  return pixel;
+}
+\end{lstlisting}
+Funktionen initialiserer en skæring med værdien -1 ved at kalde funktionen create_intersection (linje 2), og en pixel initialiseres til at indeholde RGB-værdien for farven sort (linje 3). Der checkes efterfølgende om den pågældende ray skærer med et objekt i scenen (linje 6), hvis den gør det så tildeles der en RGB-værdi (linje 8), som returneres til sidst i funktionen. 
 
-[Beskriv det væsentlige i funktionen ved at henvise til listingen ovenover, ligesom i under datastrukturer]
- 
 \paragraph{Skæring med scene}
 
 Funktionen raytracer\_scene\_intersection tjekker om en ray skærer med et objekt.
