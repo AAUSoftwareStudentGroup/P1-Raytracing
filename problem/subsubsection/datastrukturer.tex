@@ -87,7 +87,21 @@ typedef struct _plane {
 Planens normalvektor er beskrevet med typen vector (linje to). Et punkt til planen er angivet som en stedvektor af typen vector (linje tre).
 
 \paragraph{Skæring}
+Det er nødvendigt at vide, hvis og hvor en lysstråle skærer et objekt, for at finde de data (farve, materiale, lokation m.m.) der er i det givne punkt ved skæringen.
 
+\begin{lstlisting}[style=Cstyle, caption=Struct til intersection]
+typedef struct _intersection {
+  Vector normal;
+  Material material;
+  Pixel color;
+  Triangle *triangle;
+  Ray ray;
+  double t;
+} Intersection;
+\end{lstlisting}
+
+På ovenstående struct kan det ses, at hver intersection har en mængde data, som bruges senere til phong. Hver intersection har en 
+normalvektor, et materiale, en farve beskrevet ved typen Pixel. Den har derudover en 'triangle' til at finde hvilken trekant i træet, som den skærer i, en 'ray', som beskriver lysstrålen, der skærer i det givne punkt samt en tid t af typen double, der beskriver afstanden fra initialpoint.
 
 \paragraph{Image}
 
