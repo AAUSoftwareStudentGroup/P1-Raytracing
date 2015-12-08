@@ -10,8 +10,33 @@
 
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   FILE *fp_model;
-  *camera = new_camera(200, 200);
   int i;
+  int width, height, int_argument;
+
+  width = height = 200;
+
+  for(i = 2; i < argc - 1; i++) {
+    if(argv[i][0] == '-') {
+      switch(argv[i][1]) {
+        case 'h':
+        case 'w':
+        case 't':
+          sscanf(argv[i+1], "%d", &int_argument);
+          break;
+      }
+      switch(argv[i++][1]) {
+        case 'h':
+          height = int_argument;
+          break;
+        case 'w':
+          width = int_argument;
+          break;
+      }
+    }
+  }
+
+  
+  *camera = new_camera(width, height);
 
   if(ply_validate(argc, argv, &fp_model) == 0)
     return 0;
@@ -33,7 +58,7 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
 int ply_validate(int argc, char* argv[], FILE** fp_model) {
   char str[256];
 
-  if(argc != 2) {
+  if(argc < 2) {
     printf("Usage: %s [FILE]\n\n  FILE: Path to input-file in ply format\n\n", argv[0]);
     return 0;
   }
@@ -64,7 +89,7 @@ int ply_init(FILE *fp_model, Scene **scene) {
   ply_scan_element(fp_model, "object", &n_objects);
   ply_scan_element(fp_model, "light", &n_lights);
   input_file_find_first(fp_model, "end_header");
-  input_jump_lines(fp_model, n_verticies+1); // A COMMENT WILL POSSIBLY FUCK THIS UP
+  input_jump_lines(fp_model, n_verticies+1);
 
   n_triangles = 0;
   for(i = 0; i < n_polygons; i++) {

@@ -128,6 +128,7 @@ int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersect
 
 int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *intersection) {
   double denominator, time;
+  Plane plane;
   Vector v01, v12, v20, triangle_normal;
   time = -1;
 
@@ -139,13 +140,10 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
                                          triangle->verticies[2]->position));
   triangle_normal = vector_normalize(vector_cross(v01, v12));
 
-  denominator = vector_dot(ray.direction, triangle_normal);
+  plane = create_plane(triangle->verticies[0]->position, triangle_normal);
 
-  if(denominator == 0)
-    return 0;
-
-  time = vector_dot(vector_subtract(triangle->verticies[0]->position,
-                     ray.initial_point), triangle_normal) / denominator;
+  // test ray_plane intersection
+  time = intersection_ray_plane(ray, plane);
 
   // If triangle on front of camera: check if point is inside triangle
   if(time > 0) {
@@ -174,6 +172,7 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
   Vector vN, vI, vR, vU, intersection_point;
   Pixel pA, pS, pC, pI, ambient, diffuse, specular;
   Vector light_sample_position;
+  Ray r;
 
   /* initialize */
   m_a = intersection.material.ambient_coefficient;
@@ -183,7 +182,7 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
   m_sm = intersection.material.material_metalness;
   vN = intersection.normal;
   pC = intersection.color;
-  pA = scene->ambient_intensity;
+  pA = scene->ambient_intensity = create_pixel(1,1,1);
   diffuse = create_pixel(0.0, 0.0, 0.0);
   specular = create_pixel(0.0, 0.0, 0.0);
 
@@ -204,11 +203,11 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
 
       vI = vector_normalize(vector_subtract(light_sample_position,
                     intersection_point));
-      Intersection inter = create_intersection();
-      Ray r = create_ray(intersection_point, vI);
+      
+      r = create_ray(intersection_point, vI);
       r.initial_point = ray_get_point(r, 0.01);
 
-      if(!raytracer_scene_intersection(r, scene, &inter) || vector_norm(vector_subtract(scene->lights[i]->position, r.initial_point)) < vector_norm(vector_subtract(ray_get_point(r, inter.t), r.initial_point))) {
+      if(!raytracer_in_shadow(light_sample_position, r, scene)) {
         samples_reached_light++;
       }
     }
@@ -218,23 +217,33 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
     vI = vector_normalize(vector_subtract(scene->lights[i]->position,
                   intersection_point));
 
-    Ray r = create_ray(intersection_point, vI);
-    r.initial_point = ray_get_point(r, 0.01);
-
     vR = vector_normalize(vector_add(vector_scale(vI, -1),
                           vector_scale(vN, vector_dot(vI, vN) * 2)));
 
     /* diffuse light =  m_l * MAX(vI * vN, 0) * pC * pI*/
-    diffuse = pixel_add(diffuse, pixel_multiply(pixel_scale(pC,
-                        m_l * MAX(vector_dot(vI, vN), 0)), pI));
+    // diffuse = pixel_add(diffuse, pixel_multiply(pixel_scale(pC,
+                        // m_l * MAX(vector_dot(vI, vN), 0)), pI));
 
-    /* specular light = m_s * MAX(-vR * vU, 0) ^ m_sp * pI * pS */
-    specular = pixel_add(specular, pixel_multiply(pS, pixel_scale(pI,
-                         m_s * pow(MAX(vector_dot(vR, vU), 0), m_sp))));
+    // /* specular light = m_s * MAX(-vR * vU, 0) ^ m_sp * pI * pS */
+    // specular = pixel_add(specular, pixel_multiply(pS, pixel_scale(pI,
+    //                      m_s * pow(MAX(vector_dot(vR, vU), 0), m_sp))));
   }
 
   /* return ambient + diffuse + specular */
   return pixel_add(ambient, pixel_add(diffuse, specular));
+}
+
+int raytracer_in_shadow(Vector point, Ray r, Scene *scene) {
+  Intersection inter;
+
+  inter = create_intersection();
+  
+  if(raytracer_scene_intersection(r, scene, &inter)) {
+    if(vector_norm(vector_subtract(point, r.initial_point)) > vector_norm(vector_subtract(ray_get_point(r, inter.t), r.initial_point))) {
+      return 1;
+    }
+  }
+  return 0;
 }
 
 Intersection *new_intersection(void){
