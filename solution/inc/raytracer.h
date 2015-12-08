@@ -32,3 +32,13 @@ Intersection *new_intersection(void);
 Intersection create_intersection(void);
 
 #endif
+
+
+/*
+
+For hver pixel:
+  bestem en ray gennem pixel
+  hvis der er skæring mellem ray og scenens geometri:
+    udregn pixel farve
+
+*/

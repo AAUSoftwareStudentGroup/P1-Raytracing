@@ -13,7 +13,7 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   int i;
   int width, height, int_argument;
 
-  width = height = 200;
+  width = height = 1000;
 
   for(i = 2; i < argc - 1; i++) {
     if(argv[i][0] == '-') {
@@ -202,8 +202,8 @@ int ply_parse(FILE *fp_model, Scene **scene, Camera **camera) {
     (*scene)->objects[i]->material.ambient_coefficient = 1;
     input_read_double(fp_model, &((*scene)->objects[i]->material.diffuse_coefficient));
     input_read_double(fp_model, &((*scene)->objects[i]->material.specular_coefficient));
-    input_read_int(fp_model, &((*scene)->objects[i]->material.material_smoothness));
-    (*scene)->objects[i]->material.material_metalness = 0.5;
+    input_read_int(fp_model, &((*scene)->objects[i]->material.smoothness));
+    (*scene)->objects[i]->material.metalness = 0.5;
   }
 
   for(i = 0; i < (*scene)->n_lights; i++) {

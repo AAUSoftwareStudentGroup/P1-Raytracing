@@ -1,0 +1,12 @@
+Da programmet er bygget op efter at skulle kunne implementeres på en hjemmeside, er renderingen nødt til at være hurtigt. Dette opnås ved hjælp af optimering, hvor der i programmet er brugt KD-træer.
+
+\begin{lstlisting}[style=Cstyle, caption=Struct til KDNode]
+typedef struct _KDNode {
+  struct _KDNode *low, *high;
+  AABB box;
+  Triangle **triangles;
+  int n_triangles;
+} KDNode;
+\end{lstlisting}
+
+Et KD-træ består af en række nodes (linje 2), hvilket er forgreninger, den består af en AABB box (linje 3) og en række trekanter (linje 4-5).
