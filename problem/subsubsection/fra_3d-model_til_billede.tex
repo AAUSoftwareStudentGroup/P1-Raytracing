@@ -117,7 +117,7 @@ Modellen bygger på følgende \textit{shading} funktion\cite{stanford_phong}.
 \begin{equation} \label{eq:phong}
   \rho = \rho_a + \sum\limits_{lights} (\rho_d + \rho_s)
 \end{equation}
-Hvor $\rho_a$, $\rho_d$ og $\rho_s$ er hhv. \textit{ambient}, \textit{diffuse} og \textit{specular} lys beregnet som følgende\cite{stanford_phong}.
+Hvor $\rho_a$, $\rho_l$ og $\rho_s$ er hhv. \textit{ambient}, \textit{diffuse} og \textit{specular} lys beregnet som følgende\cite{stanford_phong}.
 \begin{align}
 	\rho_a &= m_a CA  \\
 	\rho_l &= m_l CI max(\vv{I}\bullet\vv{n}, 0) \\

@@ -1,6 +1,34 @@
 \subsubsection{Beskrivelse af raytracer}
 [Indledning]
 \paragraph{Rendering}
+For at rendere et billede af lampen og dens belysning, er der lavet en funktion raytracer\_render, der modtager scenen, dvs. samlingen af alle 3D-objekter og lys, samt modellen for det kamera, som billedet skal dannes ud fra. Funktionen er vist herunder.
+
+\begin{lstlisting}[style=Cstyle, caption=Funktionen der rendere billedet af scenen med et kameras perspektiv]
+Image *raytracer_render(Scene *scene, Camera *camera) {
+  int x, y;
+  Image *image;
+  Ray ray;
+
+  image = new_image(camera->width, camera->height);
+  
+  /* For each column: */
+  for(x = 0; x < camera->width; x++) {
+    /* For each pixel in column: */
+    for(y = 0; y < camera->height; y++) {
+      /* Calculate ray */
+      ray = raytracer_calculate_ray(x, y, camera);
+      
+      /* Trace ray and assign result to pixel */
+      image->pixels[x][y] = raytracer_trace(ray, scene);
+    }
+    printf("%.1f\n", ((double)x + 1) / camera->width * 100);
+  }
+
+  return image;
+}
+\end{lstlisting}
+
+Funktionen vist herover, danner en lysstråle for hver pixel i billedet. lysstråle sendes videre sammen med scenen til funktionen raytracer\_trace, som returnere hvilken farve den pågældende pixel på billedet skal have. Til sidst returneres så det endelige billede.
 
 \paragraph{Tracer}
 [Indledning: Nævn funktionen der omtales, og beskriv med én sætning, kort og præcist hvad funktione gør]
