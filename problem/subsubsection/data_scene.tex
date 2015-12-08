@@ -1,0 +1,13 @@
+Scenen er den virtuelle verden, som skal visualiseres. I programmet er scenen beskrevet på følgende måde. 
+
+\begin{lstlisting}[style=Cstyle, caption=Struct til scene]
+typedef struct _scene {
+  Object **objects;
+  unsigned int n_objects;
+  PointLight **lights;
+  unsigned int n_lights;
+  Pixel ambient_intensity;
+} Scene; 
+\end{lstlisting}
+
+En scene består af en række objekter (linje 2-3), en række lys (linje 4-5), samt den ambiente lys intensitet der bruges i Phong.

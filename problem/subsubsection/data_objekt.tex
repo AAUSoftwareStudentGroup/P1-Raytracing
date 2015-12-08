@@ -1,0 +1,23 @@
+Objektet er det man kan se når billedet bliver renderet af raytraceren. I programmet er objektet beskrevet på følgende måde.
+
+\begin{lstlisting}[style=Cstyle, caption=Structs til objektet]
+typedef struct _verticie {
+  Vector position;
+  Vector normal;
+} Vertex;
+
+typedef struct _triangle {
+  Vertex *verticies[3];
+} Triangle;
+
+typedef struct _object {
+  Vertex *verticies;
+  int n_verticies;
+  Triangle *triangles;
+  int n_triangles;
+  Pixel color;
+  Material material;
+} Object;
+\end{lstlisting}
+
+Et objekt består af en række verticies (linje 11-12), en række trekanter (linje 13-14), samt en farve på objektet og koefficienterne til det materiale den er lavet af. En verticie består af en positionsvektor og en normalvektor (linje 2-3) og en trekant består af tre verticies (linje 7).
