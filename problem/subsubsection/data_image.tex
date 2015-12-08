@@ -1,0 +1,11 @@
+Vi har en Image-struct for at simplificerer måden vi udskriver pixels på og forbedre læseligheden.
+
+\begin{lstlisting}[style=Cstyle, caption=Image definitionen]
+typedef struct _image {
+  unsigned int width, height;
+  Pixel **pixels;
+} Image;
+\end{lstlisting}
+
+Vores Image-struct definerer 2 doubles der beskriver højden og bredden på vores billede i pixels.
+Vi har også et 2-dimensionelt array med Pixels der beskriver vores billede.
