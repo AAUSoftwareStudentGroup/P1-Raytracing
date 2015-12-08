@@ -33,7 +33,7 @@ Funktionen vist herover, danner en lysstråle for hver pixel i billedet. lysstr�
 \paragraph{Tracer}
 Funktionen raytracer\_trace er den funktion som starter raytraceren samt returnerer en pixelfarve hvis en ray skærer med et objekt i scenen. Funktionen er vist herunder.  
 
-\begin{lstlisting} 
+\begin{lstlisting} [style=Cstyle, caption=Funktionen raytracer\_trace]
 Pixel raytracer_trace(Ray ray, Scene *scene) {
   Intersection intersection = create_intersection();
   Pixel pixel = {0, 0, 0};
@@ -53,7 +53,7 @@ Funktionen initialiserer en skæring med værdien -1 ved at kalde funktionen cre
 
 Funktionen raytracer\_scene\_intersection tjekker om en ray skærer med et objekt.
 
-\begin{lstlisting}[style=Cstyle, caption=Structs til objektet]
+\begin{lstlisting}[style=Cstyle, caption=Funktionen raytracer\_scene\_intersection]
 int raytracer_scene_intersection(Ray ray, Scene *scene, 
                                  Intersection *intersection) {
   int i;
