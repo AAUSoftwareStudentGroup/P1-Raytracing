@@ -78,19 +78,6 @@ Ambient_coefficient er værdien der fortæller hvor lyst objektet er selvom der 
 Diffuse_coefficient er skygge-værdien der viser hvor stor indflydelse lys har på objektet. 
 Specular_coefficient er værdien der viser hvor meget objektet spejler igen. Denne værdi er høj for en ny poleret bil, men næsten 0 hvis det er en murstensvæg. I vores program gør det at vi får en næsten hvid plet hvis vores lyskilde spejler igen.
 
-\paragraph{Billede}
-Vi har en Image-struct for at simplificerer måden vi udskriver pixels på og forbedre læseligheden.
-
-\begin{lstlisting}[style=Cstyle, caption=Struct til Image]
-typedef struct _image {
-  unsigned int width, height;
-  Pixel **pixels;
-} Image;
-\end{lstlisting}
-
-Vores Image-struct definerer 2 doubles der beskriver højden og bredden på vores billede i pixels.
-Vi har også et 2-dimensionelt array med Pixels der beskriver vores billede.
-
 \paragraph{AABB}
 AABB står for axis aligned bounding boxes, og er en kasse hvis sidder er parallelle med akserne. En boks består af to vektorer som indeholder det laveste og største koordinatsæt for boksen. De to vektorer er en stedvektor til det hjørne på boksen som er tættest på og længst væk fra origo. Nedenstående kodeuddrag viser hvordan dette er gjort i programmet.
 
@@ -129,7 +116,18 @@ typedef struct _intersection {
 På ovenstående struct kan det ses, at hver intersection har en mængde data, som bruges senere til phong. Hver intersection har en 
 normalvektor, et materiale, en farve beskrevet ved typen Pixel. Den har derudover en 'triangle' til at finde hvilken trekant i træet, som den skærer i, en 'ray', som beskriver lysstrålen, der skærer i det givne punkt samt en tid t af typen double, der beskriver afstanden fra initialpoint.
 
-\paragraph{Image}
+\paragraph{Billede}
+Vi har en Image-struct for at simplificerer måden vi udskriver pixels på og forbedre læseligheden.
+
+\begin{lstlisting}[style=Cstyle, caption=Struct til Image]
+typedef struct _image {
+  unsigned int width, height;
+  Pixel **pixels;
+} Image;
+\end{lstlisting}
+
+Vores Image-struct definerer 2 doubles der beskriver højden og bredden på vores billede i pixels.
+Vi har også et 2-dimensionelt array med Pixels der beskriver vores billede.
 
 \paragraph{Kamera}
 Som vist på figur \ref{...} i afsnit \ref{...} er kameraet beskrevet som dens position og orientering i rummet samt en afstand, d, til kameraet. Derudover har kameraet en højde og en bredde som definerer billedets opløsning. Nedenstående kodeuddrag viser hvordan dette er gjort i programmet.
