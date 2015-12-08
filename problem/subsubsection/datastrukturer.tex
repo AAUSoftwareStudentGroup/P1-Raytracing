@@ -1,5 +1,6 @@
 \subsubsection{Datastrukturer}
-[Indledning: Forklar at vi bruger datastrukturer for at abstrahere over data.]
+I programmet bliver der brugt datastrukturer for at abstrahere over data. Data der hænger sammen er således grupperet sammen. 
+
 \paragraph{Vektor}
 En stor del af opgaven bygger på vektorer i rummet. Nedenstående kodeuddrag viser hvordan der er abstraheret over en vektor i programmet. 
 
@@ -20,7 +21,7 @@ typedef struct _ray {
 } Ray;
 \end{lstlisting}
 
-På linje to i ovenstående kodeuddrag kan det ses at en ray består af et startpunkt (initial_point) og en retning, begge af disse er af typen Vector, som tidligere er beskrevet til at have et x-, y- og z-koordinat.
+På linje to i ovenstående kodeuddrag kan det ses at en ray består af et startpunkt (initial\_point) og en retning, begge af disse er af typen Vector, som tidligere er beskrevet til at have et x-, y- og z-koordinat.
 
 \paragraph{Trekant}
 Enhver figur i programmet består af mange sammensatte trekanter. I de fleste tilfælde er det så mange trekanter, at det ikke umiddelbart er synligt for det blotte øje. Et hjørne i en trekant udspændes af flere og kaldes en vertex.
@@ -59,7 +60,7 @@ typedef struct _pointlight {
 } PointLight;
 \end{lstlisting}
 
-På linje to i ovenstående kodeuddrag kan det ses, at et lys har en given position, som bestemmes af ét 3D-koordinat. Dette lys har en farve, bestående af en RGB-værdi. Derudover har lyset også en intensitet og radius af typen double, samt sampling_rate af typen int.
+På linje to i ovenstående kodeuddrag kan det ses, at et lys har en given position, som bestemmes af ét 3D-koordinat. Dette lys har en farve, bestående af en RGB-værdi. Derudover har lyset også en intensitet og radius af typen double, samt sampling\_rate af typen int.
 
 \paragraph{Materiale}
 I virkeligheden har vi mange forskellige materialer der både syner og føles anderledes end andre. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere det i raytracing har vi brugt nogen værdier der ofte bruges i forbindelse med 3D-rendering og især raytracing. Vi har valgt at bruge Phong-modellen da den er relativ simpel og giver et godt resultat.
@@ -75,15 +76,18 @@ typedef struct _material {
 \end{lstlisting}
 
 Ambient\_coefficient er værdien der fortæller hvor lyst objektet er selvom der ikke er direkte lys på den. Den bevirker at hvis objektet er i skygge så er det ikke helt sort.
-Diffuse_coefficient er skygge-værdien der viser hvor stor indflydelse lys har på objektet. 
+Diffuse\_coefficient er skygge-værdien der viser hvor stor indflydelse lys har på objektet. 
 Specular\_coefficient er værdien der viser hvor meget objektet spejler igen. Denne værdi er høj for en ny poleret bil, men næsten 0 hvis det er en murstensvæg. I vores program gør det at vi får en næsten hvid plet hvis vores lyskilde spejler igen.
 
 \paragraph{AABB}
-AABB står for axis aligned bounding boxes, og er en kasse hvis sidder er parallelle med akserne. En boks består af to vektorer som indeholder det laveste og største koordinatsæt for boksen. De to vektorer er en stedvektor til det hjørne på boksen som er tættest på og længst væk fra origo. Nedenstående kodeuddrag viser hvordan dette er gjort i programmet.
+AABB står for axis aligned bounding boxes, og er en kasse hvis sider er parallelle med akserne. En boks består af to vektorer som indeholder det laveste og største koordinatsæt for boksen. Den ene vektor er en stedvektor til det hjørne på boksen som har de største x-,y- og z-værdier, hvor den anden vektor er en stedvektor til det hjørne på boksen med de laveste x-, y-, z-værdier. 
+
+Nedenstående kodeuddrag viser hvordan dette er gjort i programmet.
 
 \begin{lstlisting}[style=Cstyle, caption=Struct til bounding boxes]
 typedef struct _plane {
   Vector low, high;
+} AABB;
 \end{lstlisting}
 
 De to punkter til boksen er angivet som stedvektorer af typen vector (linje 2).
@@ -95,6 +99,7 @@ Et plan i rummet er beskrev ved et punkt og en normalvektor til planen. Hvordan 
 typedef struct _plane {
   Vector normal;
   Vector point;
+} Plane;
 \end{lstlisting}
 
 Planens normalvektor er beskrevet med typen vector (linje to). Et punkt til planen er angivet som en stedvektor af typen vector (linje tre).
@@ -175,6 +180,7 @@ typedef struct _object {
 \end{lstlisting}
 
 Et objekt består af en række verticies (linje 2-3), en række trekanter (linje 4-5), samt en farve på objektet og koefficienterne til det materiale den er lavet af.
+
 \paragraph{K-dimensionalt træ}
 Da programmet er bygget op efter at skulle kunne implementeres på en hjemmeside, er renderingen nødt til at være hurtigt. Dette opnås ved hjælp af optimering, hvor der i programmet er brugt KD-træer.
 
