@@ -7,3 +7,8 @@ Vector point_light_get_sample(PointLight *l) {
   rand_pos = vector_scale(rand_pos, l->radius);
   return vector_add(l->position, rand_pos);
 }
+
+int free_pointlight(PointLight* light) {
+  free(light);
+  return 1;
+}

@@ -1,5 +1,5 @@
 #include "raytracer.h"
-
+#define FALLOFF_DISTANCE 20.0
 /* Render an image of scene with perspective of camera */
 Image *raytracer_render(Scene *scene, Camera *camera) {
   int x, y;
@@ -168,7 +168,7 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
 
 Pixel raytracer_phong(Intersection intersection, Scene *scene) {
   int i, j, samples_reached_light;
-  double m_a, m_l, m_s, m_sp, m_sm, sampled_light_intensity;
+  double m_a, m_l, m_s, m_sp, m_sm, sampled_light_intensity, distance_light;
   Vector vN, vI, vR, vU, intersection_point;
   Pixel pA, pS, pC, pI, ambient, diffuse, specular;
   Vector light_sample_position;
@@ -212,8 +212,13 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
         samples_reached_light++;
       }
     }
-    sampled_light_intensity = (double)samples_reached_light / 
+    sampled_light_intensity = (double)(samples_reached_light*
+                              scene->lights[i]->intensity) / 
                               scene->lights[i]->sampling_rate;
+
+    // distance_light = vector_norm(vector_subtract(scene->lights[i]->position,
+                          // intersection_point));
+    // sampled_light_intensity /= distance_light*distance_light;
     
     pI = pixel_scale(pI, sampled_light_intensity);
     vI = vector_normalize(vector_subtract(scene->lights[i]->position,

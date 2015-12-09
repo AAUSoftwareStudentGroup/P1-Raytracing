@@ -14,5 +14,6 @@ typedef struct _pointlight {
 } PointLight;
 
 Vector point_light_get_sample(PointLight *l);
+int free_pointlight(PointLight* light);
 
 #endif

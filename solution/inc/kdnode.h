@@ -25,5 +25,6 @@ typedef struct _KDNode {
 int kdnode_build_subnodes(KDNode *node, int level);
 int kdnode_is_leaf(KDNode *node);
 KDNode *new_kdnode(void);
+int free_kdnode(KDNode *node);
 
 #endif
