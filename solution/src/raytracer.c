@@ -129,16 +129,11 @@ int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersect
 int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *intersection) {
   double denominator, time;
   Plane plane;
-  Vector v01, v12, v20, triangle_normal;
+  Vector triangle_normal;
   time = -1;
 
-  v01 = vector_normalize(vector_subtract(triangle->verticies[1]->position,
-                                         triangle->verticies[0]->position));
-  v12 = vector_normalize(vector_subtract(triangle->verticies[2]->position,
-                                         triangle->verticies[1]->position));
-  v20 = vector_normalize(vector_subtract(triangle->verticies[0]->position,
-                                         triangle->verticies[2]->position));
-  triangle_normal = vector_normalize(vector_cross(v01, v12));
+  triangle_normal = vector_normalize(vector_cross(triangle->edges[0], 
+                                                  triangle->edges[1]));
 
   plane = create_plane(triangle->verticies[0]->position, triangle_normal);
 
@@ -146,20 +141,18 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
 
   // If triangle on front of camera: check if point is inside triangle
   if(time > 0) {
+    int i;
     Vector p = ray_get_point(ray, time);
-    Vector v0p = vector_subtract(p, triangle->verticies[0]->position);
-    Vector v1p = vector_subtract(p, triangle->verticies[1]->position);
-    Vector v2p = vector_subtract(p, triangle->verticies[2]->position);
-    if(vector_dot(triangle_normal, vector_cross(v01, v0p)) >= -0.0000000000000001 &&
-       vector_dot(triangle_normal, vector_cross(v12, v1p)) >= -0.0000000000000001 &&
-       vector_dot(triangle_normal, vector_cross(v20, v2p)) >= -0.0000000000000001 ) {
-      intersection->t = time;
-      intersection->ray = ray;
-      if(vector_dot(ray.direction, triangle_normal) > 0)
-        triangle_normal = vector_scale(triangle_normal, -1);
-      intersection->normal = triangle_normal;
-      return 1;
-    }
+    for(i = 0; i < 3; i++)
+      if(vector_dot(triangle_normal, vector_cross(triangle->edges[i], 
+         vector_subtract(p, triangle->verticies[i]->position))) < 0)
+        return 0;
+    intersection->t = time;
+    intersection->ray = ray;
+    if(vector_dot(ray.direction, triangle_normal) > 0)
+      triangle_normal = vector_scale(triangle_normal, -1);
+    intersection->normal = triangle_normal;
+    return 1;
   }
 
 
