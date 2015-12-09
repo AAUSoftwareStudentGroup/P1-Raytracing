@@ -4,8 +4,8 @@
 #include "vector.h"
 
 typedef struct _plane {
-  Vector normal;
   Vector point;
+  Vector normal;
 } Plane;
 
 Plane create_plane(Vector point, Vector normal);

@@ -51,13 +51,18 @@ int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
   return *tmax >= *tmin && *tmax > 0;
 }
 
-int intersection_ray_plane(Ray r, Plane p) {
-  double denominator;
+double intersection_ray_plane(Ray r, Plane p) {
+  double denominator, time;
 
+  // test ray_plane intersection
   denominator = vector_dot(r.direction, p.normal);
 
   if(denominator == 0)
     return 0;
 
-  return vector_dot(vector_subtract(p.point, r.initial_point), p.normal) / denominator;
+  time = vector_dot(vector_subtract(p.point, r.initial_point), p.normal) / denominator;
+
+  return time;
 }
+
+

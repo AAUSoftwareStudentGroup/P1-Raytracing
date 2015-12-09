@@ -142,7 +142,6 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
 
   plane = create_plane(triangle->verticies[0]->position, triangle_normal);
 
-  // test ray_plane intersection
   time = intersection_ray_plane(ray, plane);
 
   // If triangle on front of camera: check if point is inside triangle
@@ -163,6 +162,7 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
     }
   }
 
+
   return 0;
 }
 
@@ -182,7 +182,7 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
   m_sm = intersection.material.metalness;
   vN = intersection.normal;
   pC = intersection.color;
-  pA = scene->ambient_intensity = create_pixel(1,1,1);
+  pA = scene->ambient_intensity;
   diffuse = create_pixel(0.0, 0.0, 0.0);
   specular = create_pixel(0.0, 0.0, 0.0);
 
@@ -223,12 +223,12 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
                           vector_scale(vN, vector_dot(vI, vN) * 2)));
 
     /* diffuse light =  m_l * MAX(vI * vN, 0) * pC * pI*/
-    // diffuse = pixel_add(diffuse, pixel_multiply(pixel_scale(pC,
-                        // m_l * MAX(vector_dot(vI, vN), 0)), pI));
+    diffuse = pixel_add(diffuse, pixel_multiply(pixel_scale(pC,
+                        m_l * MAX(vector_dot(vI, vN), 0)), pI));
 
     // /* specular light = m_s * MAX(-vR * vU, 0) ^ m_sp * pI * pS */
-    // specular = pixel_add(specular, pixel_multiply(pS, pixel_scale(pI,
-    //                      m_s * pow(MAX(vector_dot(vR, vU), 0), m_sp))));
+    specular = pixel_add(specular, pixel_multiply(pS, pixel_scale(pI,
+                         m_s * pow(MAX(vector_dot(vR, vU), 0), m_sp))));
   }
 
   /* return ambient + diffuse + specular */
@@ -239,7 +239,7 @@ int raytracer_in_shadow(Vector point, Ray r, Scene *scene) {
   Intersection inter;
 
   inter = create_intersection();
-  
+
   if(raytracer_scene_intersection(r, scene, &inter)) {
     if(vector_norm(vector_subtract(point, r.initial_point)) > vector_norm(vector_subtract(ray_get_point(r, inter.t), r.initial_point))) {
       return 1;
