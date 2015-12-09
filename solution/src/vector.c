@@ -47,7 +47,7 @@ Vector vector_rotate_around_x(Vector v, double angle){
 }
 
 Vector vector_rotate_around_xz(Vector v, double vertical, double horizontal) {
-  v = vector_rotate_around_x(v, horizontal);
-  v = vector_rotate_around_z(v, vertical);
+  v = vector_rotate_around_x(v, vertical);
+  v = vector_rotate_around_z(v, horizontal);
   return v;
 }

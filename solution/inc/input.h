@@ -13,8 +13,8 @@ typedef struct {
   int width;
   int height;
   int color_temperature;
-  int horizontal_angle;
-  int vertical_angle;
+  double horizontal_angle;
+  double vertical_angle;
 } Configuration;
 
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera);

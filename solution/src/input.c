@@ -29,7 +29,7 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
     input_build_root_node((*scene)->objects[i]);
   }
 
-  (*scene)->ambient_intensity = create_pixel(0.25,0.25,0.25);
+  (*scene)->ambient_intensity = create_pixel(0.1,0.1,0.1);
 
   return 1;
 }
@@ -255,7 +255,9 @@ int ply_parse(FILE *fp_model, Configuration conf, Scene **scene, Camera **camera
   // camera_set_angle(*camera, 3.14/8, -3.14/4.0);
 
   if(lamp_source != NULL)
-    camera_look_at_point(*camera, lamp_source->position, vector_norm(lamp_source->position), conf.vertical_angle, conf.horizontal_angle);
+    camera_look_at_point(*camera, lamp_source->position, 
+                         vector_norm(vector_subtract(lamp_source->position, (*camera)->position)), 
+                         conf.vertical_angle, conf.horizontal_angle);
 
   return 1;
 }
