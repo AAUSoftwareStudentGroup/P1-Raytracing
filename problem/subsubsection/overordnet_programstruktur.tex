@@ -1,1 +1,30 @@
 \subsubsection{Overordnet programstruktur}
+Programmets main.c-funktion, er startstedet til programmet, og den eneste funktion, der udføres. Dette kan lade sig gøre, ved at main-funktionen kalder alle de andre funktioner, der bruges. Programmet afsluttes ved slutningen af main.
+
+\begin{lstlisting}[style=Cstyle, caption=Main]
+int main(int argc, char* argv[]) {
+  Scene *scene;
+  Camera *camera;
+  Image *image;
+
+  unsigned long t0 = time(NULL);
+  
+  if(input_parse(argc, argv, &scene, &camera) == 0) {
+    return -1;
+  }
+  
+  image = raytracer_render(scene, camera);
+  
+  if(argc == 3)
+    image_write(image, argv[2]);
+  else
+    image_write(image, "out.ppm");
+  
+  printf("%lus\n", time(NULL) - t0);
+  return 0;
+}
+\end{lstlisting}
+
+På linje 1 i ovenstående kodeuddrag, kaldes main, med parametrene argc og argv. argc bruges til at holde styr på, hvor mange informationer programmet får. Igennem if-løkken på linje 8 tjekkes det, om inputtet er korrekt, og der angives nogle specifikke informationer til programmet, alt efter hvad inputtet er, som gøres gennem input\_parse-funktionen i input.c. Her kan man f.eks. angive højde, bredde og farvetemperatur. argv bruges til at holde styr på, hvad programmet har fået som input, som fx hjælper med at læse indtil næste bindestreg, dette gøres også i input\_parse-funktionen. Linje 12 laver selve billedet 'image' af typen Image, som består af bredde, højde og farve, ved hjælp af raytracer\_render-funktionen. 
+
+Linje 6 og 19 bruges udelukkende til teknisk anvendelse, for at kunne se hvor lang tid programmet har taget for at fuldføre. Dette bruges f.eks. for at vi kan se, om hastigheden af programmet er optimal og tilfredsstillende. 
