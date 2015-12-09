@@ -1,6 +1,47 @@
 \subsubsection{Datastrukturer}
 I programmet bliver der brugt datastrukturer for at abstrahere over data. Data der hænger sammen er således grupperet sammen. 
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+[-,thick,%
+  every node/.style={shape=rectangle,inner sep=3pt,draw,thick}]
+\footnotesize
+\node {Scene} [edge from parent fork down]
+  [sibling distance=2cm]
+  child[dashed,draw=black!40] {node[dashed,draw=black!40]  {Object}}
+  child {node {Object}
+    child {node {Material}}
+    child {node {KDNode - root}
+      [sibling distance=4.5cm]
+        child {node {KDNode - leaf}
+          [sibling distance=1.5cm]
+          child[dashed,draw=black!40] {node[dashed,draw=black!40] {Triangle}}
+          child {node {Triangle}}
+        }
+      child {node {KDNode - node}
+        [sibling distance=3cm]
+        child {node {KDNode - leaf}
+          [sibling distance=1.5cm]
+          child[dashed,draw=black!40] {node[dashed,draw=black!40] {Triangle}}
+          child {node {Triangle}}
+        }
+        child {node {KDNode - leaf}
+          [sibling distance=1.5cm]
+          child[dashed,draw=black!40] {node[dashed,draw=black!40] {Triangle}}
+          child {node {Triangle}}
+        }
+      }
+    }
+  }
+  child[dashed,draw=black!40] {node[dashed,draw=black!40]  {PointLight}}
+  child {node {PointLight}}
+;
+\end{tikzpicture}
+\caption{Data relations model - Stiplede afmærkninger indikere fortsat liste}
+\label{fig:data_model}
+\end{figure}
+
 \paragraph{Vektor}
 En stor del af opgaven bygger på vektorer i rummet. Nedenstående kodeuddrag viser hvordan der er abstraheret over en vektor i programmet. 
 
