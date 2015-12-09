@@ -79,6 +79,24 @@ If-sætningen på linje 11 assigner temporary\_intersection til en intersection 
 
 \paragraph{Skæring med objekt}
 
+Funktionen raytracer\_object\_intersection er en funktion, der undersøger om der er en skæring mellem lysstrålen og objektet. Funktionen ses herunder:
+
+\begin{lstlisting}[style=Cstyle, caption=raytracer\_object\_intersection]
+int raytracer_object_intersection(Ray ray, Object *object, Intersection *intersection) {
+  double i, j;
+  
+  /* if ray intersects with object's aabb: */
+  if(intersection_ray_aabb(ray, object->root.box, &i, &j) && 
+     raytracer_kdtree_intersection(ray, &(object->root), intersection)) {
+    intersection->color = object->color;
+    intersection->material = object->material;
+  }
+  return intersection->t > 0;
+}
+\end{lstlisting}
+
+På linje fem i ovenstående kodeuddrag kan man se at funktionen tjekker først om lysstrålen skærer med aabb, og hvis dette er sandt tjekker den så om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet. (hvad betyder object material??). Herefter returnerer funktionen true, hvis tiden, som beskriver afstanden fra initialpoint til skæringspunktet, er over 0, og false hvis den ikke er.
+
 \paragraph{Skæring med KD-træ}
 
 \paragraph{Skæring med trekant}
