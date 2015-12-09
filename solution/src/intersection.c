@@ -4,7 +4,7 @@ int intersection_triangle_aabb(Triangle triangle, AABB bounding_box){
   int i;
   double tmin, tmax;
   Ray edge_ray;
-  for(i = 0; i < 3; i++){
+  for(i = 0; i < VERTICES_IN_TRIANGLE; i++){
     edge_ray = (Ray){triangle.verticies[i]->position, triangle.edges[i]};
     if(intersection_ray_aabb(edge_ray, bounding_box, &tmin, &tmax) && tmin <= 1)
       return 1;

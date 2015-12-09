@@ -1,5 +1,5 @@
 #include "raytracer.h"
-#define FALLOFF_DISTANCE 20.0
+
 /* Render an image of scene with perspective of camera */
 Image *raytracer_render(Scene *scene, Camera *camera) {
   int x, y;
@@ -143,7 +143,7 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
   if(time > 0) {
     int i;
     Vector p = ray_get_point(ray, time);
-    for(i = 0; i < 3; i++)
+    for(i = 0; i < VERTICES_IN_TRIANGLE; i++)
       if(vector_dot(triangle_normal, vector_cross(triangle->edges[i], 
          vector_subtract(p, triangle->verticies[i]->position))) < 0)
         return 0;

@@ -8,16 +8,16 @@
 #define MIN(a,b) (((a) < (b) ? (a) : (b)))
 #endif
 
-int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
+int input_parse(int argc, char* argv[], Scene **scene, Camera **camera, Configuration *conf) {
   FILE *fp_model;
   int i;
-  Configuration conf;
-  conf = create_configuration();
-
-  if(ply_validate(argc, argv, &fp_model, &conf) == 0)
+  if(input_read_command_args(argc, argv, conf) == 0)
     return 0;
 
-  *camera = new_camera(conf.width, conf.height);
+  *camera = new_camera(conf->width, conf->height);
+  
+  if(ply_validate(conf, &fp_model) == 0)
+    return 0;
   
   if(ply_init(fp_model, scene) == 0)
     return 0;
@@ -34,26 +34,17 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   return 1;
 }
 
-int ply_validate(int argc, char* argv[], FILE** fp_model, Configuration *conf) {
-  char str[256];
+int input_read_command_args(int argc, char* argv[], Configuration *conf) {
   int i, int_argument;
   double double_argument;
+  char string_argument[256];
 
   if(argc < 2) {
     printf("Usage: %s [FILE]\n\n  FILE: Path to input-file in ply format\n\n", argv[0]);
     return 0;
   }
-
-  *fp_model = fopen(argv[1], "r");
-
-  if(*fp_model == NULL) {
-    printf("ERROR: file %s, could not be opened! %s:%d\n", argv[1], __FILE__, __LINE__);
-    return 0;
-  }
-
-  if(fscanf(*fp_model, "%s", str) != EOF && strcmp(str,"ply") != 0) {
-    printf("ERROR: %s is not a ply file! %s:%d\n", argv[1], __FILE__, __LINE__);
-    return 0;
+  else {
+    strcpy(conf->in_file, argv[1]);
   }
 
   for(i = 2; i < argc - 1; i++) {
@@ -67,6 +58,10 @@ int ply_validate(int argc, char* argv[], FILE** fp_model, Configuration *conf) {
         case 'H':
         case 'V':
           sscanf(argv[i+1], "%lf", &double_argument);
+          break;
+        case 'o':
+          sscanf(argv[i+1], "%s", string_argument);
+          break;
       }
       switch(argv[i++][1]) {
         case 'h':
@@ -84,8 +79,28 @@ int ply_validate(int argc, char* argv[], FILE** fp_model, Configuration *conf) {
         case 'V':
           conf->vertical_angle = double_argument;
           break;
+        case 'o':
+          strcpy(conf->out_file, string_argument);
+          break;
       }
     }
+  }
+  return 1;
+}
+
+int ply_validate(Configuration *conf, FILE** fp_model) {
+  char str[256];
+
+  *fp_model = fopen(conf->in_file, "r");
+
+  if(*fp_model == NULL) {
+    printf("ERROR: file %s, could not be opened! %s:%d\n", conf->in_file, __FILE__, __LINE__);
+    return 0;
+  }
+
+  if(fscanf(*fp_model, "%s", str) != EOF && strcmp(str,"ply") != 0) {
+    printf("ERROR: %s is not a ply file! %s:%d\n", conf->in_file, __FILE__, __LINE__);
+    return 0;
   }
 
   return 1;
@@ -143,7 +158,7 @@ int ply_init(FILE *fp_model, Scene **scene) {
   return 1;
 }
 
-int ply_parse(FILE *fp_model, Configuration conf, Scene **scene, Camera **camera) {
+int ply_parse(FILE *fp_model, Configuration *conf, Scene **scene, Camera **camera) {
   PointLight *lamp_source = NULL;
   int i, j, k, triangle_index;
   int n_faces, verticies_in_polygon;
@@ -238,7 +253,7 @@ int ply_parse(FILE *fp_model, Configuration conf, Scene **scene, Camera **camera
     if((*scene)->lights[i]->color.red   == 0 && 
        (*scene)->lights[i]->color.green == 0 &&
        (*scene)->lights[i]->color.blue  == 0) {
-      (*scene)->lights[i]->color = create_from_color_temperature(conf.color_temperature);
+      (*scene)->lights[i]->color = create_from_color_temperature(conf->color_temperature);
       lamp_source = (*scene)->lights[i];
     }
 
@@ -257,7 +272,7 @@ int ply_parse(FILE *fp_model, Configuration conf, Scene **scene, Camera **camera
   if(lamp_source != NULL)
     camera_look_at_point(*camera, lamp_source->position, 
                          vector_norm(vector_subtract(lamp_source->position, (*camera)->position)), 
-                         conf.vertical_angle, conf.horizontal_angle);
+                         conf->vertical_angle, conf->horizontal_angle);
 
   return 1;
 }
@@ -360,5 +375,9 @@ int input_build_root_node(Object *object) {
 }
 
 Configuration create_configuration() {
-  return (Configuration){1000, 1000, 6600, 0, 0};
+  Configuration conf = {1000, 1000, 6600, 0, 0, "", ""};
+  conf.out_file = (char*)malloc(sizeof(char)*256);
+  conf.in_file = (char*)malloc(sizeof(char)*256);
+  strcpy(conf.out_file, "out.ppm");
+  return conf;
 }

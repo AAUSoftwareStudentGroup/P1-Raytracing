@@ -15,12 +15,15 @@ typedef struct {
   int color_temperature;
   double horizontal_angle;
   double vertical_angle;
+  char *in_file;
+  char *out_file;
 } Configuration;
 
-int input_parse(int argc, char* argv[], Scene **scene, Camera **camera);
-int ply_validate(int argc, char* argv[], FILE **fp_model, Configuration *conf);
+int input_parse(int argc, char* argv[], Scene **scene, Camera **camera, Configuration *conf);
+int input_read_command_args(int argc, char* argv[], Configuration *conf);
+int ply_validate(Configuration *conf, FILE** fp_model);
 int ply_init(FILE *fp_model, Scene **scene);
-int ply_parse(FILE *fp_model, Configuration conf, Scene **scene, Camera **camera);
+int ply_parse(FILE *fp_model, Configuration *conf, Scene **scene, Camera **camera);
 int ply_scan_element(FILE *file, const char *element_name, int *out);
 int input_file_find_first(FILE *file, char *search_str);
 int input_file_find_next(FILE *file, char *search_str);

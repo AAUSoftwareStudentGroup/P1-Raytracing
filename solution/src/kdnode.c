@@ -20,9 +20,9 @@ int kdnode_build_subnodes(KDNode *node, int level) {
   // X-axis is longest axis
   if(dx > dy && dx > dz) {
     for(i = 0; i < node->n_triangles; i++) {
-      for(j = 0; j < 3; j++) {
+      for(j = 0; j < VERTICES_IN_TRIANGLE; j++) {
         cut_position += node->triangles[i]->verticies[j]->position.x
-        / (node->n_triangles*3);
+        / (node->n_triangles*VERTICES_IN_TRIANGLE);
       }
     }
     node->low->box.high.x = cut_position;
@@ -30,9 +30,9 @@ int kdnode_build_subnodes(KDNode *node, int level) {
   }
   else if(dy > dx && dy > dz) { // Y-axis is longest axis
     for(i = 0; i < node->n_triangles; i++) {
-      for(j = 0; j < 3; j++) {
+      for(j = 0; j < VERTICES_IN_TRIANGLE; j++) {
         cut_position += node->triangles[i]->verticies[j]->position.y
-        / (node->n_triangles*3);
+        / (node->n_triangles*VERTICES_IN_TRIANGLE);
       }
     }
     node->low->box.high.y = cut_position;
@@ -40,9 +40,9 @@ int kdnode_build_subnodes(KDNode *node, int level) {
   }
   else { // Z-axis is longest axis
     for(i = 0; i < node->n_triangles; i++) {
-      for(j = 0; j < 3; j++) {
+      for(j = 0; j < VERTICES_IN_TRIANGLE; j++) {
         cut_position += node->triangles[i]->verticies[j]->position.z
-        / (node->n_triangles*3);
+        / (node->n_triangles*VERTICES_IN_TRIANGLE);
       }
     }
     node->low->box.high.z = cut_position;

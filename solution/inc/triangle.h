@@ -3,14 +3,16 @@
 
 #include "vector.h"
 
-typedef struct _verticie {
+#define VERTICES_IN_TRIANGLE 3
+
+typedef struct _vertex {
   Vector position;
   Vector normal;
 } Vertex;
 
 typedef struct _triangle {
-  Vertex *verticies[3];
-  Vector edges[3];
+  Vertex *verticies[VERTICES_IN_TRIANGLE];
+  Vector edges[VERTICES_IN_TRIANGLE];
 } Triangle;
 
 #endif

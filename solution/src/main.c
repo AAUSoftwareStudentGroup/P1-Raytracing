@@ -10,19 +10,18 @@ int main(int argc, char* argv[]) {
   Scene *scene;
   Camera *camera;
   Image *image;
+  Configuration conf;
 
   unsigned long t0 = time(NULL);
+  conf = create_configuration();
   
-  if(input_parse(argc, argv, &scene, &camera) == 0) {
+  if(input_parse(argc, argv, &scene, &camera, &conf) == 0) {
     return -1;
   }
   
   image = raytracer_render(scene, camera);
   
-  if(argc == 3)
-    image_write(image, argv[2]);
-  else
-    image_write(image, "out.ppm");
+  image_write(image, conf.out_file);
 
   free_camera(camera);
   free_scene(scene);
