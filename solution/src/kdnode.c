@@ -1,7 +1,7 @@
 #include "kdnode.h"
 
 int kdnode_build_subnodes(KDNode *node, int level) {
-  double cut_position;
+  double cut_position, dx, dy, dz;
   int i, j, n_same_triangles;
 
   cut_position = 0;
@@ -13,9 +13,12 @@ int kdnode_build_subnodes(KDNode *node, int level) {
   node->low->triangles =(Triangle**)malloc(node->n_triangles*sizeof(Triangle*));
   node->high->triangles=(Triangle**)malloc(node->n_triangles*sizeof(Triangle*));
 
+  dx = node->box.high.x - node->box.low.x;
+  dy = node->box.high.y - node->box.low.y;
+  dz = node->box.high.z - node->box.low.z;
+  
   // X-axis is longest axis
-  if(node->box.high.x - node->box.low.x > node->box.high.y - node->box.low.y && 
-     node->box.high.x - node->box.low.x > node->box.high.z - node->box.low.z) {
+  if(dx > dy && dx > dz) {
     for(i = 0; i < node->n_triangles; i++) {
       for(j = 0; j < 3; j++) {
         cut_position += node->triangles[i]->verticies[j]->position.x
@@ -25,10 +28,7 @@ int kdnode_build_subnodes(KDNode *node, int level) {
     node->low->box.high.x = cut_position;
     node->high->box.low.x = cut_position;
   }
-  else if(node->box.high.y - node->box.low.y >
-          node->box.high.x - node->box.low.x && 
-          node->box.high.y - node->box.low.y > 
-          node->box.high.z - node->box.low.z) { // Y-axis is longest axis
+  else if(dy > dx && dy > dz) { // Y-axis is longest axis
     for(i = 0; i < node->n_triangles; i++) {
       for(j = 0; j < 3; j++) {
         cut_position += node->triangles[i]->verticies[j]->position.y

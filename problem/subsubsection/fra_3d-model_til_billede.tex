@@ -12,11 +12,12 @@ En 3D-model er en matematisk beskrivelse af et tre dimensionelt objekt. For at b
     \caption{Eksempel hvor trekanter bruges til at repræsentere et objekt: http://www.cs.rpi.edu}
 \end{figure}
 
+For at rendere et billede af en 3D-model bestående af trekanter, er man nødt til at have en model for det kamera, som billedet renderes ud fra. Hvordan kameraet kan modelleres er beskrevet i næste afsnit.
+
 \paragraph{Kamera}
 [BESKRIV HVORDAN KAMERAET ER EN MODEL FOR HVORDAN DER LAVES ET BILLEDE AF ET KAMERA]
 For at beskrive kameraet er det nødvendigt at fastlægge dets position og orientering i rummet[KILDE]. Hvordan dette kan modelleres er vist på figur [INDSÆT REF]
 
-[LAV FIGUR DER VISER VEKTORER DER BESKRIVER KAMERAET]
 \begin{figure}[H]
   \label{fig:kamera}
   \centering
@@ -35,7 +36,12 @@ For at beskrive kameraet er det nødvendigt at fastlægge dets position og orien
 \end{tikzpicture}
   \caption{Viser hvordan kameraet kan beskrives ved tre vektorer $\protect\vv{r}$, $\protect\vv{u}$ og $\protect\vv{f}$, der repræsentere hhv. op, højre og frem retninger for kameraet.}
 \end{figure}
-[FIGUR TILFØJ VEKTORER DER BESKRIVER PUNKTET B, SOM LINEAR KOMBINATION. TILFØJ NORMALVEKTOR FRA BILLEDPLANEN TIL KAMERAET]
+
+[FIGUR TILFØJ VEKTORER DER BESKRIVER PUNKTET B, SOM LINEAR KOMBINATION.]
+
+[SKRIV EN FORMEL DER VISER SAMMENHÆNGEN MELLEM ET PIXELKOORDINAT (X, Y) OG SÅ PUNKTET PÅ BILLEDPLANEN, UD FRA VEKTORERNE FOR KAMERAET.]
+
+[SKRIV OVERGANG TIL NÆSTE AFSNIT]
 
 \paragraph{Perspektiv projektion}
 For at udlede en model for billeddannelsen, tages der udgangspunkt i en perspektiv projektion. Perspektiv projektion er en måde at danne et billede af 3D-objekter ved at projektere objekterne hen på et plan mod et kameraes position\cite{fig:perspective_projection}. Princippet bag perspektiv projektion er vist på figur \ref{fig:perspektiv_projektion}.
