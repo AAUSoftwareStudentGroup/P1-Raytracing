@@ -51,9 +51,9 @@ typedef struct _vector {
 } Vector;
 \end{lstlisting}
 
-På linje 2 i ovenstående kodeuddrag er det vist hvordan en 3D vektors koordinarter er beskrevet med typen double. 
+På linje 2 i ovenstående kodeuddrag er det vist hvordan en 3D vektors koordinater er beskrevet med typen double. 
 
-\paragraph{Stråle}
+\paragraph{Ray}
 For at benytte sig af ray-tracingmetoden er det naturligvis nødvendigt at have en ray (stråle) som man kan trace (følge). 
 
 \begin{lstlisting}[style=Cstyle, caption=Struct til ray]
@@ -64,8 +64,8 @@ typedef struct _ray {
 
 På linje to i ovenstående kodeuddrag kan det ses at en ray består af et startpunkt (initial\_point) og en retning, begge af disse er af typen Vector, som tidligere er beskrevet til at have et x-, y- og z-koordinat.
 
-\paragraph{Trekant}
-Enhver figur i programmet består af mange sammensatte trekanter. I de fleste tilfælde er det så mange trekanter, at det ikke umiddelbart er synligt for det blotte øje. Et hjørne i en trekant udspændes af flere og kaldes en vertex.
+\paragraph{Triangle}
+Enhver figur i programmet består af mange sammensatte trekanter. Jo flere trekanter billedet består af des mere glat er overfladen. Et hjørne i en trekant udspændes af flere vektorer og kaldes en vertex.
     
 \begin{lstlisting}[style=Cstyle, caption=Struct til vertex]
 typedef struct _verticie {
@@ -85,7 +85,7 @@ typedef struct _triangle {
 } Triangle;
 \end{lstlisting}
 
-Denne struct viser, kort sagt, at en trekant består af tre hjørner, altså tre verticies, af typen Vertex, samt tre edges, der er stedvektorer til trekantens tre sider. 
+Denne struct viser, kort sagt, at en trekant består af tre hjørner, altså tre vertices, af typen Vertex, samt tre edges, der er stedvektorer til trekantens tre sider. 
 
 \paragraph{Point\_lights}
 
@@ -104,7 +104,7 @@ typedef struct _pointlight {
 På linje to i ovenstående kodeuddrag kan det ses, at et lys har en given position, som bestemmes af ét 3D-koordinat. Dette lys har en farve, bestående af en RGB-værdi. Derudover har lyset også en intensitet og radius af typen double, samt sampling\_rate af typen int.
 
 \paragraph{Materiale}
-I virkeligheden har vi mange forskellige materialer der både syner og føles anderledes end andre. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere det i raytracing har vi brugt nogen værdier der ofte bruges i forbindelse med 3D-rendering og især raytracing. Vi har valgt at bruge Phong-modellen da den er relativ simpel og giver et godt resultat.
+I virkeligheden har vi mange forskellige materialer der både syner og føles anderledes end andre. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere det i raytracing har vi brugt nogen værdier der ofte bruges i forbindelse med 3D-rendering og især raytracing.
 
 \begin{lstlisting}[style=Cstyle, caption=Struct til Material]
 typedef struct _material {
