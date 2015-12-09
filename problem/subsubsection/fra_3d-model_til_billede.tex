@@ -138,5 +138,20 @@ Hvor $m_s$ er den specular konstant, $S$ er en lineær interpolation mellem obje
 \end{align}
 
 De anvendte vektorer til phong \textit{shading} funktionen er vist på figuren herunder.
-
-[LAV FIGUR DER VISER DE FORSKELLIGE VEKTORER DER BRUGES TIL PHONG]
+\begin{figure}[H]
+  \label{fig:phongvektorer}
+  \centering
+  \begin{tikzpicture} [scale=2.5]
+    \draw [ultra thick] (1,2) -- (5, 2);
+    \node [above] at (4,2) {Overflade};
+    \draw [very thick][->] (7,5) -- (3, 2);
+    \node [above] at (7,5) {Kamera};
+    \draw [very thick][->] (3, 2) -- (1,4);
+    \node [above] at (1,4) {Lyskilde};
+    \draw [very thick][->] (3, 2) -- (3,5);
+    \node [above] at (3,5) {Overfladenormal};
+    \draw [very thick][->] (3, 2) -- (5,4);
+    \node [above] at (5,4) {Lyskilde reflektion};
+  \end{tikzpicture}
+  \caption{Illustration af vektorer i phong-modellen}
+\end{figure}
