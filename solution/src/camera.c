@@ -39,7 +39,6 @@ int camera_set_angle(Camera *camera, double vertical_angle, double horizontal_an
   /* Rotating up and forward vector */
   camera->up      = vector_rotate_around_xz(camera->up,      vertical_angle, horizontal_angle);
   camera->forward = vector_rotate_around_xz(camera->forward, vertical_angle, horizontal_angle);
-
   camera->right   = vector_rotate_around_z(camera->right,   horizontal_angle);
   
   return 1;
