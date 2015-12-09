@@ -80,19 +80,15 @@ I modsætning til en perspektiv projektion af et punkt på et plan, er backwards
   \path[fill=blue!50, draw=gray!20] (2,-8,2) -- (-2,-8,2) -- (0,-8,0) -- (2,-8,2);
 \draw (0,0,0) -- (0,-8,1);
 \path[fill=gray!20, draw=gray!40] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
-\draw (0,0,0) -- (1,-4,1);
-
-\draw plot [mark=*, mark size=2] coordinates{(1,-4,1) }; 
+\draw plot [mark=*, mark size=2] coordinates{(0,-4,0.5) }; 
 \draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
-\node [above right] at (1,-4,1) {$B$};
+\node [above right] at (0,-4,0.5) {$B$};
 \node [above right] at (0,0,0) {$C$};
-\draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (0,0,0) -- (1,-4,1);
-\node [above right] at (0.5,-2,0.5) {$\vv{r}$};
+\draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (0,0,0) -- (0,-4,0.5);
+\node [above right] at (0,-2,0.25) {$\vv{r}$};
 \end{tikzpicture}
-  \caption{Viser hvordan en der kan opstilles retningsvektor mellem kameraets position $C$ og punktet $P$ på billedplanen, som sammen med startpunktet $C$ beskriver lysstrålen i omvendt retning.}
+  \caption{Viser hvordan en der kan opstilles retningsvektor mellem kameraets position $C$ og punktet $P$ på billedplanen, som sammen med startpunktet $C$ beskriver lysstrålen fra trekanten i omvendt retning.}
 \end{figure}
-
-[TEGN TO PUNKTER MERE PÅ FIGUREN OVENOVER OG TAG UDGANGS PUNKT I AFBILDNING AF EN TREKANT I STEDET FOR ET PUNKT HVOR DEN SKÆRES I MIDTEN]
 
 Retningsvektoren $\vv{r}$ for lysstrålen kan heraf beskrives som følgende.
 
@@ -113,70 +109,34 @@ Der findes flere forskellige modeller for hvordan lysintensiteten for en lysstr�
 \paragraph{Phong-modellen}
 Phong-modellen er en såkaldt \textit{shading} funktion, som beskriver lyset fra punkter på et objekt på baggrund af lyskilden, objektet og kameraets synsvinkel\cite{phong_paper}. Der findes flere forskellige variationer af phong-modellen. Da vi som vist i afsnit \ref{sec:temptilrgb} kan arbejde med farvetemperaturer via rgb-værdier, så har vi valgt en variation af phong-modellen, som beskriver lys via rgb-værdier. 
 
-Modellen bygger på følgende \textit{shading} funktion\cite{stanford_phong}.
+Ud fra modellen\cite{stanford_phong}, kan der skrives følgende overordnede \textit{shading} funktion.
 \begin{equation} \label{eq:phong}
   \rho = \rho_a + \sum\limits_{lights} (\rho_d + \rho_s)
 \end{equation}
-Hvor $\rho_a$, $\rho_d$ og $\rho_s$ er hhv. \textit{ambient}, \textit{diffuse} og \textit{specular} lys beregnet som følgende\cite{stanford_phong}.
+Hvor $\rho_a$, $\rho_l$ og $\rho_s$ er hhv. \textit{ambient}, \textit{diffuse} og \textit{specular} lys der er beskrevet kort herunder.
+
+\subparagraph{\textit{Ambient} lys} repræsenterer det lys, som reflekteres rundt i rummet og rammer objekter ligeligt fra alle sider\cite{stanford_phong}. Formlen til at beregne dette er følgende\cite{stanford_phong}.
 \begin{align}
-	\rho_a &= m_a CA  \\
-	\rho_l &= m_l CI max(\vv{I}\bullet\vv{n}, 0) \\
-	\rho_s &= m_s S I max(-\vv{r}\bullet\vv{u},0)^{m_{sp}} \\
-	S &= m_{sm} C + (1 - m_sm)(1,1,1)
+	\rho_a &= m_a C A
+\end{align}
+Hvor $m_a$ er den ambiente konstant, $C$ er overfladens farve som rgb-værdi og $A$ er den ambiente lysintensitet.
+
+\subparagraph{\textit{Diffuse} lys} er det lys, som reflekteres ifølge \textit{Lambert's Cosinuslov}. Ud fra loven kan følgende model anvendes til at udregne \textit{diffuse} lys\cite{stanford_phong}.
+\begin{align}
+	\rho_l &= m_l C I max(\vv{I}\bullet\vv{n}, 0)
+\end{align}
+Hvor $m_l$ er den Lambertianske konstant, $I$ er det lyskildens lysintensitet, $\vv{I}$ og $\vv{n}$, er normaliserede vektorer, hhv. vektor fra overfladepunktet mod lyskilden og normalvektoren til overfladepunktet.
+
+\subparagraph{\textit{Specular} lys} er det lys der spejles i objektets overflade, givet ved nedenstående formel\cite{stanford_phong}.
+\begin{align}
+	\rho_s &= m_s S I max(\vv{r}\bullet\vv{u},0)^{m_{sp}} \\
+	S &= m_{sm} C + (1 - m_{sm})(1,1,1)
+\end{align}
+Hvor $m_s$ er den specular konstant, $S$ er en lineær interpolation mellem objektets farve og hvid, afhængig af objektets \textit{metalness} $m_{sm}$. $\vv{u}$ og $\vv{r}$ er normaliserede vektorer, for hhv. vektor fra overfladepunktet mod kameraet og retningsvektor for det reflekterede lys beregnet som følgende.
+\begin{align}
+	\vv{r} &= -\vv{I} + 2 (\vv{I} \bullet \vv{n}) \vv{n}
 \end{align}
 
+De anvendte vektorer til phong \textit{shading} funktionen er vist på figuren herunder.
 
-
-
-
-
-
-
-På figur \ref{fig:phong_skitse} er 
-
-\begin{figure}[H]
-  \label{fig:phong_skitse}
-  \centering
-  \tdplotsetmaincoords{60}{130}
-  \begin{tikzpicture}[tdplot_main_coords]
-\draw (0,0,0) -> (2,-8,2);
-\path[fill=gray!20, draw=gray!40] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
-\draw (0,0,0) -- (0,-4,0.5);
-\path[fill=blue!50, draw=gray!20] (1,-4,1) -- (-1,-4,1) -- (0,-4,0) -- (1,-4,1);
-\draw plot [mark=*, mark size=2] coordinates{(1,-4,1) }; 
-\draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
-\node [above right] at (1,-4,1) {$B$};
-\node [above right] at (0,0,0) {$C$};
-
-\draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (0,0,0) -- (0,-4,0.5);
-\node [above right] at (0.5,-2,0.5) {$\vv{r}$};
-\end{tikzpicture}
-  \caption{Viser de forskellige vektorer der indgår i beregning af lysintensiteten fra et punkt $p$ på et objekt.}
-\end{figure}
-
-
-
-
-%\begin{enumerate}
-
-%  \item Omgivende lys (eng. \textit{ambient light}): En konstant belysning, som bliver tilføjet til alle objekter i scenen. Formålet med dette, er at undgå at skyggerne bliver helt sorte. Da der i et normalt rum altid vil være en lille lysmængde ved alle overflader. 
-%  \item Spredt lys (eng. \textit{diffuse light}): Lyset, som rammer en overflade, og bliver spredt i alle retninger. Intensiteten af dette lys afhænger af vinklen mellem lysvektoren og overfladenormalen.
-%  \item Spejlende lys (eng. \textit{specular light}): Lyset, som bliver reflekteret i en bestemt retning. Grundet dette, er det spejlende lys afhænig af vinklen mellem kameravektoren og lysvektoren. Det spejlende lys hjælper med at få et objekt til at have højglanspunkter.
-
-%\end{enumerate}
-
-%http://www.gameprogrammer.net/delphi3dArchive/phongfordummies.htm 
-
-
-
-%\begin{equation}
-%  S = (m_{sm})C + (1-m_{sm})(1,1,1)
-%\end{equation}
-
-
-
-
-
-
-
-
+[LAV FIGUR DER VISER DE FORSKELLIGE VEKTORER DER BRUGES TIL PHONG]
