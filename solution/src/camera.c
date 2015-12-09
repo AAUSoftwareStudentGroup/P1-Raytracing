@@ -17,22 +17,18 @@ int free_camera(Camera *camera) {
   free(camera);
   return 1;
 }
-/*
-int camera_look_at_point(Camera *camera, Vector *point) {
-  return 1;
-}
-*/
-void camera_look_at_point(Camera *camera, Vector *point, double distance, double vertical_angle, double horizontal_angle) {
 
-  camera->position = (Vector){0, distance, 0};
+void camera_look_at_point(Camera *camera, Vector point, double distance, double vertical_angle, double horizontal_angle) {
+
+  camera->position = (Vector){0, -distance, 0};
   camera_set_angle(camera, vertical_angle, horizontal_angle);
   
-  camera->right   = vector_scale( camera->right, -1);
-  camera->forward = vector_scale( camera->forward, -1);
-  camera->up      = vector_scale( camera->up, -1);
+  // camera->right   = vector_scale( camera->right, -1);
+  // camera->forward = vector_scale( camera->forward, -1);
+  // camera->up      = vector_scale( camera->up, -1);
 
   camera->position = vector_rotate_around_xz(camera->position, vertical_angle, horizontal_angle);
-  camera->position = vector_add(camera->position, *point);
+  camera->position = vector_add(camera->position, point);
 }
 
 int camera_set_angle(Camera *camera, double vertical_angle, double horizontal_angle){

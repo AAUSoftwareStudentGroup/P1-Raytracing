@@ -6,6 +6,11 @@ Object *new_object(void) {
 }
 
 int free_object(Object *object) {
+  if(object->root.low != NULL)
+    free_kdnode(object->root.low);
+  if(object->root.high != NULL)
+    free_kdnode(object->root.high);
+
   free(object);
   return 1;
 }

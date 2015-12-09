@@ -46,7 +46,7 @@ Vector vector_rotate_around_x(Vector v, double angle){
     cos(angle) * v.z};  
 }
 
-Vector vector_rotate_around_xz(Vector v, double horizontal, double vertical) {
+Vector vector_rotate_around_xz(Vector v, double vertical, double horizontal) {
   v = vector_rotate_around_x(v, horizontal);
   v = vector_rotate_around_z(v, vertical);
   return v;

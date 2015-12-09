@@ -11,39 +11,18 @@
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   FILE *fp_model;
   int i;
-  int width, height, int_argument;
+  Configuration conf;
+  conf = create_configuration();
 
-  width = height = 1000;
-
-  for(i = 2; i < argc - 1; i++) {
-    if(argv[i][0] == '-') {
-      switch(argv[i][1]) {
-        case 'h':
-        case 'w':
-        case 't':
-          sscanf(argv[i+1], "%d", &int_argument);
-          break;
-      }
-      switch(argv[i++][1]) {
-        case 'h':
-          height = int_argument;
-          break;
-        case 'w':
-          width = int_argument;
-          break;
-      }
-    }
-  }
-
-  
-  *camera = new_camera(width, height);
-
-  if(ply_validate(argc, argv, &fp_model) == 0)
+  if(ply_validate(argc, argv, &fp_model, &conf) == 0)
     return 0;
+
+  *camera = new_camera(conf.width, conf.height);
+  
   if(ply_init(fp_model, scene) == 0)
     return 0;
 
-  if(ply_parse(fp_model, scene, camera) == 0)
+  if(ply_parse(fp_model, conf, scene, camera) == 0)
     return 0;
 
   for(i = 0; i < (*scene)->n_objects; i++) {
@@ -55,8 +34,10 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera) {
   return 1;
 }
 
-int ply_validate(int argc, char* argv[], FILE** fp_model) {
+int ply_validate(int argc, char* argv[], FILE** fp_model, Configuration *conf) {
   char str[256];
+  int i, int_argument;
+  double double_argument;
 
   if(argc < 2) {
     printf("Usage: %s [FILE]\n\n  FILE: Path to input-file in ply format\n\n", argv[0]);
@@ -73,6 +54,38 @@ int ply_validate(int argc, char* argv[], FILE** fp_model) {
   if(fscanf(*fp_model, "%s", str) != EOF && strcmp(str,"ply") != 0) {
     printf("ERROR: %s is not a ply file! %s:%d\n", argv[1], __FILE__, __LINE__);
     return 0;
+  }
+
+  for(i = 2; i < argc - 1; i++) {
+    if(argv[i][0] == '-') {
+      switch(argv[i][1]) {
+        case 'h':
+        case 'w':
+        case 't':
+          sscanf(argv[i+1], "%d", &int_argument);
+          break;
+        case 'H':
+        case 'V':
+          sscanf(argv[i+1], "%lf", &double_argument);
+      }
+      switch(argv[i++][1]) {
+        case 'h':
+          conf->height = int_argument;
+          break;
+        case 'w':
+          conf->width = int_argument;
+          break;
+        case 't':
+          conf->color_temperature = int_argument;
+          break;
+        case 'H':
+          conf->horizontal_angle = double_argument;
+          break;
+        case 'V':
+          conf->vertical_angle = double_argument;
+          break;
+      }
+    }
   }
 
   return 1;
@@ -130,7 +143,7 @@ int ply_init(FILE *fp_model, Scene **scene) {
   return 1;
 }
 
-int ply_parse(FILE *fp_model, Scene **scene, Camera **camera) {
+int ply_parse(FILE *fp_model, Configuration conf, Scene **scene, Camera **camera) {
   PointLight *lamp_source = NULL;
   int i, j, k, triangle_index;
   int n_faces, verticies_in_polygon;
@@ -224,8 +237,10 @@ int ply_parse(FILE *fp_model, Scene **scene, Camera **camera) {
 
     if((*scene)->lights[i]->color.red   == 0 && 
        (*scene)->lights[i]->color.green == 0 &&
-       (*scene)->lights[i]->color.blue  == 0)
+       (*scene)->lights[i]->color.blue  == 0) {
+      (*scene)->lights[i]->color = create_from_color_temperature(conf.color_temperature);
       lamp_source = (*scene)->lights[i];
+    }
 
     input_read_double(fp_model, &((*scene)->lights[i]->radius) ); // Radius
     input_read_int(fp_model, &((*scene)->lights[i]->sampling_rate)); // sample_size
@@ -240,7 +255,7 @@ int ply_parse(FILE *fp_model, Scene **scene, Camera **camera) {
   // camera_set_angle(*camera, 3.14/8, -3.14/4.0);
 
   if(lamp_source != NULL)
-    lamp_source->color = create_from_color_temperature(1500);
+    camera_look_at_point(*camera, lamp_source->position, vector_norm(lamp_source->position), conf.vertical_angle, conf.horizontal_angle);
 
   return 1;
 }
@@ -340,4 +355,8 @@ int input_build_root_node(Object *object) {
     kdnode_build_subnodes(root, 0);
 
   return 1;
+}
+
+Configuration create_configuration() {
+  return (Configuration){1000, 1000, 6600, 0, 0};
 }

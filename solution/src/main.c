@@ -23,6 +23,9 @@ int main(int argc, char* argv[]) {
     image_write(image, argv[2]);
   else
     image_write(image, "out.ppm");
+
+  free_camera(camera);
+  free_scene(scene);
   
   printf("%lus\n", time(NULL) - t0);
   return 0;

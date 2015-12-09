@@ -87,3 +87,14 @@ KDNode *new_kdnode(void) {
   n->triangles = NULL;
   return n;
 }
+
+int free_kdnode(KDNode *node) {
+  if(kdnode_is_leaf(node)) {
+    free(node->triangles);
+  } 
+  else {
+    free_kdnode(node->low);
+    free_kdnode(node->high);
+  }
+  return 1;
+}
