@@ -36,10 +36,12 @@ Ray raytracer_calculate_ray(int x, int y, Camera *camera){
   return create_ray(camera->position, direction);
 }
 
-
+/* Traces ray in scene and returns color for the corresponding ray */
 Pixel raytracer_trace(Ray ray, Scene *scene) {
   Intersection intersection = create_intersection();
-  Pixel pixel = {0, 0, 0};
+  Pixel pixel; 
+  
+  pixel = (Pixel){0, 0, 0};
   
   /* If ray intersects with scene: */
   if(raytracer_scene_intersection(ray, scene, &intersection)) {
@@ -50,6 +52,7 @@ Pixel raytracer_trace(Ray ray, Scene *scene) {
   return pixel;
 }
 
+/* whether or not ray intersects with scene and store intersection */
 int raytracer_scene_intersection(Ray ray, Scene *scene, 
                                  Intersection *intersection) {
   int i;
@@ -69,27 +72,32 @@ int raytracer_scene_intersection(Ray ray, Scene *scene,
   return intersection->t > 0;
 }
 
+/* whether or not ray intersects with object and store intersection */
 int raytracer_object_intersection(Ray ray, Object *object, Intersection *intersection) {
   double i, j;
   
   /* if ray intersects with object's aabb: */
-  if(intersection_ray_aabb(ray, object->root.box, &i, &j) && 
-     raytracer_kdtree_intersection(ray, &(object->root), intersection)) {
-    intersection->color = object->color;
-    intersection->material = object->material;
+  if(intersection_ray_aabb(ray, object->root.box, &i, &j)){
+    /* if ray intersects with triangle in object's kd-tree */
+    if(raytracer_kdtree_intersection(ray, &(object->root), intersection)){
+      intersection->color = object->color;
+      intersection->material = object->material;
+    }
   }
   return intersection->t > 0;
 }
 
+/* whether or not ray intersects with kd-tree and store intersection */
 int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersection) {
   int i;
   Intersection temporary_intersection = create_intersection();
   double tmin, tmax;
-  // if leaf
+  /* if leaf: */
   if(kdnode_is_leaf(node)) {
-    // test intersection with geometry
+    /* test intersection with triangles */
     for(i = 0; i < node->n_triangles; i++) {
       if(raytracer_triangle_intersection(ray, node->triangles[i], &temporary_intersection)) {
+        /* if first intersection or closer than current intersection: */
         if(temporary_intersection.t < intersection->t || intersection->t == -1) {
           *intersection = temporary_intersection;
           intersection->triangle = node->triangles[i];
@@ -100,7 +108,7 @@ int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersect
     double t_minl, t_maxl;
     double t_minh, t_maxh;
     int retl, reth;
-    // test intersection recursively
+    /* test intersection recursively */
     retl = intersection_ray_aabb(ray, node->low->box, &t_minl, &t_maxl);
     reth = intersection_ray_aabb(ray, node->high->box, &t_minh, &t_maxh);
 
@@ -126,24 +134,27 @@ int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersect
   return intersection->t > 0;
 }
 
+/* whether or not ray intersects with triangle and store intersection */
 int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *intersection) {
   double denominator, time;
   Plane plane;
   Vector triangle_normal;
+  
   time = -1;
-
   triangle_normal = vector_normalize(vector_cross(triangle->edges[0], 
                                                   triangle->edges[1]));
-
   plane = create_plane(triangle->verticies[0]->position, triangle_normal);
 
-  // If triangle on front of camera: check if point is inside triangle
+  /* get ray's intersection time with triangle plane: */
   if(intersection_ray_plane(ray, plane, &time) && time > 0) {
     int i;
-    Vector p = ray_get_point(ray, time);
+    Vector point;
+    point = ray_get_point(ray, time);
+    
+    /* if intersection point inside triangle: */
     for(i = 0; i < VERTICES_IN_TRIANGLE; i++)
       if(vector_dot(triangle_normal, vector_cross(triangle->edges[i], 
-         vector_subtract(p, triangle->verticies[i]->position))) < 0)
+         vector_subtract(point, triangle->verticies[i]->position))) < 0)
         return 0;
     intersection->t = time;
     intersection->ray = ray;
@@ -156,12 +167,12 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
   return 0;
 }
 
+/* phong shaded color at a given intersection */
 Pixel raytracer_phong(Intersection intersection, Scene *scene) {
-  int i, j, samples_reached_light;
-  double m_a, m_l, m_s, m_sp, m_sm, sampled_light_intensity, distance_light;
+  int i;
+  double m_a, m_l, m_s, m_sp, m_sm, sampled_light_intensity;
   Vector vN, vI, vR, vU, intersection_point;
   Pixel pA, pS, pC, pI, ambient, diffuse, specular;
-  Vector light_sample_position;
   Ray r;
 
   /* initialize */
@@ -181,35 +192,16 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
 
   intersection_point = ray_get_point(intersection.ray, intersection.t);
   vU = vector_scale(intersection.ray.direction, -1.0);
-  pS = pixel_add(pixel_scale(pC, m_sm), pixel_scale(create_pixel(1.0,1.0,1.0),
-                                                    (1-m_sm)));
-
+  pS = pixel_add(pixel_scale(pC, m_sm), pixel_scale(create_pixel(1.0, 1.0, 1.0), (1 - m_sm)));
+  
+  /* sum diffuse and specular for each light */
   for(i = 0; i < scene->n_lights; i++) {
-    pI = scene->lights[i]->color;
-    
-    samples_reached_light = 0;
+    sampled_light_intensity = raytracer_get_light_intensity(scene->lights[i], 
+                                                  intersection_point, scene);
 
-    for(j = 0; j < scene->lights[i]->sampling_rate; j++) {
-      light_sample_position = point_light_get_sample(scene->lights[i]);
-
-      vI = vector_normalize(vector_subtract(light_sample_position,
-                    intersection_point));
-      
-      r = create_ray(intersection_point, vI);
-      r.initial_point = ray_get_point(r, 0.01);
-
-      if(!raytracer_in_shadow(light_sample_position, r, scene)) {
-        samples_reached_light++;
-      }
-    }
-    sampled_light_intensity = (double)(samples_reached_light*
-                              scene->lights[i]->intensity) / 
-                              scene->lights[i]->sampling_rate;
-
-    pI = pixel_scale(pI, sampled_light_intensity);
+    pI = pixel_scale(scene->lights[i]->color, sampled_light_intensity);
     vI = vector_normalize(vector_subtract(scene->lights[i]->position,
                           intersection_point));
-
     vR = vector_normalize(vector_add(vector_scale(vI, -1),
                           vector_scale(vN, vector_dot(vI, vN) * 2)));
 
@@ -226,13 +218,38 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
   return pixel_add(ambient, pixel_add(diffuse, specular));
 }
 
+/* light intensity from light */
+double raytracer_get_light_intensity(PointLight *light, Vector point, Scene *scene){
+  Vector sample_position, vI;
+  Ray ray;
+  int samples_reached_light, i;
+  
+  samples_reached_light = 0;
+  
+  for(i = 0; i < light->sampling_rate; i++) {
+    sample_position = point_light_get_sample(light);
+
+    vI = vector_normalize(vector_subtract(sample_position,
+                  point));
+      
+    ray = create_ray(point, vI);
+    ray.initial_point = ray_get_point(ray, SMALL_NUMBER);
+    if(!raytracer_in_shadow(sample_position, ray, scene)) {
+      samples_reached_light++;
+    }
+  }
+  return (double)(samples_reached_light *  light->intensity) / light->sampling_rate;
+}
+
+/* checks if a ray against point gets blocked by an object in scene */
 int raytracer_in_shadow(Vector point, Ray r, Scene *scene) {
   Intersection inter;
 
   inter = create_intersection();
 
   if(raytracer_scene_intersection(r, scene, &inter)) {
-    if(vector_norm(vector_subtract(point, r.initial_point)) > vector_norm(vector_subtract(ray_get_point(r, inter.t), r.initial_point))) {
+    if(vector_distance(point, r.initial_point) > 
+       vector_distance(ray_get_point(r, inter.t), r.initial_point)) {
       return 1;
     }
   }

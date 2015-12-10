@@ -20,6 +20,10 @@ double vector_norm(Vector v) {
   return sqrt(vector_dot(v, v));
 }
 
+inline double vector_distance(Vector v1, Vector v2){
+  return vector_norm(vector_subtract(v1, v2));
+}
+
 Vector vector_normalize(Vector v) {
   return vector_scale(v, 1/vector_norm(v));
 }

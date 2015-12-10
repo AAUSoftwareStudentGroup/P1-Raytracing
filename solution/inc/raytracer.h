@@ -9,6 +9,8 @@
 #include "intersection.h"
 #include "plane.h"
 
+#define SMALL_NUMBER 0.001
+
 typedef struct _intersection {
   Vector normal;
   Material material;
