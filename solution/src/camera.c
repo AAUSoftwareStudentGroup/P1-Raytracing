@@ -20,18 +20,19 @@ int free_camera(Camera *camera) {
 
 void camera_look_at_point(Camera *camera, Vector point, double distance, double vertical_angle, double horizontal_angle) {
 
+  /* Resetting camera position to prepare rotation */
   camera->position = (Vector){0, -distance, 0};
+
+  /* Rotate camera around itself */
   camera_set_angle(camera, vertical_angle, horizontal_angle);
   
-  // camera->right   = vector_scale( camera->right, -1);
-  // camera->forward = vector_scale( camera->forward, -1);
-  // camera->up      = vector_scale( camera->up, -1);
-
+  /* Rotate camera around x and z axis and add to point we wanna look at */
   camera->position = vector_rotate_around_xz(camera->position, vertical_angle, horizontal_angle);
   camera->position = vector_add(camera->position, point);
 }
 
 int camera_set_angle(Camera *camera, double vertical_angle, double horizontal_angle){
+  /* Reset camera angles before rotating*/
   camera->right   = (Vector){1,0,0};
   camera->forward = (Vector){0,1,0};
   camera->up      = (Vector){0,0,1};

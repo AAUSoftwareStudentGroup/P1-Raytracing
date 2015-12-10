@@ -53,7 +53,7 @@ Funktionen initialiserer en skæring med værdien -1 ved at kalde funktionen cre
 
 \paragraph{Skæring med scene}
 
-Funktionen raytracer\_scene\_intersection tjekker om en ray skærer med et objekt.
+Funktionen raytracer\_scene\_intersection tjekker om en stråle skærer med et objekt.
 
 \begin{lstlisting}[style=Cstyle, caption=Funktionen raytracer\_scene\_intersection]
 int raytracer_scene_intersection(Ray ray, Scene *scene, 
@@ -81,7 +81,7 @@ If-sætningen på linje 11 assigner temporary\_intersection til en intersection 
 
 \paragraph{Skæring med objekt}
 
-Funktionen raytracer\_object\_intersection er en funktion, der undersøger om der er en skæring mellem lysstrålen og objektet. Funktionen ses herunder:
+Funktionen raytracer\_object\_intersection er en funktion, der undersøger om der er en skæring mellem en stråle og et objekt. Funktionen ses herunder:
 
 \begin{lstlisting}[style=Cstyle, caption=raytracer\_object\_intersection]
 int raytracer_object_intersection(Ray ray, Object *object, Intersection *intersection) {
@@ -114,13 +114,42 @@ Hvis roden ikke er et blad og hvis strålen skærer i begge kasser, undersøges 
 Funktionen returnerer afstanden i tid, til skæringen med trekanten.
 
 \paragraph{Skæring med trekant}
-Funktionen raytracer\_triangle\_intersection bruges til at finde skæringspunktet mellem lysstrålen og en trekant. Dette er nødvendigt at vide, for at finde ud af hvor skæringen er, da forskellige skæringer f.eks. giver forskelligt lys.
 
-Funktionen kan ses i bilag \ref{sec:...}
+Funktionen raytracer\_triangle\_intersection bruges til at checke om der er skæring mellem en stråle og en trekant. Funktionen ses herunder
 
-På side X??? i koden, tjekker funktionen, om trekanten er foran kameraet ved at sige time > 0. Hvis den er det, tjekkes det om én af trekantens sider er parallelle med strålen, dette gøres i if-løkken på linje X???, hvilket gøres for alle tre af trekantens verticies, ved at sætte if-løkken ind i en for-løkke, der kører tre gange. Hvis de er parallelle returneres 0.
-Dernæst tjekkes det om punktet i trekantens plan ligger indenfor trekanten??
+\begin{lstlisting}[style=Cstyle, caption=Funktionen der finder skæring med trekant]
+int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *intersection) {
+  double denominator, time;
+  Plane plane;
+  Vector triangle_normal;
+  time = -1;
 
+  triangle_normal = vector_normalize(vector_cross(triangle->edges[0], 
+                                                  triangle->edges[1]));
+
+  plane = create_plane(triangle->verticies[0]->position, triangle_normal);
+
+  // If triangle on front of camera: check if point is inside triangle
+  if(intersection_ray_plane(ray, plane, &time) && time > 0) {
+    int i;
+    Vector p = ray_get_point(ray, time);
+    for(i = 0; i < VERTICES_IN_TRIANGLE; i++)
+      if(vector_dot(triangle_normal, vector_cross(triangle->edges[i], 
+         vector_subtract(p, triangle->verticies[i]->position))) < 0)
+        return 0;
+    intersection->t = time;
+    intersection->ray = ray;
+    if(vector_dot(ray.direction, triangle_normal) > 0)
+      triangle_normal = vector_scale(triangle_normal, -1);
+    intersection->normal = triangle_normal;
+    return 1;
+  }
+
+  return 0;
+}
+\end{lstlisting}
+
+Funktionen finder en normaliseret normalvektor ud fra to vektorer som beskriver siderne i trekanten (linje 7). Derefter findes trekantens plan ud fra en stedvektor og en normalvektor (linje 10). Der checkes nu om der er skæring mellem trekant og plan (linje 13), hvis der er skæring checkes der om punktet ligger i trekanten (linje 13 - 22). Hvis punktet ligger indenfor trekanten (linje 22) så skaleres der med -1 for, at få normalvektoren til trekanten til at vende ud mod kameraet (linje 23) og værdien gemmes (linje 24).
 
 \paragraph{Phong pixel farve}
 Når skæringen er fundet ved ovenstående funktioner, og returneres til funktionen raytracer\_trace, så sendes, de data gemt i en struct Intersection, videre i funktionen raytracer\_phong sammen med scenen.

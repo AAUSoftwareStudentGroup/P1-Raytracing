@@ -54,16 +54,16 @@ Vector vector_rotate_around_xz(Vector v, double vertical, double horizontal) {
 
 double vector_get_component(Vector v, VectorAxis axis) {
   switch(axis) {
-    case x: return v.x; break;
-    case y: return v.y; break;
-    case z: return v.z; break;
+    case X_AXIS: return v.x; break;
+    case Y_AXIS: return v.y; break;
+    case Z_AXIS: return v.z; break;
     default: return 0;
   }
 }
 void vector_set_component(Vector *v, VectorAxis axis, double value) {
   switch(axis) {
-    case x: v->x = value; break;
-    case y: v->y = value; break;
-    case z: v->z = value; break;
+    case X_AXIS: v->x = value; break;
+    case Y_AXIS: v->y = value; break;
+    case Z_AXIS: v->z = value; break;
   }
 }
