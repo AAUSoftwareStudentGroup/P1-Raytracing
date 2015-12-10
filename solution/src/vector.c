@@ -51,3 +51,19 @@ Vector vector_rotate_around_xz(Vector v, double vertical, double horizontal) {
   v = vector_rotate_around_z(v, horizontal);
   return v;
 }
+
+double vector_get_component(Vector v, VectorAxis axis) {
+  switch(axis) {
+    case x: return v.x; break;
+    case y: return v.y; break;
+    case z: return v.z; break;
+    default: return 0;
+  }
+}
+void vector_set_component(Vector *v, VectorAxis axis, double value) {
+  switch(axis) {
+    case x: v->x = value; break;
+    case y: v->y = value; break;
+    case z: v->z = value; break;
+  }
+}

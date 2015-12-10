@@ -13,42 +13,34 @@ int intersection_triangle_aabb(Triangle triangle, AABB bounding_box){
 }
 
 int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
+  VectorAxis axis;
+  double t1, t2;
+
   *tmin = -DBL_MAX;
   *tmax =  DBL_MAX;
 
-  if(r.direction.x == 0 && r.initial_point.x < box.low.x && r.initial_point.x > box.high.x){
-    return 0;
-  }
-  else{
-    double tx1 = (box.low.x - r.initial_point.x) / r.direction.x;
-    double tx2 = (box.high.x - r.initial_point.x) / r.direction.x; 
-
-    *tmin = MAX(*tmin, MIN(tx1, tx2));
-    *tmax = MIN(*tmax, MAX(tx1, tx2));
+  for(axis = x; axis <= z; axis++) {
+    if(vector_get_component(r.direction, axis) == 0 &&
+       (vector_get_component(r.initial_point, axis) < vector_get_component(box.low, axis) ||
+        vector_get_component(r.initial_point, axis) > vector_get_component(box.high, axis))) {
+      return 0;
+    }
   }
 
-  if(r.direction.y == 0 && r.initial_point.y < box.low.y && r.initial_point.y > box.high.y){
-    return 0;
-  }
-  else{
-    double ty1 = (box.low.y - r.initial_point.y) / r.direction.y;
-    double ty2 = (box.high.y - r.initial_point.y) / r.direction.y; 
-
-    *tmin = MAX(*tmin, MIN(ty1, ty2));
-    *tmax = MIN(*tmax, MAX(ty1, ty2));
-  }
-
-  if(r.direction.z == 0 && r.initial_point.z < box.low.z && r.initial_point.z > box.high.z){
-    return 0;
-  }
-  else{
-    double tz1 = (box.low.z - r.initial_point.z) / r.direction.z;
-    double tz2 = (box.high.z - r.initial_point.z) / r.direction.z; 
-
-    *tmin = MAX(*tmin, MIN(tz1, tz2));
-    *tmax = MIN(*tmax, MAX(tz1, tz2));
+  for(axis = x; axis <= z; axis++) {
+    intersection_ray_axis_aligned_plane(r, box.low, axis, &t1);
+    intersection_ray_axis_aligned_plane(r, box.high, axis, &t2);
+    *tmin = MAX(*tmin, MIN(t1, t2));
+    *tmax = MIN(*tmax, MAX(t1, t2));
   }
   return *tmax >= *tmin && *tmax > 0;
+}
+
+int intersection_ray_axis_aligned_plane(Ray r, Vector plane_position, VectorAxis axis, double *t) {
+  *t = (vector_get_component(plane_position, axis) - 
+         vector_get_component(r.initial_point, axis)) / 
+       vector_get_component(r.direction, axis);
+  return 1;
 }
 
 double intersection_ray_plane(Ray r, Plane p) {
