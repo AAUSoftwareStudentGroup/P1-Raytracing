@@ -8,33 +8,48 @@ En 3D-model er en matematisk beskrivelse af et tre dimensionelt objekt. For at b
 \begin{figure}[H]
 \label{fig:kanin}
     \centering
-    \includegraphics[width=5cm]{kanin}
+    \includegraphics[widt0h=5cm]{kanin}
     \caption{Eksempel hvor trekanter bruges til at repræsentere et objekt: http://www.cs.rpi.edu}
 \end{figure}
 
 For at rendere et billede af en 3D-model bestående af trekanter, er man nødt til at have en model for det kamera, som billedet renderes ud fra. Hvordan kameraet kan modelleres er beskrevet i næste afsnit.
 
 \paragraph{Kamera}
-[BESKRIV HVORDAN KAMERAET ER EN MODEL FOR HVORDAN DER LAVES ET BILLEDE AF ET KAMERA]
-For at beskrive kameraet er det nødvendigt at fastlægge dets position og orientering i rummet[KILDE]. Hvordan dette kan modelleres er vist på figur [INDSÆT REF]
+Et kamera i konteksten af at rendere en 3D-model, er typisk en beskrivelse af position, orientation og synsfelt. Andre informationer kan tilknyttes som beskriver opløsning og postproccessering af det resulterende billede. Orientationen fastsættes ved hjælp af et sæt vektore som beskriver hvilken retning der er f.eks.\ højre og op for kameraret.
 
 \begin{figure}[H]
   \centering
   \tdplotsetmaincoords{60}{130}
 \begin{tikzpicture}[tdplot_main_coords]
-\path[fill=gray!20, draw=gray!40] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
+\path[fill=gray!20, draw=gray!40] (-3,-4,-3) -- (-3,-4,3) -- (3,-4,3) -- (3,-4,-3) -- (-3,-4,-3);
 \draw (0,0,0) -- (0,-4,0);
-\draw[blue!50, thick, -{Stealth[width=2mm, length=2mm]}] (0,0,0) -- (0,-2,0);
-\draw[blue!50, thick, -{Stealth[width=2mm, length=3mm]}] (0,-4,0) -- (-2,-4,0);
-\draw[blue!50, thick, -{Stealth[width=2mm, length=2mm]}] (0,-4,0) -- (0,-4,2);
+\draw[blue!50, thick, -{Stealth[width=2mm, length=2mm]}] (0,0,0) -- (0,-1,0);
+\draw[blue!50, thick, -{Stealth[width=2mm, length=3mm]}] (0,-4,0) -- (-1,-4,0);
+\draw[blue!50, thick, -{Stealth[width=2mm, length=2mm]}] (0,-4,0) -- (0,-4,1);
+\draw[blue!50, thick, -{Stealth[width=2mm, length=2mm]}] (0,0,0) -- (-0.41,-0.8,0.41);
+\draw[black, thick, dashed] (-0.41,-0.8,0.41) -- (-2,-4,2);
+\draw[black, dashed, thick] (-0,-4,1) -- (-0,-4,2);
+\draw[black, dashed, thick] (-0,-4,2) -- (-2,-4,2);
+\draw[black, dashed, thick] (-1,-4,0) -- (-2,-4,0);
+\draw[black, dashed, thick] (-2,-4,0) -- (-2,-4,2);
 \draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
-\node [above right] at (0,0,0) {$C$};
-\node [above right] at (0,-1,0) {$\vv{f}$};
+\draw plot [mark=*, mark size=2] coordinates{(-2,-4,2) }; 
+\node [below] at (0,0,0) {$C$};
+\node [below] at (0,-1,-0.1) {$\vv{f}$};
+\node [above right] at (0,-2.5,0) {$d$};
+\node [above right] at (-2,-4,2) {$B$};
+\node [left] at (-2,-4,1) {$y$};
+\node [above] at (-1,-4,2) {$x$};
 \node [above] at (-1,-4,0) {$\vv{r}$};
+\node [right] at (-0.41,-0.8,0.41) {$\vv{s}$};
 \node [left] at (0,-4,1) {$\vv{u}$};
+\draw[blue!50, thick, |-|] (3.1,-4,3.2) -- (-2.9,-4,3.2);
+\draw[blue!50, thick, |-|] (3.2,-4,3.1) -- (3.2,-4,-2.9);
+\node [above] at (0,-4,3.2) {$w$};
+\node [left]  at (3.2,-4,0) {$h$};
 \end{tikzpicture}
-  \caption{Viser hvordan kameraet kan beskrives ved tre vektorer $\protect\vv{r}$, $\protect\vv{u}$ og $\protect\vv{f}$, der repræsentere hhv. op, højre og frem retninger for kameraet.}
-\label{fig:kamera_billede}
+  \caption{Viser hvordan kameraet kan beskrives ved tre vektorer $\protect\vv{r}$, $\protect\vv{u}$ og $\protect\vv{f}$, der repræsentere hhv. højre, op og frem retninger for kameraet.}
+  \label{fig:kamera_billede}
 \end{figure}
 
 [FIGUR TILFØJ VEKTORER DER BESKRIVER PUNKTET B, SOM LINEAR KOMBINATION.]

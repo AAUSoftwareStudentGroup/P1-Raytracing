@@ -44,13 +44,13 @@ Planets normalvektor findes ved at krydse to vektore fra en af trekantens hjørn
 [NEDENSTÅENDE SKAL OMSKRIVES EN SMULE]()
 
 punktmændgen som opgør planet kan beskrives som de punkter $\vv{p}$ der opfylder reglen $ \vv{p} \bullet \vv{n} = 0$ 
-$$ P(t) = \vv{r} \cdotp t + \vv{p_0}$$
-$$ ( P(t_A) - A ) \bullet \vv{n} = 0 $$
-$$ (\vv{r} \cdotp t_A + \vv{p_0} - A) \bullet \vv{n} = 0 $$
-$$ t_A \cdotp \vv{r} \bullet \vv{n} + (\vv{p_0} - A) \bullet \vv{n} = 0 $$
-\begin{equation}
- t_A = \frac{(\vv{A} - \vv{p_0})\bullet \vv{n}}{\vv{r} \bullet \vv{n}}
-\end{equation}
+\begin{align}
+  P(t) &= \vv{r} \cdotp t + \vv{p_0} \\
+  ( P(t_A) - A ) \bullet \vv{n} &= 0 \\
+  (\vv{r} \cdotp t_A + \vv{p_0} - A) \bullet \vv{n} &= 0 \\
+  t_A \cdotp \vv{r} \bullet \vv{n} + (\vv{p_0} - A) \bullet \vv{n} &= 0 \\
+  t_A &= -\frac{(\vv{A} - \vv{p_0})\bullet \vv{n}}{\vv{r} \bullet \vv{n}}
+\end{align}
 
 
 [FIND IF POINT IS INSIDE TRIANGLE]()
