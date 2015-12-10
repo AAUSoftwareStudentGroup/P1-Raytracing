@@ -137,10 +137,8 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
 
   plane = create_plane(triangle->verticies[0]->position, triangle_normal);
 
-  time = intersection_ray_plane(ray, plane);
-
   // If triangle on front of camera: check if point is inside triangle
-  if(time > 0) {
+  if(intersection_ray_plane(ray, plane, &time) && time > 0) {
     int i;
     Vector p = ray_get_point(ray, time);
     for(i = 0; i < VERTICES_IN_TRIANGLE; i++)

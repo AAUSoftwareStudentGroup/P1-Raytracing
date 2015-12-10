@@ -43,8 +43,8 @@ int intersection_ray_axis_aligned_plane(Ray r, Vector plane_position, VectorAxis
   return 1;
 }
 
-double intersection_ray_plane(Ray r, Plane p) {
-  double denominator, time;
+int intersection_ray_plane(Ray r, Plane p, double *time) {
+  double denominator;
 
   // test ray_plane intersection
   denominator = vector_dot(r.direction, p.normal);
@@ -52,9 +52,7 @@ double intersection_ray_plane(Ray r, Plane p) {
   if(denominator == 0)
     return 0;
 
-  time = vector_dot(vector_subtract(p.point, r.initial_point), p.normal) / denominator;
+  *time = vector_dot(vector_subtract(p.point, r.initial_point), p.normal) / denominator;
 
-  return time;
+  return 1;
 }
-
-
