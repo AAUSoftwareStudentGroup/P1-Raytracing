@@ -206,10 +206,6 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
                               scene->lights[i]->intensity) / 
                               scene->lights[i]->sampling_rate;
 
-    // distance_light = vector_norm(vector_subtract(scene->lights[i]->position,
-                          // intersection_point));
-    // sampled_light_intensity /= distance_light*distance_light;
-    
     pI = pixel_scale(pI, sampled_light_intensity);
     vI = vector_normalize(vector_subtract(scene->lights[i]->position,
                           intersection_point));

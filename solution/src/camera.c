@@ -19,7 +19,6 @@ int free_camera(Camera *camera) {
 }
 
 void camera_look_at_point(Camera *camera, Vector point, double distance, double vertical_angle, double horizontal_angle) {
-
   /* Resetting camera position to prepare rotation */
   camera->position = (Vector){0, -distance, 0};
 
