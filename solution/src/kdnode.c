@@ -1,5 +1,6 @@
 #include "kdnode.h"
 
+/* builds kdtree recursively */
 int kdnode_build_subnodes(KDNode *node, int level) {
 
   /* Initialize variables */
@@ -10,14 +11,12 @@ int kdnode_build_subnodes(KDNode *node, int level) {
 
   cut_position = 0;
   n_same_triangles = 0;
-
   node->low = new_kdnode();
   node->high = new_kdnode();
   node->low->box = node->box;
   node->high->box = node->box;
-
-  node->low->triangles =(Triangle**)malloc(node->n_triangles*sizeof(Triangle*));
-  node->high->triangles=(Triangle**)malloc(node->n_triangles*sizeof(Triangle*));
+  node->low->triangles  = (Triangle**)malloc(node->n_triangles*sizeof(Triangle*));
+  node->high->triangles = (Triangle**)malloc(node->n_triangles*sizeof(Triangle*));
 
   box_size = vector_subtract(node->box.high, node->box.low);
   
@@ -66,7 +65,7 @@ int kdnode_build_subnodes(KDNode *node, int level) {
   /* Avoid leaking memory */
   free(node->triangles);
 
-  /* Call recursively until returns in if-statement above*/
+  /* Call recursively until returns in if-statement above */
   kdnode_build_subnodes(node->low, level);
   kdnode_build_subnodes(node->high, level);
   return 1;
