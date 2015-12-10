@@ -153,7 +153,6 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
     return 1;
   }
 
-
   return 0;
 }
 
