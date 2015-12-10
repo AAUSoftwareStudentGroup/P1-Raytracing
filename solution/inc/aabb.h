@@ -9,6 +9,5 @@ typedef struct _AABB {
 } AABB;
 
 int aabb_is_point_inside(Vector v, AABB box);
-int aabb_is_triangle_in(Triangle t, AABB box);
 
 #endif

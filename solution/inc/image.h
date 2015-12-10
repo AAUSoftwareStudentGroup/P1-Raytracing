@@ -11,8 +11,7 @@ typedef struct _image {
   Pixel **pixels;
 } Image;
 
-Image *new_image(unsigned int width, unsigned int height);
-
 int image_write(Image *img, char *path);
+Image *new_image(unsigned int width, unsigned int height);
 
 #endif

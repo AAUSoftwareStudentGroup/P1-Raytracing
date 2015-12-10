@@ -154,7 +154,6 @@ int ply_init(FILE *fp_model, Scene **scene) {
     (*scene)->lights[i] = (PointLight*)malloc(sizeof(PointLight));
   }
 
-
   return 1;
 }
 
@@ -166,9 +165,7 @@ int ply_parse(FILE *fp_model, Configuration *conf, Scene **scene, Camera **camer
   Triangle t;
   Vertex v;
 
-
   ply_scan_element(fp_model, "face", &n_faces);
-
 
   input_file_find_first(fp_model, "end_header");
   for(j = 0; j < (*scene)->n_objects; j++) {
@@ -182,7 +179,6 @@ int ply_parse(FILE *fp_model, Configuration *conf, Scene **scene, Camera **camer
       (*scene)->objects[j]->verticies[i] = v;
     }
   }
-
 
   triangle_index = 0;
   // foreach polygon in file
@@ -267,22 +263,24 @@ int ply_parse(FILE *fp_model, Configuration *conf, Scene **scene, Camera **camer
   input_read_double(fp_model, &((*camera)->position.y));
   input_read_double(fp_model, &((*camera)->position.z));
 
-  // camera_set_angle(*camera, 3.14/8, -3.14/4.0);
-
   if(lamp_source != NULL)
     camera_look_at_point(*camera, lamp_source->position, 
                          vector_norm(vector_subtract(lamp_source->position, (*camera)->position)), 
                          conf->vertical_angle, conf->horizontal_angle);
+  else {
+    camera_look_at_point(*camera, (Vector){0,0,0}, 
+                         vector_norm((*camera)->position), 
+                         conf->vertical_angle, conf->horizontal_angle);
+  }
 
   return 1;
 }
 
 int ply_scan_element(FILE *file, const char *element_name, int *out) {
-
   int result;
   int fscan_result;
-  fseek(file, 0, SEEK_SET);
 
+  fseek(file, 0, SEEK_SET);
   char *search_string = (char*)malloc(12+strlen(element_name));
   strcpy(search_string, "element ");
   strcpy(search_string+8, element_name);
@@ -375,7 +373,7 @@ int input_build_root_node(Object *object) {
 }
 
 Configuration create_configuration() {
-  Configuration conf = {1000, 1000, 6600, 0, 0, "", ""};
+  Configuration conf = {500, 500, 6600, 0, 0, "", ""};
   conf.out_file = (char*)malloc(sizeof(char)*256);
   conf.in_file = (char*)malloc(sizeof(char)*256);
   strcpy(conf.out_file, "out.ppm");

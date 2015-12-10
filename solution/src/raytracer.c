@@ -8,16 +8,15 @@ Image *raytracer_render(Scene *scene, Camera *camera) {
 
   image = new_image(camera->width, camera->height);
   
-  /* For each column: */
+  /* For each pixel */
   for(x = 0; x < camera->width; x++) {
-    /* For each pixel in column: */
     for(y = 0; y < camera->height; y++) {
-      /* Calculate ray */
       ray = raytracer_calculate_ray(x, y, camera);
 
       /* Trace ray and assign result to pixel */
       image->pixels[x][y] = raytracer_trace(ray, scene);
     }
+    /* print progress percentage */
     printf("%.1f\n", ((double)x + 1) / camera->width * 100);
   }
 
@@ -83,11 +82,17 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection *interse
 
 int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersection) {
   int i;
-  Intersection temporary_intersection = create_intersection();
+  double t_minl, t_maxl;
+  double t_minh, t_maxh;
   double tmin, tmax;
-  // if leaf
+  int retl, reth;
+  Intersection temporary_intersection;
+
+  temporary_intersection = create_intersection();
+  
+  /* if leaf */
   if(kdnode_is_leaf(node)) {
-    // test intersection with geometry
+    /* test intersection with geometry */
     for(i = 0; i < node->n_triangles; i++) {
       if(raytracer_triangle_intersection(ray, node->triangles[i], &temporary_intersection)) {
         if(temporary_intersection.t < intersection->t || intersection->t == -1) {
@@ -97,29 +102,26 @@ int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersect
       }
     }
   } else {
-    double t_minl, t_maxl;
-    double t_minh, t_maxh;
-    int retl, reth;
-    // test intersection recursively
+    /* test intersection recursively */
     retl = intersection_ray_aabb(ray, node->low->box, &t_minl, &t_maxl);
     reth = intersection_ray_aabb(ray, node->high->box, &t_minh, &t_maxh);
 
-    if(retl && reth) {
-      if(t_minh < t_minl) {
+    if(retl && reth) { /* Intersecting both sub-nodes */
+      if(t_minh < t_minl) { /* low node is hit first */
         if(!raytracer_kdtree_intersection(ray, node->high, intersection)) {
           raytracer_kdtree_intersection(ray, node->low, intersection);
         }
       } else if(t_minh == t_minl) {
         raytracer_kdtree_intersection(ray, node->low, intersection);
         raytracer_kdtree_intersection(ray, node->high, intersection);
-      } else {
+      } else { /* high node is hit first */
         if(!raytracer_kdtree_intersection(ray, node->low, intersection)) {
           raytracer_kdtree_intersection(ray, node->high, intersection);
         }
       }
-    } else if(retl) {
+    } else if(retl) { /* only low node is hit */
         raytracer_kdtree_intersection(ray, node->low, intersection);
-    } else {
+    } else { /* only high node is hit */
         raytracer_kdtree_intersection(ray, node->high, intersection);
     }
   }
@@ -137,7 +139,7 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
 
   plane = create_plane(triangle->verticies[0]->position, triangle_normal);
 
-  // If triangle on front of camera: check if point is inside triangle
+  /* If triangle on front of camera: check if point is inside triangle */
   if(intersection_ray_plane(ray, plane, &time) && time > 0) {
     int i;
     Vector p = ray_get_point(ray, time);
@@ -181,8 +183,7 @@ Pixel raytracer_phong(Intersection intersection, Scene *scene) {
 
   intersection_point = ray_get_point(intersection.ray, intersection.t);
   vU = vector_scale(intersection.ray.direction, -1.0);
-  pS = pixel_add(pixel_scale(pC, m_sm), pixel_scale(create_pixel(1.0,1.0,1.0),
-                                                    (1-m_sm)));
+  pS = pixel_add(pixel_scale(pC, m_sm), pixel_scale(create_pixel(1.0,1.0,1.0), (1-m_sm)));
 
   for(i = 0; i < scene->n_lights; i++) {
     pI = scene->lights[i]->color;

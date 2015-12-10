@@ -47,9 +47,9 @@ int kdnode_build_subnodes(KDNode *node, int level) {
   }
   if(++level > 30 || n_same_triangles > node->n_triangles/2 ||
      node->low->n_triangles <= 2 || node->high->n_triangles <= 2) {
-    // Return -- more than 50% of triangles appear in both branches
-    //           or at most 2 triangles in either branch
-    //           or depth of tree too deep
+    /* Return -- more than 50% of triangles appear in both branches */
+    /*           or at most 2 triangles in either branch */
+    /*           or depth of tree too deep */
     return 1;
   }
   free(node->triangles);

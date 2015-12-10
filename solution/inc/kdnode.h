@@ -1,19 +1,13 @@
 #ifndef _KDNODE_
 #define _KDNODE_
 
-#ifndef MAX
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-#endif
-#ifndef MIN
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-#endif
-
 #include <stdlib.h>
 
 #include "vector.h"
 #include "triangle.h"
 #include "aabb.h"
 #include "intersection.h"
+#include "macros.h"
 
 typedef struct _KDNode {
   struct _KDNode *low, *high;

@@ -38,15 +38,15 @@ int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
 
 int intersection_ray_axis_aligned_plane(Ray r, Vector plane_position, VectorAxis axis, double *t) {
   *t = (vector_get_component(plane_position, axis) - 
-         vector_get_component(r.initial_point, axis)) / 
-       vector_get_component(r.direction, axis);
+        vector_get_component(r.initial_point, axis)) / 
+        vector_get_component(r.direction, axis);
   return 1;
 }
 
 int intersection_ray_plane(Ray r, Plane p, double *time) {
   double denominator;
 
-  // test ray_plane intersection
+  /* test ray_plane intersection */
   denominator = vector_dot(r.direction, p.normal);
 
   if(denominator == 0)

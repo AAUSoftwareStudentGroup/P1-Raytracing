@@ -14,11 +14,10 @@ typedef struct _camera {
   double distance;
 } Camera;
 
-Camera *new_camera(unsigned int width, unsigned int height);
-int free_camera(Camera *camera);
-
 void camera_look_at_point(Camera *camera, Vector point, double distance, double vertical_angle, double horizontal_angle);
 int camera_set_angle(Camera *camera, double vertical_angle, double horizontal_angle);
+Camera *new_camera(unsigned int width, unsigned int height);
+int free_camera(Camera *camera);
 
 
 #endif

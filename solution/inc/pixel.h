@@ -1,12 +1,10 @@
 #ifndef _PIXEL_
 #define _PIXEL_
 
-#ifndef MIN
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-#endif
-
 #include <stdio.h>
 #include <math.h>
+
+#include "macros.h"
 
 typedef struct _pixel {
   double red, green, blue;

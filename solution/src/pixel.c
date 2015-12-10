@@ -17,7 +17,6 @@ Pixel create_pixel(double red, double green, double blue) {
   * http://www.vendian.org/mncharity/dir3/blackbody/UnstableURLs/bbr_color.html
   * (visited 19-11-2015).
   */
-
 Pixel create_from_color_temperature(unsigned int kelvin) {
 
   Pixel color;
