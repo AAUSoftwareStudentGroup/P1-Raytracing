@@ -114,6 +114,13 @@ Hvis roden ikke er et blad og hvis strålen skærer i begge kasser, undersøges 
 Funktionen returnerer afstanden i tid, til skæringen med trekanten.
 
 \paragraph{Skæring med trekant}
+Funktionen raytracer\_triangle\_intersection bruges til at finde skæringspunktet mellem lysstrålen og en trekant. Dette er nødvendigt at vide, for at finde ud af hvor skæringen er, da forskellige skæringer f.eks. giver forskelligt lys.
+
+Funktionen kan ses i bilag \ref{sec:...}
+
+På side X??? i koden, tjekker funktionen, om trekanten er foran kameraet ved at sige time > 0. Hvis den er det, tjekkes det om én af trekantens sider er parallelle med strålen, dette gøres i if-løkken på linje X???, hvilket gøres for alle tre af trekantens verticies, ved at sætte if-løkken ind i en for-løkke, der kører tre gange. Hvis de er parallelle returneres 0.
+Dernæst tjekkes det om punktet i trekantens plan ligger indenfor trekanten??
+
 
 \paragraph{Phong pixel farve}
 
