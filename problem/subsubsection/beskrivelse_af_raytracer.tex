@@ -152,6 +152,6 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
 Funktionen finder en normaliseret normalvektor ud fra to vektorer som beskriver siderne i trekanten (linje 7). Derefter findes trekantens plan ud fra en stedvektor og en normalvektor (linje 10). Der checkes nu om der er skæring mellem trekant og plan (linje 13), hvis der er skæring checkes der om punktet ligger i trekanten (linje 13 - 22). Hvis punktet ligger indenfor trekanten (linje 22) så skaleres der med -1 for, at få normalvektoren til trekanten til at vende ud mod kameraet (linje 23) og værdien gemmes (linje 24).
 
 \paragraph{Phong pixel farve}
-
+Når skæringen er fundet ved ovenstående funktioner, og returneres til funktionen raytracer\_trace, så sendes, de data gemt i en struct Intersection, videre i funktionen raytracer\_phong sammen med scenen.
 
 

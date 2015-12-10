@@ -1,9 +1,5 @@
 #include "pixel.h"
 
-Pixel create_pixel(double red, double green, double blue) {
-  return (Pixel){red, green, blue};
-}
-
  /* 
   * The following code is implemented from 
   * http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
@@ -101,4 +97,6 @@ Pixel pixel_add(Pixel color1, Pixel color2){
     MIN(color1.green + color2.green, 1.0), MIN(color1.blue + color2.blue,1.0)};
 }
 
-
+Pixel create_pixel(double red, double green, double blue) {
+  return (Pixel){red, green, blue};
+}

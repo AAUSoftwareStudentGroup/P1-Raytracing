@@ -27,6 +27,7 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection *interse
 int raytracer_kdtree_intersection(Ray ray, KDNode *node, Intersection *intersection);
 int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *intersection);
 Pixel raytracer_phong(Intersection intersection, Scene *scene);
+double raytracer_get_light_intensity(PointLight *light, Vector point, Scene *scene);
 int raytracer_in_shadow(Vector point, Ray r, Scene *scene);
 Intersection *new_intersection(void);
 Intersection create_intersection(void);

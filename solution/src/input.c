@@ -1,13 +1,6 @@
 #include "input.h"
 
-#ifndef MAX
-#define MAX(a,b) (((a) > (b) ? (a) : (b)))
-#endif
-
-#ifndef MIN
-#define MIN(a,b) (((a) < (b) ? (a) : (b)))
-#endif
-
+/* prepares everything this program needs before running */
 int input_parse(int argc, char* argv[], Scene **scene, Camera **camera, Configuration *conf) {
   FILE *fp_model;
   int i;
@@ -34,6 +27,7 @@ int input_parse(int argc, char* argv[], Scene **scene, Camera **camera, Configur
   return 1;
 }
 
+/* Reads commandline arguments and saves relevant information in conf */
 int input_read_command_args(int argc, char* argv[], Configuration *conf) {
   int i, int_argument;
   double double_argument;
@@ -88,6 +82,7 @@ int input_read_command_args(int argc, char* argv[], Configuration *conf) {
   return 1;
 }
 
+/* Tests if input file exsists and if it contains the ply header */
 int ply_validate(Configuration *conf, FILE** fp_model) {
   char str[256];
 
@@ -106,6 +101,8 @@ int ply_validate(Configuration *conf, FILE** fp_model) {
   return 1;
 }
 
+/* Reads how many of the different primitives there exsists in input file
+   and allocates memmory */
 int ply_init(FILE *fp_model, Scene **scene) {
   int n_polygons, n_verticies, n_objects, n_lights, n_triangles;
   int i, j;
@@ -125,7 +122,6 @@ int ply_init(FILE *fp_model, Scene **scene) {
     n_triangles += j-2;
     input_jump_lines(fp_model, 1); // discard rest of line
   }
-
 
   (*scene)->n_objects = n_objects;
   (*scene)->objects = (Object**)malloc((*scene)->n_objects * sizeof(Object*));
@@ -147,7 +143,6 @@ int ply_init(FILE *fp_model, Scene **scene) {
     (*scene)->objects[i]->triangles = (*scene)->objects[i-1]->triangles + (*scene)->objects[i-1]->n_triangles;
   }
 
-
   (*scene)->n_lights = n_lights;
   (*scene)->lights = (PointLight**)malloc(n_lights*sizeof(PointLight*));
   for(i = 0; i < n_lights; i++) {
@@ -157,6 +152,7 @@ int ply_init(FILE *fp_model, Scene **scene) {
   return 1;
 }
 
+/* Reads 3D model data from input file */
 int ply_parse(FILE *fp_model, Configuration *conf, Scene **scene, Camera **camera) {
   PointLight *lamp_source = NULL;
   int i, j, k, triangle_index;
@@ -276,6 +272,7 @@ int ply_parse(FILE *fp_model, Configuration *conf, Scene **scene, Camera **camer
   return 1;
 }
 
+/* Scans for element header and returns number of the specific element in out */
 int ply_scan_element(FILE *file, const char *element_name, int *out) {
   int result;
   int fscan_result;
@@ -299,6 +296,7 @@ int ply_scan_element(FILE *file, const char *element_name, int *out) {
   return 0;
 }
 
+/* Finds first occourence of query string */
 int input_file_find_first(FILE *file, char *search_str) {
   fseek(file, 0, SEEK_SET);
 
@@ -307,6 +305,7 @@ int input_file_find_first(FILE *file, char *search_str) {
   return 0;
 }
 
+/* Finds next occourence of query string */
 int input_file_find_next(FILE *file, char *search_str) {
   char str[256];
 
@@ -318,6 +317,7 @@ int input_file_find_next(FILE *file, char *search_str) {
   return 0;
 }
 
+/* Skips 'lines' lines */
 int input_jump_lines(FILE *file, int lines) {
   char c;
   while(lines--) {
@@ -339,6 +339,7 @@ int input_read_double(FILE *file, double *out) {
   return res;
 }
 
+/* Prepares a root KDNode before growing the tree */
 int input_build_root_node(Object *object) {
   int i;
   KDNode *root;

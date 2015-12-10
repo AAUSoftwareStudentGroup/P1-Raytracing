@@ -1,5 +1,6 @@
 #include "intersection.h"
 
+/* finds if a triangle intersects or is inside AABB */
 int intersection_triangle_aabb(Triangle triangle, AABB bounding_box){
   int i;
   double tmin, tmax;
@@ -12,6 +13,7 @@ int intersection_triangle_aabb(Triangle triangle, AABB bounding_box){
   return 0;
 }
 
+/* Finds the entry and exit points of a ray trough AABB if any */
 int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
   VectorAxis axis;
   double t1, t2;
@@ -19,7 +21,7 @@ int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
   *tmin = -DBL_MAX;
   *tmax =  DBL_MAX;
 
-  for(axis = x; axis <= z; axis++) {
+  for(axis = X_AXIS; axis <= Z_AXIS; axis++) {
     if(vector_get_component(r.direction, axis) == 0 &&
        (vector_get_component(r.initial_point, axis) < vector_get_component(box.low, axis) ||
         vector_get_component(r.initial_point, axis) > vector_get_component(box.high, axis))) {
@@ -27,7 +29,7 @@ int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
     }
   }
 
-  for(axis = x; axis <= z; axis++) {
+  for(axis = X_AXIS; axis <= Z_AXIS; axis++) {
     intersection_ray_axis_aligned_plane(r, box.low, axis, &t1);
     intersection_ray_axis_aligned_plane(r, box.high, axis, &t2);
     *tmin = MAX(*tmin, MIN(t1, t2));
@@ -36,6 +38,7 @@ int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
   return *tmax >= *tmin && *tmax > 0;
 }
 
+/* finds intersectionpoint between ray and axis-aligned plane */
 int intersection_ray_axis_aligned_plane(Ray r, Vector plane_position, VectorAxis axis, double *t) {
   *t = (vector_get_component(plane_position, axis) - 
         vector_get_component(r.initial_point, axis)) / 
@@ -43,6 +46,7 @@ int intersection_ray_axis_aligned_plane(Ray r, Vector plane_position, VectorAxis
   return 1;
 }
 
+/* Finds intersectionpoint between ray and plane */
 int intersection_ray_plane(Ray r, Plane p, double *time) {
   double denominator;
 

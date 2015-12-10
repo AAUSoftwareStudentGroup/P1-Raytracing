@@ -8,6 +8,7 @@
 
 #include "scene.h"
 #include "camera.h"
+#include "macros.h"
 
 typedef struct {
   int width;

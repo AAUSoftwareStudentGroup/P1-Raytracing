@@ -19,5 +19,4 @@ int camera_set_angle(Camera *camera, double vertical_angle, double horizontal_an
 Camera *new_camera(unsigned int width, unsigned int height);
 int free_camera(Camera *camera);
 
-
 #endif

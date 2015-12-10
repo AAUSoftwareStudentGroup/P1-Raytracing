@@ -1,5 +1,7 @@
 #include "image.h"
 
+/* Writes image pixel array to file specified in 'path'
+   File is in pnm format */
 int image_write(Image *image, char *path) {
   int x, y;
   FILE *image_file;
