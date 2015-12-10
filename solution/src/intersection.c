@@ -19,7 +19,7 @@ int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
   *tmin = -DBL_MAX;
   *tmax =  DBL_MAX;
 
-  for(axis = x; axis <= z; axis++) {
+  for(axis = X_AXIS; axis <= Z_AXIS; axis++) {
     if(vector_get_component(r.direction, axis) == 0 &&
        (vector_get_component(r.initial_point, axis) < vector_get_component(box.low, axis) ||
         vector_get_component(r.initial_point, axis) > vector_get_component(box.high, axis))) {
@@ -27,7 +27,7 @@ int intersection_ray_aabb(Ray r, AABB box, double *tmin, double *tmax) {
     }
   }
 
-  for(axis = x; axis <= z; axis++) {
+  for(axis = X_AXIS; axis <= Z_AXIS; axis++) {
     intersection_ray_axis_aligned_plane(r, box.low, axis, &t1);
     intersection_ray_axis_aligned_plane(r, box.high, axis, &t2);
     *tmin = MAX(*tmin, MIN(t1, t2));
