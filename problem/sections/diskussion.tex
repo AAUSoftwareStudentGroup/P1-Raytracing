@@ -3,13 +3,26 @@
 
 Formålet med dette afsnit er: I hvor høj grad løser vores produkt problemet "Mangel på visualisering af belysningen fra lamper ved E-handel". For at afgøre dette diskuteres der først i hvor høj grad de tre underspørgsmål i problemformuleringen er besvaret. 
 
-\subsection{Løsningen i forhold til ideen}
+\subsection{Løsningen i forhold til løsningsforslaget}
 
- - Hvilke af de kravsspecifikationer som blev opstillet i ideafsnittet er løst og hvilke er ikke løst? I hvor høj grad er de løst, hvad kunne forbedres.
+Ud fra den løsning der er blevet dokumenteret i afsnit \ref{sec:problemlosning}, diskuteres der nu i hvor høj grad den opfylder kravene i afsnit \ref{sec:losning}. 
 
- Opsummering til løsning i forhold til ideen. 
+Det første krav var, at programmet skulle kunne vise et billede af en lampe og dens belysning. Dette krav er som vist under afsnit \ref{sec:test} opfyldt, da programmet kan modtage en 3D-fil for en lampe og en kontekst, og ud fra dette rendere og gemme et billede af lampens belysning i konteksten. Det er dog vigtigt at pointere, at billedet af lampen er renderet på baggrund af en simpel model (phong-modellen) som i vores program ikke tager højde for alle lysfænomener såsom refleksion og refraktion. Dette gør, at programmet har en begrænsning i forhold til den realisme billederne af lampen kan have. Et eksempel som programmet ikke kan rendere er en lampe som har en reflekterende overflade som gør, at man kan se spejlning af andre objekter i lampens overflade.  
 
- \subsection{Ideen i forhold til problemformuleringen}
+Det andet krav var, at det i programmet skulle være muligt at ændre synsvinklen hvorfra lampen og dens belysning visualiseres fra. Dette krav er løst som beskrevet under afsnit \ref{sec:test} ved at modtage to vinkler, der indikerer hvorfra lampen skal ses. Dog er der en begrænsning i, at man ikke kan ændre afstanden mellem kameraet og lampen uden at ændre i 3D-filen. 
+
+Det tredje krav var, at det i programmet skulle være muligt at ændre farvetemperaturen for pæren i lampen. Dette er gjort ved at omdanne kelvin til RBG-værdier ud fra algortimen som er beskrevet i afsnit \ref{sec:temptilrgb}. Når 3D-filen indlæses overskrives alle sorte lyskilder med den pågældende farvetemperatur. Ulempen ved denne løsning er, at algortimen der konveterer farvetemperatur i kelvin til RBG-værdier kun bygger på regression af ét datasæt, og der kan derfor være usikkerheder som gør, at billedet af lampen og dens belysning med en bestemt farvetemperatur ikke stemmer overens med den reelle farvetemperatur for lampen. 
+
+Det fjerde krav var, at programmet skulle kunne rendere et billede af en lampe og dens belysning på en tid der er praktisk anvendelig. Som dokumenteret i afsnit \ref{sec:test} ses der, at et enkelt billede af en lampe og dens belysning kan tage XXX timer at rendere. Dette udelukker, at vores løsning er praktisk anvendelig i form af, at der skal renderes et nyt billede så snart brugeren ændrer synsvinklen. Dog kunne man benytte programmet til, at forudrendere billeder af lampen fra forskellige synsvinkler som lagres på en server, der herefter kan vises på en e-butiks hjemmeside. Dette begrænser dog antallet af synsvinkler som lampen kan visualiseres fra. 
+
+Det femte krav var, at programmet skulle kunne implementeres på en e-butiks hjemmeside således at billederne af lampens og dens belysning kan visualiseres for kunderne. Dette krav blev ikke opfyldt da fokus har været at visualisere belysningen fra lamper, og ikke selve brugerfladen for visningen af de renderede billeder på e-butikkens hjemmeside.  
+
+ \subsection*{Opsummering}
+
+ \subsection{Løsningforslaget i forhold til problemformuleringen}
+
+ Vi har nu diskuteret hvorvidt løsningen lever op til kravene til løsningsforslaget i afsnit \ref{sec:losning}. I dette afsnit diskuteres der nu i hvor høj grad løsningsforslaget lever op til besvarelsen af problemformuleringen. 
+
 
  (Der antages at ALLE kravsspecifikationer til ideen er opfyldt)
 
