@@ -61,7 +61,7 @@ Et pixel koordinat relativt til kameraets udgangspunkt $C$ kan altså beskrives 
 
 Hvor $(x,y)$ er en et koordinat mellem $(0,0)$ og $(w,h)$.
 
-Afstanden $d$ samt størrelsen af billedplanet bestemmer forvrængningen af perspektiv projektionen
+Afstanden $d$ samt størrelsen af billedplanet bestemmer forvrængningen af perspektiv projektionen.
 
 \paragraph{Perspektiv projektion}
 \label{sec:perspektiv_projektion}
@@ -72,13 +72,21 @@ For at udlede en model for billeddannelsen, tages der udgangspunkt i en perspekt
   \tdplotsetmaincoords{60}{130}
 \begin{tikzpicture}[tdplot_main_coords]
 \path[fill=blue!50, draw=gray!20] (2,-8,2) -- (-2,-8,2) -- (0,-8,0) -- (2,-8,2);
-\draw (0,0,0) -- (2,-8,2);
+\draw (1,-4,1) -- (2,-8,2);
+\draw (-1,-4,1) -- (-2,-8,2);
+\draw (0,-4,0) -- (0,-8,0);
 \path[fill=gray!20, draw=gray!40] (-2,-4,-2) -- (-2,-4,2) -- (2,-4,2) -- (2,-4,-2) -- (-2,-4,-2);
 \path[fill=blue!50, draw=gray!20] (1,-4,1) -- (-1,-4,1) -- (0,-4,0) -- (1,-4,1);
 \draw (0,0,0) -- (1,-4,1);
+\draw (0,0,0) -- (-1,-4,1);
+\draw (0,0,0) -- (0,-4,0);
 
 \draw plot [mark=*, mark size=2] coordinates{(2,-8,2) } ; 
+\draw plot [mark=*, mark size=2] coordinates{(-2,-8,2) } ; 
+\draw plot [mark=*, mark size=2] coordinates{(0,-8,0) } ; 
 \draw plot [mark=*, mark size=2] coordinates{(1,-4,1) }; 
+\draw plot [mark=*, mark size=2] coordinates{(-1,-4,1) }; 
+\draw plot [mark=*, mark size=2] coordinates{(0,-4,0) }; 
 \draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
 \node [above left] at (2,-8,2) {$P$};
 \node [above left] at (1,-4,1) {$B$};
