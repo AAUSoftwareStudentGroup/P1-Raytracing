@@ -210,23 +210,9 @@ for(i = 0; i < scene->n_lights; i++) {
 }
 \end{lstlisting}
 
-I kodeuddrag \ref{summmering_diffuse_specular} linje 2 indlæses intensiteten fra den pågældende lyskilde. Lysintensiteten beregnes i funktionen raytracer\_get\_light\_intensity, ved at teste hvor stor en procentdel af et bestemt antal tilfældige rays fra lyskilden, som ikke afskærmes på vej mod skæringspunktet ved objektet. Dette muliggør bløse skygger, da hver lyskilde kan have en radius, i stedet for blot et bestemt punkt. Ud fra lysintensiteten og lyskildens farve beregnes $I$ (Linje 4). Herefter beregnes $\vv{I}$ og $\vv{R}$, som er hhv. vektor mod lyset og refleksionsvektoren. I linje 11-16, lægges den pågældende lys \textit{diffuse} og \textit{specular} lys til de samlede summer. Til sidst i raytracer\_phong returneres summen af textit{ambient}, \textit{diffuse} og \textit{specular} lys, som er den farve det pågældende skæringspunkt på objektet får, når billedet renderes. 
+I kodeuddrag \ref{summmering_diffuse_specular} linje 2 indlæses intensiteten fra den pågældende lyskilde. Lysintensiteten beregnes i funktionen raytracer\_get\_light\_intensity, ved at teste hvor stor en procentdel af et bestemt antal tilfældige rays fra lyskilden, som ikke afskærmes på vej mod skæringspunktet ved objektet. Dette muliggør bløde skygger, da hver lyskilde kan have en radius, i stedet for blot et bestemt punkt. Ud fra lysintensiteten og lyskildens farve beregnes $I$ (Linje 4). Herefter beregnes $\vv{I}$ og $\vv{R}$, som er hhv. vektor mod lyset og refleksionsvektoren. I linje 11-16, lægges de pågældende \textit{diffuse} og \textit{specular} lys til de samlede summer. Til sidst i raytracer\_phong returneres summen af \textit{ambient}, \textit{diffuse} og \textit{specular} lys, som er den farve det pågældende skæringspunkt på objektet får, når billedet renderes. 
 \begin{lstlisting}[style=Cstyle, caption={summen af ambient, diffuse og specular lys returneres fra raytracer\_phong.}]
 /* return ambient + diffuse + specular */
 return pixel_add(ambient, pixel_add(diffuse, specular));
 \end{lstlisting}
-
-\paragraph{Konvertering fra farvetemperatur til RGB}
-Som en ekstra tilføjelse til visualiseringen af lyset fra en lampe, indfører programmet også en funktion, der kan diffierentiere farvetemperaturen af pærens lys. En dybdegående beskrivelse af hvordan en farvetemperatur oversættes til RGB er beskrevet i teoriafsnittet {sec:temptilrgb}. 
-
-
-
-
-
-
-
-
-
-
-
 
