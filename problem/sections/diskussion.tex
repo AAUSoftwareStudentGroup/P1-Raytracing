@@ -1,7 +1,7 @@
 \section{diskussion}
 
 
-Formålet med dette afsnit er: I hvor høj grad løser vores produkt problemet "Mangel på visualisering af belysningen fra lamper ved E-handel". For at afgøre dette diskuteres der først i hvor høj grad de tre underspørgsmål i problemformuleringen er besvaret. 
+Formålet med dette afsnit er: I hvor høj grad løser vores produkt problemet "Mangel på visualisering af belysningen fra lamper ved E-handel". For at afgøre dette sammenlignes de krav der er fastsat igennem rapporten med de resultater der er opnået. 
 
 \subsection{Løsningen i forhold til løsningsforslaget}
 
@@ -11,11 +11,11 @@ Det første krav var, at programmet skulle kunne vise et billede af en lampe og 
 
 Det andet krav var, at det i programmet skulle være muligt at ændre synsvinklen hvorfra lampen og dens belysning visualiseres fra. Dette krav er løst som beskrevet under afsnit \ref{sec:test} ved at modtage to vinkler, der indikerer hvorfra lampen skal ses. Dog er der en begrænsning i, at man ikke kan ændre afstanden mellem kameraet og lampen uden at ændre i 3D-filen. 
 
-Det tredje krav var, at det i programmet skulle være muligt at ændre farvetemperaturen for pæren i lampen. Dette er gjort ved at omdanne kelvin til RBG-værdier ud fra algortimen som er beskrevet i afsnit \ref{sec:temptilrgb}. Når 3D-filen indlæses overskrives alle sorte lyskilder med den pågældende farvetemperatur. Ulempen ved denne løsning er, at algortimen der konveterer farvetemperatur i kelvin til RBG-værdier kun bygger på regression af ét datasæt, og der kan derfor være usikkerheder som gør, at billedet af lampen og dens belysning med en bestemt farvetemperatur ikke stemmer overens med den reelle farvetemperatur for lampen. 
+Det tredje krav var, at det i programmet skulle være muligt at ændre farvetemperaturen for pæren i lampen. Dette er gjort ved at omdanne kelvin til RGB-værdier ud fra algortimen som er beskrevet i afsnit \ref{sec:temptilrgb}. Når 3D-filen indlæses overskrives alle sorte lyskilder med den pågældende farvetemperatur. Ulempen ved denne løsning er, at algortimen der konveterer farvetemperatur i kelvin til RBG-værdier kun bygger på regression af ét datasæt, og der kan derfor være usikkerheder som gør, at billedet af lampen og dens belysning med en bestemt farvetemperatur ikke stemmer overens med den reelle farvetemperatur for lampen. 
 
-Det fjerde krav var, at programmet skulle kunne rendere et billede af en lampe og dens belysning på en tid der er praktisk anvendelig. Som dokumenteret i afsnit \ref{sec:test} ses der, at et enkelt billede af en lampe og dens belysning kan tage XXX timer at rendere. Dette udelukker, at vores løsning er praktisk anvendelig i form af, at der skal renderes et nyt billede så snart brugeren ændrer synsvinklen. Dog kunne man benytte programmet til, at forudrendere billeder af lampen fra forskellige synsvinkler som lagres på en server, der herefter kan vises på en e-butiks hjemmeside. Dette begrænser dog antallet af synsvinkler som lampen kan visualiseres fra. 
+Det fjerde krav var, at programmet skulle kunne rendere et billede af en lampe og dens belysning på en tid der er praktisk anvendelig. Som dokumenteret i afsnit \ref{sec:test} ses der, at et enkelt billede af en lampe og dens belysning kan tage XXX timer at rendere. Dette udelukker, at vores løsning er praktisk anvendelig i form af, at der skal renderes et nyt billede så snart brugeren ændrer synsvinklen. Dog kunne man benytte programmet til, at forudrendere billeder af lampen fra forskellige synsvinkler som lagres på en server, der herefter kan vises på en e-butiks hjemmeside. Dette begrænser dog antallet af synsvinkler som lampen kan visualiseres fra, da mange synsvinkler og farvetemperaturer giver mange kombinationer og dermed lang renderingstid.
 
-Det femte krav var, at programmet skulle kunne implementeres på en e-butiks hjemmeside således at billederne af lampens og dens belysning kan visualiseres for kunderne. Dette krav blev ikke opfyldt da fokus har været at visualisere belysningen fra lamper, og ikke selve brugerfladen for visningen af de renderede billeder på e-butikkens hjemmeside.  
+Det femte krav var, at programmet skulle kunne implementeres på en e-butiks hjemmeside således at billederne af lampen og dens belysning kan visualiseres for kunderne. Dette krav blev ikke opfyldt da fokus har været at visualisere belysningen fra lamper, og ikke selve brugerfladen for visningen af de renderede billeder på e-butikkens hjemmeside.  
 
 \subsection*{Opsummering}
 
