@@ -1,6 +1,6 @@
 \subsubsection{Fra 3D-model til billede}
 \label{sec:fra_model_til_billede}
-I dette afsnit er det vist, hvordan der kan udledes en model, der beskriver en billeddannelsen af objekter i rummet, også kaldt rendering. Dette er essentielt da billeddannelsen danner grundlag for, hvordan 3D-modellen for en lampe omdannes til et billede, der kan vises for kunderne på e-butikken. Til sidst i afsnittet udledes en model for, hvordan belysningen fra en lampe kan simuleres og visualiseres vha. raytracing. 
+Vi har nu set hvordan man kan konvertere en farvetemperatur i Kelvin til RGB-værdier. Derudover har vi set, hvordan man kan rotere en vektor ved hjælp af matricer. Denne viden er nødvendig for at kunne opfylde kravene om at løsningen skal gøre det muligt at vise lampen med forskellige farvetemperaturer og vinkler. I dette afsnit er formålet nu at vise en model for, hvordan en billeddannelsen af objekter i rummet, også kaldt rendering, kan konstrueres. Dette er essentielt da billeddannelsen danner grundlag for, hvordan 3D-modellen for en lampe omdannes til et billede, der kan vises for kunderne på e-butikken. Til sidst i afsnittet udledes en model for, hvordan belysningen fra en lampe kan simuleres og visualiseres vha. raytracing. 
 
 \paragraph{3D-model}
 En 3D-model er en matematisk beskrivelse af et tre dimensionelt objekt. For at beskrive et 3D-objekt opdeler man ofte objektet i trekanter. Dette er illustreret på nedenstående figur.
@@ -8,14 +8,14 @@ En 3D-model er en matematisk beskrivelse af et tre dimensionelt objekt. For at b
 \begin{figure}[H]
 \label{fig:kanin}
     \centering
-    \includegraphics[widt0h=5cm]{kanin}
+    \includegraphics[width=5cm]{kanin}
     \caption{Eksempel hvor trekanter bruges til at repræsentere et objekt: http://www.cs.rpi.edu}
 \end{figure}
 
 For at rendere et billede af en 3D-model bestående af trekanter, er man nødt til at have en model for det kamera, som billedet renderes ud fra. Hvordan kameraet kan modelleres er beskrevet i næste afsnit.
 
 \paragraph{Kamera}
-Et kamera i konteksten af at rendere en 3D-model, er typisk en beskrivelse af position, orientation og synsfelt. Andre informationer kan tilknyttes som beskriver opløsning og postproccessering af det resulterende billede. Orientationen fastsættes ved hjælp af et sæt vektore som beskriver hvilken retning der er f.eks.\ højre og op for kameraret.
+Et kamera i konteksten af at rendere en 3D-model, er typisk en beskrivelse af position, orientation og synsfelt. Andre informationer kan tilknyttes som beskriver opløsning af det renderede billede, samt perspektivet af det resulterende billede. Orientationen fastsættes ved hjælp af et sæt vektore som beskriver hvilken retning der er f.eks.\ højre og op for kameraret.
 
 \begin{figure}[H]
   \centering
@@ -83,9 +83,7 @@ For at udlede en model for billeddannelsen, tages der udgangspunkt i en perspekt
   \caption{Viser princippet bag perspektiv projektion af et punkt på et billedplan.}
 \end{figure}
 
-[TEGN TO PUNKTER MERE PÅ FIGUREN OVENOVER OG TAG UDGANGSPUNKT I AFBILDNING AF EN TREKANT I STEDET FOR ET PUNKT.]
-
-Som vist på figur \ref{fig:perspektiv_projektion} kan et punkt $P\in \mathbb{R}^3$ projekteres ned på billedplanen $\alpha$ ved at finde skæringspunktet $B$ mellem billedplanen $\alpha$ og en lysstråle $L$, som går fra punktet $P$ mod kameraets position $C$. Gør man nu dette for alle punkter på et objekt i rummet, og tegner skæringspunkterne på billedplanen, dannes et billede af objektet. For at omdanne 3D-objekter i rummet til et billede, er det nødvendigt at have en model for kameraet der danner billedet. 
+Som vist på figur \ref{fig:perspektiv_projektion} kan et punkt $P\in \mathbb{R}^3$ projekteres ned på billedplanen $\alpha$ ved at finde skæringspunktet $B$ mellem billedplanen $\alpha$ og en lysstråle $L$, som går fra punktet $P$ mod kameraets position $C$. Gør man nu dette for alle punkter på et objekt i rummet, og tegner skæringspunkterne på billedplanen, dannes et billede af objektet, ved at oversætte punktet på billedplanen, til (x,y)-pixelkoordinater, på det resulterende billede, med udtrykket beskrevet under afsnittet om kameraet.
 
 Udfordringen er så at afgøre hvilken farve punkterne på billedplanen skal have, da dette afhænger af objektets egenskaber, samt hvilket udefrakommende lys der rammer objektet. 
 
@@ -139,6 +137,7 @@ Hvor $\rho_a$, $\rho_l$ og $\rho_s$ er hhv. \textit{ambient}, \textit{diffuse} o
 
 \subparagraph{\textit{Ambient} lys} repræsenterer det lys, som reflekteres rundt i rummet og rammer objekter ligeligt fra alle sider\cite{stanford_phong}. Formlen til at beregne dette er følgende\cite{stanford_phong}.
 \begin{align}
+\label{eq:ambient_formel}
 	\rho_a &= m_a C A
 \end{align}
 Hvor $m_a$ er den ambiente konstant, $C$ er overfladens farve som rgb-værdi og $A$ er den ambiente lysintensitet.
