@@ -104,13 +104,56 @@ På linje fem i ovenstående kodeuddrag kan man se, at funktionen først checker
 
 Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om lysstrålen skærer med kdtræet og i så fald hvor. Formålet med denne funktion er at optimere programmet, og undgå at lave udregninger hvor det ikke er relevant. 
 
-Funktionen kan ses i bilag \ref{sec:...}
+Hele funktionen kan ses i bilag \ref{sec:...}
 
-Funktionen undersøger først, om skæringen med træet sker i et af bladene. Et blad er 'bunden' af træet, altså det punkt, hvor en kasse ikke længere kan inddeles i flere kasser. Der er tre krav til, hvornår vi ender vores inddeling af flere kasser, og istedet slutter og kalder det for et blad. Første krav er, hvis der er mere end 30 niveauer (DETTE KAN ÆNDRES SENERE  SÅ OPDATER TAL), da vores objekter ikke er alt for avancerede, behøves der ikke mere end 30 niveauer. Det andet krav er, hvis antallet af trekanter i en kasse er mindre end eller lig med 2. En kasse med 2 eller færre trekanter er nemt og hurtigt for computeren at udregne, og derfor behøves den ikke at inddeles yderligere. Det tredje og sidste krav er, hvis over halvdelen af to kassers trekanter ligger i begge kasser. Hvis dette er tilfældet kaldes begge kasser for blade, da mindst halvdelen af begge kassers fælles trekanter er i begge kasser og der derfor ikke er brug for at inddele i flere yderligere kasser.
+\begin{lstlisting}[style=Cstyle, caption=if(leaf)]
+  if(kdnode_is_leaf(node)) {
+    /* test intersection with triangles */
+    for(i = 0; i < node->n_triangles; i++) {
+      if(raytracer_triangle_intersection(ray, node->triangles[i], &temporary_intersection)) {
+        /* if first intersection or closer than current intersection: */
+        if(temporary_intersection.t < intersection->t || intersection->t == -1) {
+          *intersection = temporary_intersection;
+          intersection->triangle = node->triangles[i];
+        }
+      }
+    }
+\end{lstlisting}
 
-Hvis roden (hovedkassen) er et blad, findes de nærmeste skæringer først, og der findes skæring med samtlige trekanter, medmindre nogle trekanter ligger helt i skygge for andre.
+På ovenstående kodeuddrag undersøger funktionen, om skæringen med træet sker i et af bladene, dette ses på linje et. Et blad er 'bunden' af træet, altså det punkt, hvor en kasse ikke længere kan inddeles i flere kasser. Der er tre krav til, hvornår vi ender vores inddeling af flere kasser, og istedet slutter og kalder det for et blad. Første krav er, hvis der er mere end 30 niveauer (DETTE KAN ÆNDRES SENERE  SÅ OPDATER TAL), da vores objekter ikke er alt for avancerede, behøves der ikke mere end 30 niveauer. Det andet krav er, hvis antallet af trekanter i en kasse er mindre end eller lig med to. En kasse med to eller færre trekanter er nemt og hurtigt for computeren at udregne, og derfor behøves den ikke at inddeles yderligere. Det tredje og sidste krav er, hvis over halvdelen af to kassers trekanter ligger i begge kasser. Hvis dette er tilfældet kaldes begge kasser for blade, da mindst halvdelen af begge kassers fælles trekanter er i begge kasser og der derfor ikke er brug for at inddele i flere yderligere kasser.
 
-Hvis roden ikke er et blad og hvis strålen skærer i begge kasser, undersøges hvilken kasse er nærmest og funktionen kaldes rekursivt for denne kasse. Hvis strålen går gennem den nærmeste kasse uden at ramme et objekt tjekkes for den fjerneste kasse. Hvis strålen kun skærer én af kasserne, tjekkes simpelt kun for den kasse.
+Hvis roden (hovedkassen) er et blad, findes de nærmeste skæringer først som vist på linjerne 6-8, og der findes skæring med samtlige trekanter som vist på linje tre, medmindre nogle trekanter ligger helt i skygge for andre. 
+
+\begin{lstlisting}[style=Cstyle, caption=else (recursive)]
+else {
+    /* test intersection recursively */
+    retl = intersection_ray_aabb(ray, node->low->box, &t_minl, &t_maxl);
+    reth = intersection_ray_aabb(ray, node->high->box, &t_minh, &t_maxh);
+
+    if(retl && reth) { /* Intersecting both sub-nodes */
+      if(t_minh < t_minl) { /* low node is hit first */
+        if(!raytracer_kdtree_intersection(ray, node->high, intersection)) {
+          raytracer_kdtree_intersection(ray, node->low, intersection);
+        }
+      } else if(t_minh == t_minl) {
+        raytracer_kdtree_intersection(ray, node->low, intersection);
+        raytracer_kdtree_intersection(ray, node->high, intersection);
+      } else { /* high node is hit first */
+        if(!raytracer_kdtree_intersection(ray, node->low, intersection)) {
+          raytracer_kdtree_intersection(ray, node->high, intersection);
+        }
+      }
+    } else if(retl) { /* only low node is hit */
+        raytracer_kdtree_intersection(ray, node->low, intersection);
+    } else { /* only high node is hit */
+        raytracer_kdtree_intersection(ray, node->high, intersection);
+    }
+  }
+  return intersection->t > 0;
+}
+\end{lstlisting}
+
+Hvis roden ikke er et blad og hvis strålen skærer i begge kasser, undersøges hvilken kasse er nærmest og funktionen kaldes rekursivt for denne kasse, dette kan ses på 6-18. Hvis strålen går gennem den nærmeste kasse uden at ramme et objekt tjekkes for den fjerneste kasse. Hvis strålen kun skærer én af kasserne, tjekkes simpelt kun for den kasse, som set på linje 19-24.
 
 Funktionen returnerer afstanden i tid, til skæringen med trekanten.
 
