@@ -1,5 +1,5 @@
 \subsubsection{Datastrukturer}
-I programmet bliver der brugt datastrukturer for at abstrahere over data. Data der hænger sammen er således grupperet sammen. 
+I programmet bliver der brugt datastrukturer for at abstrahere over data. Data der hænger sammen er således grupperet sammen. Nedenstående figur viser data-relationerne i programmet.
 
 \begin{figure}[H]
 \centering
@@ -54,7 +54,7 @@ typedef struct _vector {
 På linje 2 i ovenstående kodeuddrag er det vist hvordan en 3D vektors koordinater er beskrevet med typen double. 
 
 \paragraph{Ray}
-For at benytte sig af ray-tracingmetoden er det naturligvis nødvendigt at have en ray (stråle) som man kan trace (følge). 
+For at benytte sig af ray-tracingmetoden er detnødvendigt at have en ray som man kan følge. 
 
 \begin{lstlisting}[style=Cstyle, caption=Struct til ray]
 typedef struct _ray {
@@ -74,8 +74,8 @@ typedef struct _verticie {
 } Vertex;
 \end{lstlisting}
 
-På linje to og tre i ovenstående kodeuddrag kan det ses at en vertex består af et stedvektor, som er kaldet position, og en normalvektor.
-    
+I ovenstående kodeuddrag kan det ses at en vertex består af et stedvektor (line 2), og en normalvektor (linje 3). Vertex normalerne bruges i forbindelse med implementationen af phong-modellen se afsnit se afsnit \ref{sec:teori} om teori.
+
 Som nævnt for ovenstående struct for en vertex, er alle objekter i programmet bestående af trekanter. Nedenstående kodeuddrag viser hvordan trekanter er implementeret i programmet.
     
 \begin{lstlisting}[style=Cstyle, caption=Struct til triangle]
@@ -104,7 +104,7 @@ typedef struct _pointlight {
 På linje to i ovenstående kodeuddrag kan det ses, at et lys har en given position, som bestemmes af ét 3D-koordinat. Dette lys har en farve, bestående af en RGB-værdi. Derudover har lyset også en intensitet og radius af typen double, samt sampling\_rate af typen int.
 
 \paragraph{Materiale}
-I virkeligheden har vi mange forskellige materialer der både syner og føles anderledes end andre. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere det i raytracing har vi brugt nogen værdier der ofte bruges i forbindelse med 3D-rendering og især raytracing.
+I virkeligheden har vi mange forskellige materialer der både syner og føles anderledes end andre. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere dette i programmet anvendes der forskellige konstanter til at beskrive et materiale. Konstanterne bruges i phong-modellen se afsnit \ref{sec:teori} om teori.
 
 \begin{lstlisting}[style=Cstyle, caption=Struct til Material]
 typedef struct _material {
