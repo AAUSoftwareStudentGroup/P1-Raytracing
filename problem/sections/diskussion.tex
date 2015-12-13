@@ -1,7 +1,7 @@
 \section{diskussion}
 
 
-Formålet med dette afsnit er: I hvor høj grad løser vores produkt problemet "Mangel på visualisering af belysningen fra lamper ved E-handel". For at afgøre dette diskuteres der først i hvor høj grad de tre underspørgsmål i problemformuleringen er besvaret. 
+Formålet med dette afsnit er at finde ud af i hvor høj grad vores løsningsforslag løser problemet "Mangel på visualisering af belysningen fra lamper ved E-handel". For at afgøre dette diskuteres der først i hvor høj grad de tre underspørgsmål i problemformuleringen er besvaret. 
 
 \subsection{Løsningen i forhold til løsningsforslaget}
 
@@ -15,7 +15,7 @@ Det tredje krav var, at det i programmet skulle være muligt at ændre farvetemp
 
 Det fjerde krav var, at programmet skulle kunne rendere et billede af en lampe og dens belysning på en tid der er praktisk anvendelig. Som dokumenteret i afsnit \ref{sec:test} ses der, at et enkelt billede af en lampe og dens belysning kan tage XXX timer at rendere. Dette udelukker, at vores løsning er praktisk anvendelig i form af, at der skal renderes et nyt billede så snart brugeren ændrer synsvinklen. Dog kunne man benytte programmet til, at forudrendere billeder af lampen fra forskellige synsvinkler som lagres på en server, der herefter kan vises på en e-butiks hjemmeside. Dette begrænser dog antallet af synsvinkler som lampen kan visualiseres fra. 
 
-Det femte krav var, at programmet skulle kunne implementeres på en e-butiks hjemmeside således at billederne af lampens og dens belysning kan visualiseres for kunderne. Dette krav blev ikke opfyldt da fokus har været at visualisere belysningen fra lamper, og ikke selve brugerfladen for visningen af de renderede billeder på e-butikkens hjemmeside.  
+Det femte krav var, at programmet skulle kunne implementeres på en e-butiks hjemmeside således at billederne af lampen og dens belysning kan visualiseres for kunderne. Dette krav blev ikke opfyldt da fokus har været at visualisere belysningen fra lamper, og ikke selve brugerfladen for visningen af de renderede billeder på e-butikkens hjemmeside.  
 
 \subsection*{Opsummering}
 
@@ -24,11 +24,11 @@ Ud fra ovenstående kan der nu kort opsummeres, at krav 1-3 er løst, da program
 \subsection{løsningen i forhold til problemformuleringen}
  Vi har nu diskuteret hvorvidt løsningen lever op til kravene til løsningsforslaget i afsnit \ref{sec:losning}. I dette afsnit diskuteres der nu i hvor høj grad løsningen lever op til besvarelsen af den endelige problemformuleringen.
 
-Det overordnede spørgsmål i den endelige problemformulering var følgende: "Hvordan kan vi lave et værktøj til e-butikker, som visualiserer belysningen fra indendørslamper for kunderne?". Inden der der afgøres hvorvidt dette spørgsmål er besvaret, diskuteres først de hvorvidt de tre underspørgsmål i den endelige problemformulering er besvaret.
+Det overordnede spørgsmål i den endelige problemformulering var følgende: "Hvordan kan vi lave et værktøj til e-butikker, som visualiserer belysningen fra indendørslamper for kunderne?". Inden  der afgøres hvorvidt dette spørgsmål er besvaret, diskuteres først de hvorvidt de tre underspørgsmål i den endelige problemformulering er besvaret.
 
 Det første underspørgsmål var: "Hvordan visualiseres lyset fra en given indendørslampe?". Dette underspørgsmål blev besvaret ved at repræsentere lampen, som en 3D-model, som indlæses af programmet og renderes vha. raytracing med brug af phong-modellen beskrevet i \ref{sec:teori}. I stedet for phong-modellen, kunne det tænkes er der var andre modeller, som også kunne anvendes. Derudover kunne modellen udvides, så den kunne håndtere refleksioner og refraktioner, og på den måde hæve kvaliteten af det renderede billede. Dette er dog ikke nået i dette projekt grundet tidsmangel. Derudover er vil dette sandsynligvis også øge renderingstiden, hvilket vil kræve at programmet optimeres yderligere end det på nuværende tidspunkt er gjort vha. kd-træer. Der er derfor en balancegang mellem realisme og renderingstid, som skal tages højde for, hvis programmet skulle videreudvikles.
 
-Det andet underspørgsmål var: "Hvordan kan lampen og dens belysning visualiseres flere vinkler?". Dette underspørgsmålet blev besvaret ved at anvende teorien om rotationsmatricer, til at positionere det virtuelle kamera, som billedet renderes ud fra. I stedet for at rendere billedet af lampen vha. raytracing og rotere det virtuelle kamera, ville det være en mulighed at benytte sig af augmented reality, som til dels ville gøre det muligt at indsætte lampen i en kontekst, men samtidig også gøre det nemt for kunden at betragte lampen fra forskellige vinkler.
+Det andet underspørgsmål var: "Hvordan kan lampen og dens belysning visualiseres flere vinkler?". Dette underspørgsmålet blev besvaret ved at anvende teorien om rotationsmatricer, til at positionere det virtuelle kamera, som billedet renderes ud fra. I stedet for at rendere billedet af lampen vha.\ raytracing og rotere det virtuelle kamera, ville det være en mulighed at benytte sig af augmented reality, som til dels ville gøre det muligt at indsætte lampen i en kontekst, men samtidig også gøre det nemt for kunden at betragte lampen fra forskellige vinkler.
 
 Det tredje underspørgsmål var: "Hvordan visualiseres forskellige pærers lys?". I programmet er en pærer beskrevet ved en radius, lysintensitet og farvetemperatur. Dette er blot en tilnærmet model af en pærer. Der tages højde for pærens form eller type. Derudover visualiseres selve pæren ikke i programmet, men kun selve dens lys. For at øge realismen, ville det være oplagt at implementere dette i programmet. 
 For at udregne farvetemperaturen blev der anvendt en algoritme, der konverterer farvetemperaturer i kelvin om til RGB-værdier, som kunne bruges i phong-modellen. Resultatet af dette er vist i afsnit \ref{sec:test}, hvor det er vist hvordan farvetemperaturen kan ændres, når programmet eksekveres. 

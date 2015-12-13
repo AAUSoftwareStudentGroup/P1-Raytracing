@@ -1,5 +1,5 @@
 \subsubsection{Beskrivelse af raytracer}
-I dette afsnit vil de væsentlige funktioner til raytraceren blive beskrevet. Formålet med afsnittet er, at få en forståelse for hvordan den tidligere beskrevet teori, \ref{sec:teori}, er anvendt og håndteret i programudviklingen.
+I dette afsnit vil de væsentlige funktioner til raytraceren blive beskrevet. Formålet med afsnittet er, at få en forståelse for hvordan den tidligere beskrevet teori i afsnit \ref{sec:teori}, er anvendt og håndteret i programudviklingen.
 
 
 \paragraph{Rendering}
@@ -30,7 +30,7 @@ Image *raytracer_render(Scene *scene, Camera *camera) {
 }
 \end{lstlisting}
 
-Funktionen vist herover, danner en lysstråle for hver pixel i billedet. lysstråle sendes videre sammen med scenen til funktionen raytracer\_trace, som returnere hvilken farve den pågældende pixel på billedet skal have. Til sidst returneres så det endelige billede.
+Funktionen vist herover, danner en ray for hver pixel i billedet. Rayen sendes videre sammen med scenen til funktionen raytracer\_trace, som returnere hvilken farve den pågældende pixel på billedet skal have. Til sidst returneres det endelige billede.
 
 \paragraph{Tracer}
 Funktionen raytracer\_trace er den funktion som starter raytraceren samt returnerer en pixelfarve hvis en ray skærer med et objekt i scenen. Funktionen er vist herunder.  
@@ -76,7 +76,8 @@ int raytracer_scene_intersection(Ray ray, Scene *scene,
 }
 \end{lstlisting}
 
-If-sætningen på linje 11 assigner temporary\_intersection til en intersection hvis rayen rammer et objekt. If-sætningen på linje 14 sørger for at det er den intersection der er tættest på der bliver sendt tilbage. 
+I funktionen checkes der om en ray skærer et objekt, hvis dette er tilfældes så returneres der information om denne skæring (linje 11). Der checkes efterfølgende om den nye skæring er tættere på udgangspunktet end de førhenværende skæringer og den tætteste skæring gemmes (linje 14 - 15). Herefter returnerer funktionen true, hvis tiden, som beskriver afstanden fra startpunktet  til skæringspunktet, er over 0, og false hvis den ikke er.
+
 
 
 \paragraph{Skæring med objekt}
@@ -97,7 +98,7 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection *interse
 }
 \end{lstlisting}
 
-På linje fem i ovenstående kodeuddrag kan man se at funktionen tjekker først om lysstrålen skærer med aabb, og hvis dette er sandt tjekker den så om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet, samt bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen true, hvis tiden, som beskriver afstanden fra initialpoint til skæringspunktet, er over 0, og false hvis den ikke er.
+På linje fem i ovenstående kodeuddrag kan man se, at funktionen først checker om lysstrålen skærer med aabb, og hvis dette er sandt tjekker den så om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet, samt bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen true, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er over 0, og false hvis den ikke er.
 
 \paragraph{Skæring med KD-træ}
 
