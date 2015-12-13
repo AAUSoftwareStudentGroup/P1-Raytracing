@@ -1,5 +1,5 @@
 \subsubsection{Beskrivelse af raytracer}
-I dette afsnit vil de væsentlige funktioner til raytraceren blive beskrevet. Formålet med afsnittet er, at få en forståelse for hvordan den tidligere beskrevet teori, \ref{sec:teori}, er anvendt og håndteret i programudviklingen.
+I dette afsnit vil de væsentlige funktioner til raytraceren blive beskrevet. Formålet med afsnittet er, at få en forståelse for hvordan den tidligere beskrevet teori i afsnit \ref{sec:teori}, er anvendt og håndteret i programudviklingen.
 
 
 \paragraph{Rendering}
@@ -30,7 +30,7 @@ Image *raytracer_render(Scene *scene, Camera *camera) {
 }
 \end{lstlisting}
 
-Funktionen vist herover, danner en lysstråle for hver pixel i billedet. lysstråle sendes videre sammen med scenen til funktionen raytracer\_trace, som returnere hvilken farve den pågældende pixel på billedet skal have. Til sidst returneres så det endelige billede.
+Funktionen vist herover, danner en ray for hver pixel i billedet. Rayen sendes videre sammen med scenen til funktionen raytracer\_trace, som returnere hvilken farve den pågældende pixel på billedet skal have. Til sidst returneres det endelige billede.
 
 \paragraph{Tracer}
 Funktionen raytracer\_trace er den funktion som starter raytraceren samt returnerer en pixelfarve hvis en ray skærer med et objekt i scenen. Funktionen er vist herunder.  
@@ -76,7 +76,8 @@ int raytracer_scene_intersection(Ray ray, Scene *scene,
 }
 \end{lstlisting}
 
-If-sætningen på linje 11 assigner temporary\_intersection til en intersection hvis rayen rammer et objekt. If-sætningen på linje 14 sørger for at det er den intersection der er tættest på der bliver sendt tilbage. 
+I funktionen checkes der om en ray skærer et objekt, hvis dette er tilfældes så returneres der information om denne skæring (linje 11). Der checkes efterfølgende om den nye skæring er tættere på udgangspunktet end de førhenværende skæringer og den tætteste skæring gemmes (linje 14 - 15). Herefter returnerer funktionen true, hvis tiden, som beskriver afstanden fra startpunktet  til skæringspunktet, er over 0, og false hvis den ikke er.
+
 
 
 \paragraph{Skæring med objekt}
@@ -97,19 +98,62 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection *interse
 }
 \end{lstlisting}
 
-På linje fem i ovenstående kodeuddrag kan man se at funktionen tjekker først om lysstrålen skærer med aabb, og hvis dette er sandt tjekker den så om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet, samt bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen true, hvis tiden, som beskriver afstanden fra initialpoint til skæringspunktet, er over 0, og false hvis den ikke er.
+På linje fem i ovenstående kodeuddrag kan man se, at funktionen først checker om lysstrålen skærer med aabb, og hvis dette er sandt tjekker den så om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet, samt bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen true, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er over 0, og false hvis den ikke er.
 
 \paragraph{Skæring med KD-træ}
 
 Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om lysstrålen skærer med kdtræet og i så fald hvor. Formålet med denne funktion er at optimere programmet, og undgå at lave udregninger hvor det ikke er relevant. 
 
-Funktionen kan ses i bilag \ref{sec:...}
+Hele funktionen kan ses i bilag \ref{sec:...}
 
-Funktionen undersøger først, om skæringen med træet sker i et af bladene. Et blad er 'bunden' af træet, altså det punkt, hvor en kasse ikke længere kan inddeles i flere kasser. Der er tre krav til, hvornår vi ender vores inddeling af flere kasser, og istedet slutter og kalder det for et blad. Første krav er, hvis der er mere end 30 niveauer (DETTE KAN ÆNDRES SENERE  SÅ OPDATER TAL), da vores objekter ikke er alt for avancerede, behøves der ikke mere end 30 niveauer. Det andet krav er, hvis antallet af trekanter i en kasse er mindre end eller lig med 2. En kasse med 2 eller færre trekanter er nemt og hurtigt for computeren at udregne, og derfor behøves den ikke at inddeles yderligere. Det tredje og sidste krav er, hvis over halvdelen af to kassers trekanter ligger i begge kasser. Hvis dette er tilfældet kaldes begge kasser for blade, da mindst halvdelen af begge kassers fælles trekanter er i begge kasser og der derfor ikke er brug for at inddele i flere yderligere kasser.
+\begin{lstlisting}[style=Cstyle, caption=if(leaf)]
+  if(kdnode_is_leaf(node)) {
+    /* test intersection with triangles */
+    for(i = 0; i < node->n_triangles; i++) {
+      if(raytracer_triangle_intersection(ray, node->triangles[i], &temporary_intersection)) {
+        /* if first intersection or closer than current intersection: */
+        if(temporary_intersection.t < intersection->t || intersection->t == -1) {
+          *intersection = temporary_intersection;
+          intersection->triangle = node->triangles[i];
+        }
+      }
+    }
+\end{lstlisting}
 
-Hvis roden (hovedkassen) er et blad, findes de nærmeste skæringer først, og der findes skæring med samtlige trekanter, medmindre nogle trekanter ligger helt i skygge for andre.
+På ovenstående kodeuddrag undersøger funktionen, om skæringen med træet sker i et af bladene, dette ses på linje et. Et blad er 'bunden' af træet, altså det punkt, hvor en kasse ikke længere kan inddeles i flere kasser. Der er tre krav til, hvornår vi ender vores inddeling af flere kasser, og istedet slutter og kalder det for et blad. Første krav er, hvis der er mere end 30 niveauer (DETTE KAN ÆNDRES SENERE  SÅ OPDATER TAL), da vores objekter ikke er alt for avancerede, behøves der ikke mere end 30 niveauer. Det andet krav er, hvis antallet af trekanter i en kasse er mindre end eller lig med to. En kasse med to eller færre trekanter er nemt og hurtigt for computeren at udregne, og derfor behøves den ikke at inddeles yderligere. Det tredje og sidste krav er, hvis over halvdelen af to kassers trekanter ligger i begge kasser. Hvis dette er tilfældet kaldes begge kasser for blade, da mindst halvdelen af begge kassers fælles trekanter er i begge kasser og der derfor ikke er brug for at inddele i flere yderligere kasser.
 
-Hvis roden ikke er et blad og hvis strålen skærer i begge kasser, undersøges hvilken kasse er nærmest og funktionen kaldes rekursivt for denne kasse. Hvis strålen går gennem den nærmeste kasse uden at ramme et objekt tjekkes for den fjerneste kasse. Hvis strålen kun skærer én af kasserne, tjekkes simpelt kun for den kasse.
+Hvis roden (hovedkassen) er et blad, findes de nærmeste skæringer først som vist på linjerne 6-8, og der findes skæring med samtlige trekanter som vist på linje tre, medmindre nogle trekanter ligger helt i skygge for andre. 
+
+\begin{lstlisting}[style=Cstyle, caption=else (recursive)]
+else {
+    /* test intersection recursively */
+    retl = intersection_ray_aabb(ray, node->low->box, &t_minl, &t_maxl);
+    reth = intersection_ray_aabb(ray, node->high->box, &t_minh, &t_maxh);
+
+    if(retl && reth) { /* Intersecting both sub-nodes */
+      if(t_minh < t_minl) { /* low node is hit first */
+        if(!raytracer_kdtree_intersection(ray, node->high, intersection)) {
+          raytracer_kdtree_intersection(ray, node->low, intersection);
+        }
+      } else if(t_minh == t_minl) {
+        raytracer_kdtree_intersection(ray, node->low, intersection);
+        raytracer_kdtree_intersection(ray, node->high, intersection);
+      } else { /* high node is hit first */
+        if(!raytracer_kdtree_intersection(ray, node->low, intersection)) {
+          raytracer_kdtree_intersection(ray, node->high, intersection);
+        }
+      }
+    } else if(retl) { /* only low node is hit */
+        raytracer_kdtree_intersection(ray, node->low, intersection);
+    } else { /* only high node is hit */
+        raytracer_kdtree_intersection(ray, node->high, intersection);
+    }
+  }
+  return intersection->t > 0;
+}
+\end{lstlisting}
+
+Hvis roden ikke er et blad og hvis strålen skærer i begge kasser, undersøges hvilken kasse er nærmest og funktionen kaldes rekursivt for denne kasse, dette kan ses på 6-18. Hvis strålen går gennem den nærmeste kasse uden at ramme et objekt tjekkes for den fjerneste kasse. Hvis strålen kun skærer én af kasserne, tjekkes simpelt kun for den kasse, som set på linje 19-24.
 
 Funktionen returnerer afstanden i tid, til skæringen med trekanten.
 
@@ -152,6 +196,67 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
 Funktionen finder en normaliseret normalvektor ud fra to vektorer som beskriver siderne i trekanten (linje 7). Derefter findes trekantens plan ud fra en stedvektor og en normalvektor (linje 10). Der checkes nu om der er skæring mellem trekant og plan (linje 13), hvis der er skæring checkes der om punktet ligger i trekanten (linje 13 - 22). Hvis punktet ligger indenfor trekanten (linje 22) så skaleres der med -1 for, at få normalvektoren til trekanten til at vende ud mod kameraet (linje 23) og værdien gemmes (linje 24).
 
 \paragraph{Phong pixel farve}
-Når skæringen er fundet ved ovenstående funktioner, og returneres til funktionen raytracer\_trace, så sendes, de data gemt i en struct Intersection, videre i funktionen raytracer\_phong sammen med scenen.
+Når skæringen er fundet ved ovenstående funktioner, returneres skæringen og tilhørende data gemt i en Intersection til funktionen raytracer\_trace, som kalder raytracer\_phong med scenen og en Intersection, som parametre. prototypen for funktionen er vist herunder.
 
+\begin{lstlisting}[style=Cstyle, caption=prototypen til funktionen der beregner pixelfarven på baggrund af data fra skæring med scenen.]
+Pixel raytracer_phong(Intersection intersection, Scene *scene)
+\end{lstlisting}
+
+I funktionen raytracer\_phong initialiseres først de variable til phong-modellen, som er beskrevet i afsnit
+ \ref{sec:fra_model_til_billede}.
+
+\begin{lstlisting}[style=Cstyle, caption=Initialisering af variabler i raytracer\_phong.] 
+m_a = intersection.material.ambient_coefficient;
+m_l = intersection.material.diffuse_coefficient;
+m_s = intersection.material.specular_coefficient;
+m_sp = intersection.material.smoothness;
+m_sm = intersection.material.metalness;
+vN = intersection.normal;
+pC = intersection.color;
+pA = scene->ambient_intensity;
+diffuse = create_pixel(0.0, 0.0, 0.0);
+specular = create_pixel(0.0, 0.0, 0.0);
+\end{lstlisting}
+
+Herefter beregnes \textit{ambient} lys efter formlen i udtryk \ref{eq:ambient_formel} under afsnit \ref{sec:fra_model_til_billede}.
+
+\begin{lstlisting}[style=Cstyle, caption=Beregning af ambient lys i raytracer\_phong.] 
+ambient = pixel_multiply(pixel_scale(pC, m_a), pA);
+\end{lstlisting}
+
+Efter det \textit{ambient} lys, beregnes vektorer til beregning af \textit{diffuse} og \textit{specular} lys.
+
+\begin{lstlisting}[style=Cstyle, caption={Beregning af skæring, vektor $\protect\vv{U}$ og pixel S i raytracer\_phong.}] 
+intersection_point = ray_get_point(intersection.ray, intersection.t);
+vU = vector_scale(intersection.ray.direction, -1.0);
+pS = pixel_add(pixel_scale(pC, m_sm), pixel_scale(create_pixel(1.0, 1.0, 1.0), (1 - m_sm)));
+\end{lstlisting}
+
+Via en for-løkke summeres \textit{diffuse} og \textit{specular} lys fra alle lys i scenen, som vist herunder.
+
+\begin{lstlisting}[style=Cstyle, caption=Beregning og summering af diffuse og specular lys fra scenens lys., label=summmering_diffuse_specular]
+for(i = 0; i < scene->n_lights; i++) {
+  sampled_light_intensity = raytracer_get_light_intensity(scene->lights[i], intersection_point, scene);
+
+  pI = pixel_scale(scene->lights[i]->color, sampled_light_intensity);
+  vI = vector_normalize(vector_subtract(scene->lights[i]->position,
+                          intersection_point));
+  vR = vector_normalize(vector_add(vector_scale(vI, -1),
+                        vector_scale(vN, vector_dot(vI, vN) * 2)));
+
+  /* diffuse light =  m_l * MAX(vI * vN, 0) * pC * pI*/
+  diffuse = pixel_add(diffuse, pixel_multiply(pixel_scale(pC,
+                      m_l * MAX(vector_dot(vI, vN), 0)), pI));
+
+  /* specular light = m_s * MAX(-vR * vU, 0) ^ m_sp * pI * pS */
+  specular = pixel_add(specular, pixel_multiply(pS, pixel_scale(pI,
+                         m_s * pow(MAX(vector_dot(vR, vU), 0), m_sp))));
+}
+\end{lstlisting}
+
+I kodeuddrag \ref{summmering_diffuse_specular} linje 2 indlæses intensiteten fra den pågældende lyskilde. Lysintensiteten beregnes i funktionen raytracer\_get\_light\_intensity, ved at teste hvor stor en procentdel af et bestemt antal tilfældige rays fra lyskilden, som ikke afskærmes på vej mod skæringspunktet ved objektet. Dette muliggør bløde skygger, da hver lyskilde kan have en radius, i stedet for blot et bestemt punkt. Ud fra lysintensiteten og lyskildens farve beregnes $I$ (Linje 4). Herefter beregnes $\vv{I}$ og $\vv{R}$, som er hhv. vektor mod lyset og refleksionsvektoren. I linje 11-16, lægges de pågældende \textit{diffuse} og \textit{specular} lys til de samlede summer. Til sidst i raytracer\_phong returneres summen af \textit{ambient}, \textit{diffuse} og \textit{specular} lys, som er den farve det pågældende skæringspunkt på objektet får, når billedet renderes. 
+\begin{lstlisting}[style=Cstyle, caption={summen af ambient, diffuse og specular lys returneres fra raytracer\_phong.}]
+/* return ambient + diffuse + specular */
+return pixel_add(ambient, pixel_add(diffuse, specular));
+\end{lstlisting}
 

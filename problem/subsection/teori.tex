@@ -1,7 +1,7 @@
 \subsection{Teori}
 \label{sec:teori}
 
-Dette afsnit omhandler de teorier samt videnskabelige principper som er relevante i forhold til at lave den løsning som er beskrevet i \ref{sec:losning}. Der vil derfor i afsnittet være fokus på de principper, formler og algoritmer som der bruges i udviklingsfasen. Teoriafsnittet vil primært fokusere på at beskrive og undersøge tekniske og matematiske principper som ellers ville være svære at forstå og arbejde med. Ud fra kravene til løsningen \ref{sec:krav} har gruppen valgt at undersøge og diskutere følgende fænomener og principper: Rotationsmatricer \ref{sec:rot_matricer}, konvertering af farvetemperatur til RGB-værdier \ref{sec:temptilrgb}, fra 3D-model til billede \ref{sec:fra_model_til_billede} herunder 3D-model, kamera, perspektiv projektion, backwardsraytracing, phong-modellen og til sidst ray-triangle intersection \ref{sec:triangle_intersection}. I slutningen af afsnittet vil der fremgå, hvordan de enkelte teorier bidrager til løsningen.
+Dette afsnit omhandler de teorier samt videnskabelige principper som er relevante i forhold til at lave den løsning som er beskrevet i \ref{sec:losning}. Der vil derfor i afsnittet være fokus på de principper, formler og algoritmer som der bruges i udviklingsfasen. Teoriafsnittet vil primært fokusere på at beskrive og undersøge tekniske og matematiske principper som ellers ville være svære at forstå og arbejde med. Ud fra kravene til løsningen \ref{sec:krav} har gruppen valgt at undersøge og diskutere følgende fænomener og principper: Rotationsmatricer \ref{sec:rot_matricer}, konvertering af farvetemperatur til RGB-værdier \ref{sec:temptilrgb}, fra 3D-model til billede \ref{sec:fra_model_til_billede} herunder 3D-model, kamera, perspektiv projektion, backwards raytracing, phong-modellen og til sidst skæring mellem linje og trekant i rummet \ref{sec:triangle_intersection}. I slutningen af afsnittet vil der fremgå, hvordan de enkelte teorier kan bidrage til udviklingen af løsningen.
 
 \input{./subsubsection/rotationsmatricer.tex}
 
@@ -15,11 +15,11 @@ Dette afsnit omhandler de teorier samt videnskabelige principper som er relevant
 
 \subsubsection*{Opsummering}
 
-Ud fra teorien kan der nu kortfattes hvordan teorierne bidrager til programudviklingen. 
+Ud fra teorien kan der nu kortfattets hvordan teorierne bidrager til programudviklingen. 
 
-Rotationsmatricer giver den empiri som skal til for at roterer vektorer i rummet med en vilkårlig vinkel. Dette er relevant i forhold når man skal flytte kameraets position, som hører til programkravet om at lampens belysning skal kunne ses visualiseres fra flere forskellige vinkler.
+Rotationsmatricer giver den empiri som skal til for at roterer vektorer i rummet med en vilkårlig vinkel. Dette er relevant når man skal flytte kameraets position, som hører til programkravet om at lampens belysning skal kunne visualiseres fra flere forskellige vinkler.
 
-Teorien om konvertering fra farvetemperatur til RGB giver os algoritme som skal til for, at lave en farvetemperatur i kelvin om til en RGB-værdi. Dette er relevant i forhold til programkravet om at kunne ændre pærens farvetemperatur. 
+Teorien om konvertering fra farvetemperatur til RGB giver os den algoritme som skal til for, at lave en farvetemperatur i kelvin om til en RGB-værdi. Dette er relevant i forhold til programkravet om at kunne ændre pærens farvetemperatur. 
 
 Teorien fra 3D-model til billede omhandler matematiske modeller og beskrivelser af relevante teknologier og algoritmer. Teorien i dette er relevant for, at forstå nogle af grundprincipperne i en raytracer heriblandt backwards raytracing og Phong-modellen.
 
@@ -27,7 +27,7 @@ Teorien om ray-triangle intersection omhandler en matematisk model over, hvordan
 
 Som afslutning på teoridiskussionen opstilles følgende nye krav til programudviklingen:
 \begin{enumerate}
-    \item Programmet skal kunne modtage følgende input fra brugeren: 3D-fil, billedets opløsning, pærens farvetemperatur og hvilken synsvinkel man ønsker at se billedet fra (kameraets position).
-    \item Programmet skal ved brug af raytracing kunne fremstille et billede på baggrund af bruger inputtet. Derudover skal raytracerens renderingstid optimeres ved brug af KD-træer.
+    \item Programmet skal kunne modtage følgende input fra brugeren: 3D-fil af lampen og dens kontekst, billedets opløsning, pærens farvetemperatur og hvilken synsvinkel man ønsker at se billedet fra (kameraets position).
+    \item Programmet skal ved brug af raytracing kunne fremstille et billede af lampen og dens belysning på baggrund af brugerinputtet. Derudover skal raytracerens renderingstid optimeres ved brug af KD-træer.
     \item Programmet skal kunne gemme det renderede billede.
 \end{enumerate}

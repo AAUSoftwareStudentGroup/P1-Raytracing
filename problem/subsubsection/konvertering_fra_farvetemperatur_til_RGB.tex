@@ -2,8 +2,8 @@
 \label{sec:temptilrgb}
 Farvetemperatur, som også er beskrevet nederst i \ref{sec:lys}, er temperaturen af et udsendt lys og måles i kelvin. Denne temperatur kan bruges til at finde ud af, om et lys er varmt eller koldt. 
 RGB-værdien er en værdi for en given farves indhold af rød, grøn og blå. Værdien angives normalt ved et tal mellem 0 og 255, altså er 0 128 255 ingen rød, en del grøn og fuld blå, hvilket, blandet sammen, giver en blålig farve.
-Der findes ingen direkte og 100\% præcis formel for at ’oversætte’ en kelvintemperaturværdi til en RGB-værdi, derfor har rapporten taget udgangspunkt i en forholdsvis præcis algoritme, som er lavet ud fra 400 målinger, men som stadig ikke er præcis nok til videnskabelig brug.
-Måden hvorpå algoritmen er lavet, er ved at tage disse 400 målinger, og lave en funktion ud fra dem. Der er lavet én målinger per 100 kelvin, der starter ved 1000 kelvin og slutter ved 40.000 kelvin. Ved at kigge på funktionen \cite{tanner_helland_chart} har Tanner Helland kunne konkludere  tre ting:
+Der findes ingen direkte og 100\% præcis formel for at ’oversætte’ en kelvintemperaturværdi til en RGB-værdi, derfor har rapporten taget udgangspunkt i en algoritme, som er lavet ud fra 400 målinger, men som stadig ikke er præcis nok til videnskabelig brug.
+Måden hvorpå algoritmen er lavet, er ved at tage disse 400 målinger, og lave en funktion ud fra dem. Der er lavet én måling per 100 kelvin, der starter ved 1000 kelvin og slutter ved 40.000 kelvin. Ved at kigge på funktionen \cite{tanner_helland_chart} har Tanner Helland kunne konkludere  tre ting:
 
 \begin{itemize}
 \item Røde værdier under 6600 kelvin er altid 255.
@@ -41,9 +41,6 @@ Disse tre, forholdsvis simple, konklusioner har hjulpet med at gøre algoritmen 
      \end{array}
    \right.
 \end{displaymath} 
-
-
-Algoritmen tager et input i kelvin, af typen unsigned int, beregner de tre RBG-værdier hver for sig, og returnerer herefter RGB-værdien, af typen pixel, til sidst. 
 
 Grunden til at der oversættes fra farvetemperatur til RGB-værdi, er for at kunne visualisere farverne på en computer. Et billede vist på en computer består af pixels, som alle har en RGB-værdi, derfor kan lyset fra en lampe med en given farvetemperatur visualiseres, hvis farvetemperaturen oversættes til RGB-værdi.
 
