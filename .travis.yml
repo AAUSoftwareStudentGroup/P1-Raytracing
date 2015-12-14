@@ -1,9 +1,0 @@
-language: c
-compiler: gcc
-install:
-    - make -C solution unittest
-
-script:
-    - ./solution/unittest
-notifications:
-    email: false
