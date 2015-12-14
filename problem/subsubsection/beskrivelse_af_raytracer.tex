@@ -260,3 +260,23 @@ I kodeuddrag \ref{summmering_diffuse_specular} linje 2 indlæses intensiteten fr
 return pixel_add(ambient, pixel_add(diffuse, specular));
 \end{lstlisting}
 
+\paragraph{Kamera placering}
+
+Funktionen 'camera\_look\_at\_point' er en funktion der sørger for at vi nemt og hurtigt kan bestemme en position og vinkel til kameraet hvis vi vil kigge på et bestemt objekt. 
+For at kigge på et punkt skal vi vide hvor langt væk kameraet skal være fra punktet, hvilken vinkel vi vil se punktet fra og selvfølgelig punktets position. Disse variabler er givet ved en vektor der indeholder punktets position og 3 doubles der definerer hhv. de 2 vinkler og afstanden fra punktet.
+Vi sætter kameraets position til at være vores afstand ud af y aksen, og 0 ud af x og z aksen. Så roterer vi punktet ved hjælp af vores camera\_set\_angle funktion som drejer kameraet om sig selv for at vi kigger den rigtige vej.
+Så drejer vi kameraet de angivne radianer om x og z aksen og til sidst lægger vi punktet vi vil se på, til kameraets position.
+
+\begin{lstlisting}[style=Cstyle, caption=Kode-uddrag fra camera.c: camera\_look\_at\_point]
+void camera_look_at_point(Camera *camera, Vector point, double distance, double vertical_angle, double horizontal_angle) {
+  /* Resetting camera position to prepare rotation */
+  camera->position = (Vector){0, -distance, 0};
+
+  /* Rotate camera around itself */
+  camera_set_angle(camera, -vertical_angle, horizontal_angle);
+  
+  /* Rotate camera around x and z axis and add to point we wanna look at */
+  camera->position = vector_rotate_around_xz(camera->position, -vertical_angle, horizontal_angle);
+  camera->position = vector_add(camera->position, point);
+}
+\end{lstlisting}
