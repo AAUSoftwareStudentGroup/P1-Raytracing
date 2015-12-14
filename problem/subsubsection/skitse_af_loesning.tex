@@ -13,8 +13,36 @@ På figur \ref{fig:skitse_af_ide} er der illusteret en skitse af en e-butik som 
 Derudover har kunden mulighed for, at justere lampens farvetemperatur i kelvin, meningen med denne feature er, at kunden har mulighed for at visualisere hvordan forskellige pærer vil se ud i lampen. De forskellige billeder for lampen fra forskellige synsvinkler og farvetemperaturer, vil ligge til rådighed på en ekstern server og vil derfor ikke gøre e-butikkernes hjemmeside betydeligt langsommere. 
 
 \begin{figure}[H]
-   \centering
-   \includegraphics[width=\textwidth]{brugerinteraktion}
+  \center
+  \begin{tikzpicture}
+    \foreach \x in {0,5,10}
+      \draw [black, thick] (\x, 0) -- (\x, -5.5);
+    
+    \node [above] at (0,0)  {Kunde};
+    \node [above] at (5,0)  {E-butik};
+    \node [above] at (10,0) {Server};
+
+    \node [above] at (2.5, -0.5-0.1) {\small Besøger e-butik};
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (0,-0.5) -- (5,-0.5);
+    \node [above] at (2.5, -1.0-0.1) {\small Lampekatalog};
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (5,-1.0) -- (0,-1.0);
+    \node [above] at (2.5, -1.5-0.1) {\small Valg af lampe};
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (0,-1.5) -- (5,-1.5);
+    \node [above] at (7.5, -2.0-0.1) {\small Anmod om billede};
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (5,-2.0) -- (10,-2.0);
+    \node [above] at (7.5, -2.5-0.1) {\small Valg af lampe};
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (10,-2.5) -- (5,-2.5);
+    \node [above] at (2.5, -3.0-0.1) {\small Billede};
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (5,-3.0) -- (0,-3.0);
+    \node [above] at (2.5, -3.5-0.1) {\small Billede};
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (0,-3.5) -- (5,-3.5);
+    \node [above] at (7.5, -4.0-0.1) {\small Skift vinkel og farvetemperatur};
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (5,-4.0) -- (10,-4.0);
+    \node [above] at (7.5, -4.5-0.1) {\small Anmod om billede};
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (10,-4.5) -- (5,-4.5);
+    \node [above] at (2.5, -5.0-0.1) {\small Billede};
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (5,-5.0) -- (0,-5.0);
+  \end{tikzpicture}
    \caption{Sekvensdiagram af løsningsideen.}
    \label{fig:sekvensdiagram_af_ideen}
 \end{figure}
