@@ -54,9 +54,9 @@ Et kamera i konteksten af at rendere en 3D-model, er typisk en beskrivelse af po
 
 Et punkt $B$ på billedplanet (Se figur \ref{fig:kamera_billede}) kan representere en pixel og kan beskrives som en linear kombination af en op og en højre orientationsvektor samt en vektor der beskriver afstanden til billedplanet relativt til kammeraet. På figuren er dette vektor $\vv{f}$ scaleret med en faktor $d$.
 
-Et pixel koordinat relativt til kameraets udgangspunkt $C$ kan altså beskrives på følgende måde:
+En stråles retning gennem et pixel koordinat $B$ relativt til kameraets udgangspunkt $C$ kan altså beskrives på følgende måde:
 \begin{equation}
-  \vv{f} \cdot d + \vv{u} \cdot (y-\frac{h}{2}) + \vv{r} \cdot (x-\frac{w}{2}
+  \vv{s} = || \vv{f} \cdot d + \vv{u} \cdot (y-\frac{h}{2}) + \vv{r} \cdot (x-\frac{w}{2}) ||
 \end{equation}
 
 Hvor $(x,y)$ er en et koordinat mellem $(0,0)$ og $(w,h)$.
