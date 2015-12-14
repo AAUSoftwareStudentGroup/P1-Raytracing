@@ -106,7 +106,6 @@ For at løse denne udfordring, benytter vi i dette projekt raytracing, der som b
 I modsætning til en perspektiv projektion af et punkt på et plan, er backwards raytracing, hvor man i stedet for punktet i rummet, tager udgangspunkt i de lysstråler der danner billedet. Ved backwards raytracing følger man lysstrålerne baglæns og ser på, hvor stor en lysintensitet, den pågældende lysstråle har efter den har interageret med objekterne i rummet. Ud fra dette farves det tilhørende punkt på billedet, og på den måde kan man rendere et helt billede. På figur \ref{fig:raytracing_skitse} er det vist hvordan man kan konstruere en lysstråle ud fra et bestemt punkt på billedplanen, hvor lysstrålen er beskrevet ved en retningsvektor og et startpunkt.
 
 \begin{figure}[H]
-  \label{fig:raytracing_skitse}
   \centering
   \tdplotsetmaincoords{60}{130}
   \begin{tikzpicture}[tdplot_main_coords]
@@ -121,6 +120,7 @@ I modsætning til en perspektiv projektion af et punkt på et plan, er backwards
 \node [above right] at (0,-2,0.25) {$\vv{r}$};
 \end{tikzpicture}
   \caption{Viser hvordan en der kan opstilles retningsvektor mellem kameraets position $C$ og punktet $P$ på billedplanen, som sammen med startpunktet $C$ beskriver lysstrålen fra trekanten i omvendt retning.}
+  \label{fig:raytracing_skitse}
 \end{figure}
 
 Retningsvektoren $\vv{r}$ for lysstrålen kan heraf beskrives som følgende.

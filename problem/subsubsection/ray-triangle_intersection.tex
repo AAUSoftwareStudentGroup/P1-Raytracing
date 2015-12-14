@@ -1,9 +1,9 @@
 \subsubsection{Skæring mellem linje og trekant i rummet}
 \label{sec:triangle_intersection}
-For at finde om der er et intersectionpoint mellem en stråle og en trekant, kan man følge tre trin:
+For at finde om der er en skæring mellem en stråle og en trekant, kan man følge tre trin:
 \begin{enumerate}
   \item Påvis at strålens linje ikke er parralel med trekantens plan
-  \item Find punktet i planet og påvis at punktet er foran strålens udgangspunkt
+  \item Find skæringen med trekantens plan og påvis at punktet er foran strålens udgangspunkt
   \item Påvis at punktet i trekantens plan, ligger indenfor trekanten
 \end{enumerate}
 
@@ -13,29 +13,44 @@ For at finde om der er et intersectionpoint mellem en stråle og en trekant, kan
 En stråle er paralel med et plan hvis strålens retning er 90 grader relativt til planets normalvektor, dette er sandt hvis ligning \ref{eq:parralel} er opfyldt.
 
 \begin{equation}
-\label{eq:parralel}
-\vv{r} \bullet \vv{n}=0
+  \label{eq:parralel}
+  \vv{r} \bullet \vv{n} = 0
 \end{equation}
 
-Planets normalvektor findes ved at krydse to vektore fra en af trekantens hjørner til de to andre.
+Planets normalvektor findes ved at krydse to vektore fra en af trekantens hjørner til de to andre (se figur \ref{eq:triangle_normal}).
+
+\begin{equation}
+  \label{eq:triangle_normal}
+  \vv{n} = (B - A) \times (C - A)
+\end{equation}
 
 \begin{figure}[H]
-  \label{fig:normalvektor}
   \centering
-  \begin{tikzpicture}
-    \path[fill=gray!10] (0,0) -- (4,0) -- (4,4) -- (0,4) -- (0,0);
-    \path[fill=gray!30, draw=gray!60] (1,2) -- (2,3) -- (3,1) -- (1,2);
-    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (2,3) -- (3,1);
-    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (2,3) -- (1,2);
-    \node [above] at (2,3) {$A$};
-    \draw plot [mark=*, mark size=1] coordinates{(2,3) }; 
-    \node [above right] at (3,1) {$B$};
-    \draw plot [mark=*, mark size=1] coordinates{(3,1) }; 
-    \node [above left] at (1,2) {$C$};
-    \draw plot [mark=*, mark size=1] coordinates{(1,2) }; 
+  \tdplotsetmaincoords{60}{130}
+  \begin{tikzpicture}[tdplot_main_coords]
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (0,0,0) -- (4,-8,4);
+    \path[fill=gray!10, draw=gray!20] (0,-4,0) -- (4,-4,0) -- (4,-4,4) -- (0,-4,4) -- (0,-4,0);
+    \path[fill=gray!30, draw=gray!60] (1,-4,2) -- (2,-4,3) -- (3,-4,1) -- (1,-4,2);
+    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (2,-4
+    ,3) -- (3,-4
+    ,1);
+    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (2,-4,3) -- (1,-4,2);
+    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (2,-4,3) -- (2,-2,3);
+    \node [above] at (2,-3,3) {$\vv{n}$};
+    \node [above] at (2,-4,3) {$A$};
+    \draw plot [mark=*, mark size=1] coordinates{(2,-4,3) }; 
+    \node [left] at (3,-4,1) {$B$};
+    \draw plot [mark=*, mark size=1] coordinates{(3,-4,1) }; 
+    \node [below] at (1,-4,2) {$C$};
+    \draw plot [mark=*, mark size=1] coordinates{(1,-4,2) };
+    \node [above right] at (0,0,0) {$P$};
+    \draw plot [mark=*, mark size=1] coordinates{(0,0,0) };
+    \node [above right] at (1,-2,1) {$\vv{r}$};
+    \draw [black, thick] (0,0,0) -- (2,-4,2);
+    \draw plot [mark=*, mark size=1] coordinates{(2,-4,2) };
   \end{tikzpicture}
-
-  \caption{Normalvektor test}
+  \caption{Viser princippet bag perspektiv projektion af et punkt på et billedplan.}
+  \label{fig:perspektiv_projektion}
 \end{figure}
 
 
