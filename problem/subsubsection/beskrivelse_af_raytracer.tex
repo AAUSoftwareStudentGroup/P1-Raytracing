@@ -120,7 +120,7 @@ Hele funktionen kan ses i bilag \ref{sec:...}
     }
 \end{lstlisting}
 
-På ovenstående kodeuddrag undersøger funktionen, om skæringen med træet sker i et af bladene, dette ses på linje et. Et blad er 'bunden' af træet, altså det punkt, hvor en kasse ikke længere kan inddeles i flere kasser. Der er tre krav til, hvornår vi ender vores inddeling af flere kasser, og istedet slutter og kalder det for et blad. Første krav er, hvis der er mere end 30 niveauer (DETTE KAN ÆNDRES SENERE  SÅ OPDATER TAL), da vores objekter ikke er alt for avancerede, behøves der ikke mere end 30 niveauer. Det andet krav er, hvis antallet af trekanter i en kasse er mindre end eller lig med to. En kasse med to eller færre trekanter er nemt og hurtigt for computeren at udregne, og derfor behøves den ikke at inddeles yderligere. Det tredje og sidste krav er, hvis over halvdelen af to kassers trekanter ligger i begge kasser. Hvis dette er tilfældet kaldes begge kasser for blade, da mindst halvdelen af begge kassers fælles trekanter er i begge kasser og der derfor ikke er brug for at inddele i flere yderligere kasser.
+På ovenstående kodeuddrag undersøger funktionen, om skæringen med træet sker i et af bladene, dette ses på linje et. Et blad er 'bunden' af træet, altså det punkt, hvor en kasse ikke længere kan inddeles i flere kasser. Der er tre krav til, hvornår vi ender vores inddeling af flere kasser, og istedet slutter og kalder det for et blad. Første krav er, hvis der er mere end 30 niveauer, da vores objekter ikke er alt for avancerede, behøves der ikke mere end 30 niveauer. Det andet krav er, hvis antallet af trekanter i en kasse er mindre end eller lig med to. En kasse med to eller færre trekanter er nemt og hurtigt for computeren at udregne, og derfor behøves den ikke at inddeles yderligere. Det tredje og sidste krav er, hvis over halvdelen af to kassers trekanter ligger i begge kasser. Hvis dette er tilfældet kaldes begge kasser for blade, da mindst halvdelen af begge kassers fælles trekanter er i begge kasser og der derfor ikke er brug for at inddele i flere yderligere kasser.
 
 Hvis roden (hovedkassen) er et blad, findes de nærmeste skæringer først som vist på linjerne 6-8, og der findes skæring med samtlige trekanter som vist på linje tre, medmindre nogle trekanter ligger helt i skygge for andre. 
 
@@ -260,3 +260,23 @@ I kodeuddrag \ref{summmering_diffuse_specular} linje 2 indlæses intensiteten fr
 return pixel_add(ambient, pixel_add(diffuse, specular));
 \end{lstlisting}
 
+\paragraph{Kamera placering}
+
+Funktionen 'camera\_look\_at\_point' er en funktion der sørger for at vi nemt og hurtigt kan bestemme en position og vinkel til kameraet hvis vi vil kigge på et bestemt objekt. 
+For at kigge på et punkt skal vi vide hvor langt væk kameraet skal være fra punktet, hvilken vinkel vi vil se punktet fra og selvfølgelig punktets position. Disse variabler er givet ved en vektor der indeholder punktets position og 3 doubles der definerer hhv. de 2 vinkler og afstanden fra punktet.
+Vi sætter kameraets position til at være vores afstand ud af y aksen, og 0 ud af x og z aksen. Så roterer vi punktet ved hjælp af vores camera\_set\_angle funktion som drejer kameraet om sig selv for at vi kigger den rigtige vej.
+Så drejer vi kameraet de angivne radianer om x og z aksen og til sidst lægger vi punktet vi vil se på, til kameraets position.
+
+\begin{lstlisting}[style=Cstyle, caption=Kode-uddrag fra camera.c: camera\_look\_at\_point]
+void camera_look_at_point(Camera *camera, Vector point, double distance, double vertical_angle, double horizontal_angle) {
+  /* Resetting camera position to prepare rotation */
+  camera->position = (Vector){0, -distance, 0};
+
+  /* Rotate camera around itself */
+  camera_set_angle(camera, -vertical_angle, horizontal_angle);
+  
+  /* Rotate camera around x and z axis and add to point we wanna look at */
+  camera->position = vector_rotate_around_xz(camera->position, -vertical_angle, horizontal_angle);
+  camera->position = vector_add(camera->position, point);
+}
+\end{lstlisting}
