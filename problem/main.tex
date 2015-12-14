@@ -21,6 +21,7 @@
 \usepackage{courier}
 \usepackage{esvect}
 \usepackage{subcaption}
+\usepackage{fancyhdr}
 
  \geometry{
  % a4paper,
@@ -83,6 +84,11 @@
 
 \begin{document}
 %\maketitle
+\pagestyle{fancy}
+\fancyhead[LE,RO]{\slshape \rightmark}
+\fancyhead[LO,RE]{\slshape \leftmark}
+
+
 
 % \begin{abstract}
 % \input{./sections/abstract.tex}
@@ -91,6 +97,7 @@
 
 % sections
 \input{./sections/forside_og_formalia.tex}
+
 
 \tableofcontents
 \clearpage
