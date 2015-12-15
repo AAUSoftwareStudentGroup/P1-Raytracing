@@ -38,7 +38,7 @@ Camera *new_camera(unsigned int width, unsigned int height) {
   camera->right    = (Vector){1,0,0};
   camera->forward  = (Vector){0,1,0};
   camera->up       = (Vector){0,0,1};
-  camera->distance = width;
+  camera->distance = MAX(width, height);
   return camera; 
 }
 

@@ -4,6 +4,7 @@
 int kdnode_build_subnodes(KDNode *node, int level) {
 
   /* Initialize variables */
+  char unset;
   double cut_position;
   int i, j, n_same_triangles;
   Vector box_size;
@@ -22,7 +23,7 @@ int kdnode_build_subnodes(KDNode *node, int level) {
   
   /* Find widest axis on box, to get lowest amount of triangles that are in both boxes */
   largest_axis = X_AXIS;
-  for(axis = 0; axis <= 2; axis++) {
+  for(axis = Y_AXIS; axis <= Z_AXIS; axis++) {
     if(vector_get_component(box_size, axis) > vector_get_component(box_size, largest_axis))
       largest_axis = axis;
   }
@@ -30,20 +31,24 @@ int kdnode_build_subnodes(KDNode *node, int level) {
   /* Find mid-point in box */
   for(i = 0; i < node->n_triangles; i++) {
     for(j = 0; j < VERTICES_IN_TRIANGLE; j++) {
-      cut_position += vector_get_component(node->triangles[i]->verticies[j]->position, largest_axis)
-      / (node->n_triangles*VERTICES_IN_TRIANGLE);
+      cut_position += vector_get_component(node->triangles[i]->verticies[j]->position, largest_axis);
     }
   }
-  /* Let mid-point be the seperator for the high and low box */
-  vector_set_component(&node->low->box.high, largest_axis, cut_position);
-  vector_set_component(&node->low->box.low, largest_axis, cut_position);
+  cut_position /= (node->n_triangles*VERTICES_IN_TRIANGLE);
 
+  /* Let mid-point be the seperator for the high and low box */
+  vector_set_component(&(node->low->box.high), largest_axis, cut_position);
+  vector_set_component(&(node->high->box.low), largest_axis, cut_position);
   /* Fill triangles in corresponding box. If a triangle is in both boxes, it's put in both boxes */
   for(i = 0; i < node->n_triangles; i++) {
+    unset = 0;
     if(intersection_triangle_aabb(*(node->triangles[i]), node->low->box)) {
         node->low->triangles[node->low->n_triangles++] = node->triangles[i];
     }
-    if(intersection_triangle_aabb(*(node->triangles[i]), node->high->box)) {
+    else
+      unset = 1;
+
+    if(unset || intersection_triangle_aabb(*(node->triangles[i]), node->high->box)) {
         node->high->triangles[node->high->n_triangles++] = node->triangles[i];
     }
 

@@ -68,22 +68,27 @@ int raytracer_scene_intersection(Ray ray, Scene *scene,
       if(temporary_intersection.t < intersection->t || intersection->t == -1)
         *intersection = temporary_intersection;
   }
-  return intersection->t > 0;
+  return temporary_intersection.t > 0;
 }
 
 /* whether or not ray intersects with object and store intersection */
 int raytracer_object_intersection(Ray ray, Object *object, Intersection *intersection) {
   double i, j;
-  
+  Intersection temporary_intersection;
+
+  temporary_intersection = create_intersection();
+
   /* if ray intersects with object's aabb: */
   if(intersection_ray_aabb(ray, object->root.box, &i, &j)){
     /* if ray intersects with triangle in object's kd-tree */
-    if(raytracer_kdtree_intersection(ray, &(object->root), intersection)){
-      intersection->color = object->color;
-      intersection->material = object->material;
+    if(raytracer_kdtree_intersection(ray, &(object->root), &temporary_intersection)){
+      temporary_intersection.color = object->color;
+      temporary_intersection.material = object->material;
+      if(temporary_intersection.t < intersection->t || intersection->t == -1)
+        *intersection = temporary_intersection;
     }
   }
-  return intersection->t > 0;
+  return temporary_intersection.t > 0;
 }
 
 /* whether or not ray intersects with kd-tree and store intersection */

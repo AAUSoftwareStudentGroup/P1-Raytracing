@@ -1,3 +1,5 @@
+/* Denne fil er udarbejdet med henblik på at øge hastighed af tests og prototype udvikling
+   og er derfor ikke udviklet med henblik på at blive dokumenteret */
 #include "input.h"
 
 /* prepares everything this program needs before running */

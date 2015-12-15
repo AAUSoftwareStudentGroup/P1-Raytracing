@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 
+#include "macros.h"
 #include "vector.h"
 
 typedef struct _camera {
