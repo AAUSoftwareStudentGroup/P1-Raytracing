@@ -21,4 +21,4 @@ test: $(DOCUMENT).tex
 
 clean:
 	rm -f $(PDFGFX)
-	rm -f *.log *.out *.fls *.fdb_latexmk *.aux *.toc
+	rm -f *.log *.out *.fls *.fdb_latexmk *.aux *.toc *.pdf
