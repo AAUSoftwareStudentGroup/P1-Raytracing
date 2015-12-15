@@ -6,23 +6,38 @@ int main(int argc, char* argv[]) {
   Scene *scene;
   Camera *camera;
   Image *image;
+  Configuration conf;
 
   unsigned long t0 = time(NULL);
+  conf = create_configuration();
   
-  if(input_parse(argc, argv, &scene, &camera) == 0) {
+  if(input_parse(argc, argv, &scene, &camera, &conf) == 0) {
     return -1;
   }
   
   image = raytracer_render(scene, camera);
   
-  if(argc == 3)
-    image_write(image, argv[2]);
-  else
-    image_write(image, "out.ppm");
+  image_write(image, conf.out_file);
+
+  free_camera(camera);
+  free_scene(scene);
   
   printf("%lus\n", time(NULL) - t0);
   return 0;
 }
 \end{lstlisting}
 
-På linje 1 i ovenstående kodeuddrag, kaldes main, med parametrene argc og argv. Argc bruges til at holde styr på, hvor mange informationer programmet får. I løkken på linje 8 tjekkes det, om inputtet er korrekt, og der angives nogle specifikke informationer til programmet, alt efter hvad inputtet er, som gøres gennem input\_parse-funktionen i input.c. Her kan man f.eks. angive højde, bredde og farvetemperatur. Argv bruges til at holde styr på, hvad programmet har fået som input. På Linje 12 kaldes funktionen raytracer\_render som renderer billedet. Linje 6 og 19 bruges udelukkende til teknisk anvendelse, for at kunne se hvor lang tid programmet har taget om at fuldføre. Dette bruges til at checke renderingstiden af et billede.
+På linje 1 i ovenstående kodeuddrag, kaldes main, med parametrene argc og argv. argv indeholder en liste af programparametre som f.eks.\ favetemperaturen som ønskes anvendt af programmet. argc er blot antallet af programparametre som argv indeholder. På linje 10 behandles program parametrene og der testes om der er fejl i inputet, hvilket kunne være en manglende 3D-model. Dette gøres gennem input\_parse-funktionen i input.c. På Linje 14 kaldes funktionen raytracer\_render som renderer billedet. Linje 7 og 21 bruges udelukkende til teknisk anvendelse, for at kunne se hvor lang tid programmet har taget om at fuldføre.
+
+\paragraph{Input}
+Som input kræver programmet filnavnet på en 3D-model i PLY formatet, derudover modtager programmet en række valgfrie input parametre:
+\begin{itemize}
+  \item -h [INT]: Et heltal som angiver højden af det resulterende billede i pixel
+  \item -w [INT]: Et heltal som angiver breden af det resulterende billede i pixel
+  \item -t [INT]: Et heltal som angiver farvetemperaturen af lyskilder i modellen hvis farve er angivet som sort
+  \item -H [FLOAT]: Et decimaltal som angiver, i radianer, en horisontal rotation om en sort lyskilde
+  \item -V [FLOAT]: Et decimaltal som angiver, i radianer, en vertikal rotation om en sort lyskilde
+  \item -o [STRING]: En tekststreng som angiver placering og navnet på det resulterende billede
+\end{itemize}
+
+Input 3D-modellen skal være det første programparameter og skal være i et tilpasset PLY format. Data input har ikke været fokuset for opgaven og et tilpasset PLY var blot den nemmeste måde, hurtigt at få et system op at køre så der kunne udvikles forskællige modeller til test. Af samme grund har input parseren heller ikke været et fokus.
