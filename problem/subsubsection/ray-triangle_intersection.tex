@@ -7,9 +7,6 @@ For at finde om der er en skæring mellem en stråle og en trekant, kan man føl
   \item Påvis at punktet i trekantens plan, ligger indenfor trekanten
 \end{enumerate}
 
-
-[FIND IF RAY PARRALEL WITH TRIANGLE PLANE]()
-
 En stråle er paralel med et plan hvis strålens retning er 90 grader relativt til planets normalvektor, dette er sandt hvis ligning \ref{eq:parralel} er opfyldt.
 
 \begin{equation}
@@ -17,7 +14,7 @@ En stråle er paralel med et plan hvis strålens retning er 90 grader relativt t
   \vv{r} \bullet \vv{n} = 0
 \end{equation}
 
-Planets normalvektor findes ved at krydse to vektore fra en af trekantens hjørner til de to andre (se figur \ref{eq:triangle_normal}). såvidt
+Planets normalvektor findes ved at krydse to vektore fra en af trekantens hjørner til de to andre (se ligning \ref{eq:triangle_normal}).
 
 \begin{equation}
   \label{eq:triangle_normal}
@@ -28,14 +25,16 @@ Planets normalvektor findes ved at krydse to vektore fra en af trekantens hjørn
   \centering
   \tdplotsetmaincoords{60}{130}
   \begin{tikzpicture}[tdplot_main_coords]
-    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (0,0,0) -- (4,-8,4);
+    % dashed line through plane
+    \draw [black, thick] (0,0,0) -- (4,-8,4);
+    % triangle and plane
     \path[fill=gray!10, draw=gray!20] (0,-4,0) -- (4,-4,0) -- (4,-4,4) -- (0,-4,4) -- (0,-4,0);
     \path[fill=gray!30, draw=gray!60] (1,-4,2) -- (2,-4,3) -- (3,-4,1) -- (1,-4,2);
-    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (2,-4
-    ,3) -- (3,-4
-    ,1);
+    % triangle
+    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (2,-4,3) -- (3,-4,1);
     \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (2,-4,3) -- (1,-4,2);
     \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (2,-4,3) -- (2,-2,3);
+    % \draw [black,   thick, -{Stealth[width=2mm, length=2mm]}] (2,-4,3) -- (2,-4,2);
     \node [above] at (2,-3,3) {$\vv{n}$};
     \node [above] at (2,-4,3) {$A$};
     \draw plot [mark=*, mark size=1] coordinates{(2,-4,3) }; 
@@ -43,28 +42,35 @@ Planets normalvektor findes ved at krydse to vektore fra en af trekantens hjørn
     \draw plot [mark=*, mark size=1] coordinates{(3,-4,1) }; 
     \node [below] at (1,-4,2) {$C$};
     \draw plot [mark=*, mark size=1] coordinates{(1,-4,2) };
-    \node [above right] at (0,0,0) {$P$};
+    
+    % ray
+    \node [above right] at (0,0,0) {$P_0$};
     \draw plot [mark=*, mark size=1] coordinates{(0,0,0) };
-    \node [above right] at (1,-2,1) {$\vv{r}$};
+    \node [above right] at (0.25,-0.5,0.25) {$\vv{r}$};
     \draw [black, thick] (0,0,0) -- (2,-4,2);
+    \draw [blue!50, thick, |-|] (0.1,0,-0.1) -- (2.1,-4,1.9);
+    \node [below left] at (1,-2,1) {$t_A$};
+    \node [black, above left] at (2.5,-4,2) {$P(t_A)$};
+    \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (0,0,0) -- (0.5,-1,0.5);
     \draw plot [mark=*, mark size=1] coordinates{(2,-4,2) };
   \end{tikzpicture}
   \caption{Viser princippet bag perspektiv projektion af et punkt på et billedplan.}
   \label{fig:perspektiv_projektion}
 \end{figure}
 
+Hvis strålen ikke er parralel med planet kan vi nu finde et punkt i planet som strålen skære. Alle vektore i planet er ortogonale på normal vektoren, dermed kan vi opstille ligning \ref{eq:vektor_in_plane} til at beskrive betingelsen for et punkt strålen som også ligger i planet. Ved at substituere linjens ligning (ligning \ref{eq:point_on_ray}) ind og isolere $t_A$ kan vi så bruge til at finde punktet på strålens linje og er $t_A > 0$ så er punktet også foran strålens udgangspunkt $P_0$
 
-[FIND IF PLANE IS IN FRONT OF RAY ORIGIN]()
-
-[NEDENSTÅENDE SKAL OMSKRIVES EN SMULE]()
-
-punktmændgen som opgør planet kan beskrives som de punkter $\vv{p}$ der opfylder reglen $ \vv{p} \bullet \vv{n} = 0$ 
 \begin{align}
-  P(t) &= \vv{r} \cdotp t + \vv{p_0} \\
+  \label{eq:point_on_ray}
+  P(t) &= \vv{r} \cdotp t + \vv{P_0} \\
+  \label{eq:vektor_in_plane}
   ( P(t_A) - A ) \bullet \vv{n} &= 0 \\
-  (\vv{r} \cdotp t_A + \vv{p_0} - A) \bullet \vv{n} &= 0 \\
-  t_A \cdotp \vv{r} \bullet \vv{n} + (\vv{p_0} - A) \bullet \vv{n} &= 0 \\
-  t_A &= -\frac{(\vv{A} - \vv{p_0})\bullet \vv{n}}{\vv{r} \bullet \vv{n}}
+  \label{eq:test3}
+  (\vv{r} \cdotp t_A + \vv{P_0} - A) \bullet \vv{n} &= 0 \\
+  \label{eq:test4}
+  t_A \cdotp \vv{r} \bullet \vv{n} + (\vv{P_0} - A) \bullet \vv{n} &= 0 \\
+  \label{eq:test5}
+  t_A &= -\frac{(\vv{A} - \vv{P_0})\bullet \vv{n}}{\vv{r} \bullet \vv{n}}
 \end{align}
 
 

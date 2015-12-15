@@ -15,7 +15,7 @@ En 3D-model er en matematisk beskrivelse af et tre dimensionelt objekt. For at b
 For at rendere et billede af en 3D-model bestående af trekanter, er man nødt til at have en model for det kamera, som billedet renderes ud fra. Hvordan kameraet kan modelleres er beskrevet i næste afsnit.
 
 \paragraph{Kamera}
-Et kamera i konteksten af at rendere en 3D-model, er typisk en beskrivelse af position, orientation og synsfelt. Andre informationer kan tilknyttes som beskriver opløsning af det renderede billede, samt perspektivet af det resulterende billede. Orientationen fastsættes ved hjælp af et sæt vektore som beskriver hvilken retning der er f.eks.\ højre og op for kameraret.
+Et kamera i konteksten af at rendere en 3D-model, er typisk en beskrivelse af position, orientation og synsfelt. Andre informationer kan tilknyttes som beskriver opløsning af det renderede billede, samt perspektivet af det resulterende billede. Orientationen fastsættes ved hjælp af et sæt vektorer som beskriver hvilken retning der er f.eks.\ højre og op for kameraret.
 
 \begin{figure}[H]
   \centering
@@ -52,7 +52,7 @@ Et kamera i konteksten af at rendere en 3D-model, er typisk en beskrivelse af po
   \label{fig:kamera_billede}
 \end{figure}
 
-Et punkt $B$ på billedplanet (Se figur \ref{fig:kamera_billede}) kan representere en pixel og kan beskrives som en linear kombination af en op og en højre orientationsvektor samt en vektor der beskriver afstanden til billedplanet relativt til kammeraet. På figuren er dette vektor $\vv{f}$ scaleret med en faktor $d$.
+Et punkt $B$ på billedplanet (Se figur \ref{fig:kamera_billede}) kan repræsentere en pixel og kan beskrives som en linear kombination af en op og en højre orientationsvektor samt en vektor der beskriver afstanden til billedplanet relativt til kammeraet. På figuren er dette vektor $\vv{f}$ skaleret med en faktor $d$.
 
 En stråles retning gennem et pixel koordinat $B$ relativt til kameraets udgangspunkt $C$ kan altså beskrives på følgende måde:
 \begin{align}
