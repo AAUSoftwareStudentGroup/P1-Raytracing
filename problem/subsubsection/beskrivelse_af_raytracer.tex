@@ -76,7 +76,7 @@ int raytracer_scene_intersection(Ray ray, Scene *scene,
 }
 \end{lstlisting}
 
-I funktionen checkes der om en ray skærer et objekt, hvis dette er tilfældes så returneres der information om denne skæring (linje 11). Der checkes efterfølgende om den nye skæring er tættere på udgangspunktet end de førhenværende skæringer og den tætteste skæring gemmes (linje 14 - 15). Herefter returnerer funktionen true, hvis tiden, som beskriver afstanden fra startpunktet  til skæringspunktet, er over 0, og false hvis den ikke er.
+I funktionen checkes der om en ray skærer et objekt, hvis dette er tilfældes så returneres der information om denne skæring (linje 11). Der checkes efterfølgende om den nye skæring er tættere på udgangspunktet end de førhenværende skæringer og den tætteste skæring gemmes (linje 14 - 15). Herefter returnerer funktionen sand, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er større end 0, og falsk hvis den ikke er mindre eller lig med 0.
 
 
 
@@ -98,7 +98,7 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection *interse
 }
 \end{lstlisting}
 
-På linje fem i ovenstående kodeuddrag kan man se, at funktionen først checker om lysstrålen skærer med aabb, og hvis dette er sandt tjekker den så om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet, samt bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen true, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er over 0, og false hvis den ikke er.
+På linje fem i ovenstående kodeuddrag kan man se, at funktionen først checker om lysstrålen skærer med aabb, og hvis dette er sandt tjekker den så om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet. Derudover bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen sand, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er større end 0, og falsk hvis den ikke er mindre eller lig med 0.
 
 \paragraph{Skæring med KD-træ}
 
@@ -120,7 +120,7 @@ Hele funktionen kan findes på elektronisk bilag i filen kdnode.c
     }
 \end{lstlisting}
 
-På ovenstående kodeuddrag undersøger funktionen, om skæringen med træet sker i et af bladene, dette ses på linje et. Et blad er 'bunden' af træet, altså det punkt, hvor en kasse ikke længere kan inddeles i flere kasser. Der er tre krav til, hvornår vi ender vores inddeling af flere kasser, og istedet slutter og kalder det for et blad. Første krav er, hvis der er mere end 30 niveauer, da vores objekter ikke er alt for avancerede, behøves der ikke mere end 30 niveauer. Det andet krav er, hvis antallet af trekanter i en kasse er mindre end eller lig med to. En kasse med to eller færre trekanter er nemt og hurtigt for computeren at udregne, og derfor behøves den ikke at inddeles yderligere. Det tredje og sidste krav er, hvis over halvdelen af to kassers trekanter ligger i begge kasser. Hvis dette er tilfældet kaldes begge kasser for blade, da mindst halvdelen af begge kassers fælles trekanter er i begge kasser og der derfor ikke er brug for at inddele i flere yderligere kasser.
+På ovenstående kodeuddrag undersøger funktionen, om skæringen med træet sker i et af bladene, dette ses på linje 1. Et blad er 'bunden' af træet, altså det punkt, hvor en kasse ikke længere kan inddeles i flere kasser. Der er tre krav til, hvornår vi ender vores inddeling af flere kasser, og istedet slutter og kalder det for et blad. Første krav er, hvis der er mere end 30 niveauer, da vores objekter ikke er alt for avancerede, behøves der ikke mere end 30 niveauer. Det andet krav er, hvis antallet af trekanter i en kasse er mindre end eller lig med to. En kasse med to eller færre trekanter er nemt og hurtigt for computeren at udregne, og derfor behøves den ikke at inddeles yderligere. Det tredje og sidste krav er, hvis over halvdelen af to kassers trekanter ligger i begge kasser. Hvis dette er tilfældet kaldes begge kasser for blade, da mindst halvdelen af begge kassers fælles trekanter er i begge kasser og der derfor ikke er brug for at inddele i flere yderligere kasser.
 
 Hvis roden (hovedkassen) er et blad, findes de nærmeste skæringer først som vist på linjerne 6-8, og der findes skæring med samtlige trekanter som vist på linje tre, medmindre nogle trekanter ligger helt i skygge for andre. 
 
@@ -153,7 +153,7 @@ else {
 }
 \end{lstlisting}
 
-Hvis roden ikke er et blad og hvis strålen skærer i begge kasser, undersøges hvilken kasse er nærmest og funktionen kaldes rekursivt for denne kasse, dette kan ses på 6-18. Hvis strålen går gennem den nærmeste kasse uden at ramme et objekt tjekkes for den fjerneste kasse. Hvis strålen kun skærer én af kasserne, tjekkes simpelt kun for den kasse, som set på linje 19-24.
+Hvis roden ikke er et blad og hvis strålen skærer i begge kasser, undersøges hvilken kasse der er nærmest og funktionen kaldes rekursivt for denne kasse, dette kan ses på 6-18. Hvis strålen går gennem den nærmeste kasse uden at ramme et objekt tjekkes for den fjerneste kasse. Hvis strålen kun skærer én af kasserne, tjekkes simpelt kun for den kasse, som set på linje 19-24.
 
 Funktionen returnerer afstanden i tid, til skæringen med trekanten.
 
