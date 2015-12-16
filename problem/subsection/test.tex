@@ -5,10 +5,7 @@ Som en del af problemløsningen udføres der test på det udviklede program. For
 
 Først testes det om programmet kan rendere et billede af en lampe og dens belysning. Dette gøres ved at sammenligne et billede taget med et fysisk kamera, med et billede renderet af programmet.
 
-Figuren herunder viser forsøgsopstillingen.
-
-
-Figur \ref{fig:test_real_fake} herunder viser billedet taget med et mobilkamera(Samsung Galaxy S3) og billedet renderet af programmet med nedenstående input.
+På figur \ref{fig:real} er der vist et billede taget med et mobilkamera(Samsung Galaxy S3), hvorimod billedet på figur \ref{fig:fake} er renderet af programmet på baggrund af en tilnærmet model af lampen, med nedenstående programparametre.
 \begin{lstlisting}
 ./trace model.ply -V 0.785 -t 2700 -w 540 -h 960
 \end{lstlisting}
@@ -17,80 +14,80 @@ Figur \ref{fig:test_real_fake} herunder viser billedet taget med et mobilkamera(
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.4\linewidth]{real}
-  \caption{}
+  \includegraphics[width=.6\linewidth]{real}
+  \caption{Fotografi}
   \label{fig:real}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.4\linewidth]{result_5305s}
-  \caption{}
+  \includegraphics[width=.6\linewidth]{result_5305s}
+  \caption{Renderet billede}
   \label{fig:fake}
 \end{subfigure}
-\caption{Viser billede taget med mobilkamera (a) og billede renderet af programmet (b). For de to billeder gælder at pærens farvetemperatur er 2700K.}
+\caption{Viser billede taget med mobilkamera (a) og billede renderet af programmet (b). For de to billeder gælder at pærens farvetemperatur er angivet som 2700K.}
 \label{fig:test_real_fake}
 \end{figure}
 
-For at teste de forskellige brugerinput, som kan indtastes i programmet, er der herunder billeder med forskellige brugerinput.
+For at teste de forskellige programparametre, som kan indtastes i programmet, er der herunder billeder af test med forskellige programparametre.
 
-Først testes farvetemperaturen.
+\subsubsection{Test af farvetemperatur}
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.4\linewidth]{result_5305s}
-  \caption{}
-  \label{fig:real}
+  \includegraphics[width=.5\linewidth]{result_5305s}
+  \caption{Farvetemperatur: 2700K}
+  \label{fig:kelvin2700}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.4\linewidth]{result_2734s_5000k_0H_0-785V}
-  \caption{}
-  \label{fig:fake}
+  \includegraphics[width=.5\linewidth]{result_2734s_5000k_0H_0-785V}
+  \caption{Farvetemperatur: 5000K}
+  \label{fig:kelvin5000}
 \end{subfigure}
-\caption{Viser billede renderet af programmet, med farvetemperaturer på 2700K (a) og 5000K (b).}
-\label{fig:farvetemp}
+\caption{Viser billede renderet af programmet med to forskellige farvetemperaturer.}
+\label{fig:farvetemperatur}
 \end{figure}
 
-Herefter sammenlignes billeder renderet med forskellige vinkler.
+\subsubsection{Test af synsvinkler}
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.4\linewidth]{result_2734s_5000k_0H_0-785V}
-  \caption{}
-  \label{fig:real}
+  \includegraphics[width=.5\linewidth]{result_2734s_5000k_0H_0-785V}
+  \caption{Horisontal vinkel: $0^o$ \\ Vertikal vinkel: $~45^o$}
+  \label{fig:one}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.4\linewidth]{result_2758s_white_0-8H}
-  \caption{}
-  \label{fig:fake}
+  \includegraphics[width=.5\linewidth]{result_2758s_white_0-8H}
+  \caption{Horisontal vinkel: $~45^o$ \\ Vertikal vinkel: $0^o$}
+  \label{fig:two}
 \end{subfigure}
-\caption{Viser billede renderet af programmet, med vinkler 0H 0.785V (a) og 0.8H 0V (b).}
-\label{fig:synsvinkel1}
+\caption{Viser billeder renderet af programmet, med to forskellige vinkler.}
+\label{fig:synsvinkel}
 \end{figure}
 
-For at teste om programmet er blevet optimeret renderes nu et billede før kd-træer blev implementeret og et billede efter.
+\subsubsection{Test af optimering}
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.4\linewidth]{result53s}
-  \caption{}
-  \label{fig:real}
-\end{subfigure}
+  \includegraphics[width=.5\linewidth]{result658s}
+  \caption{Før optimering: 658 sek.}
+  \label{fig:slow}
+\end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.4\linewidth]{result658s}
-  \caption{}
-  \label{fig:fake}
+  \includegraphics[width=.5\linewidth]{result53s}
+  \caption{Efter optimering: 53 sek.}
+  \label{fig:fast}
 \end{subfigure}
-\caption{Viser et billede renderet af programmet henholdsvis før og efter implementationen af kd-træer.}
-\label{fig:synsvinkel1}
+\caption{Viser et billede angivet med renderingstider for programmet henholdsvis før og efter implementationen af kd-træer. Begge billeder er renderet uden bløde skygger.}
+\label{fig:optimering}
 \end{figure}
 
-Med det gamle version af programmet opnås der en renderingstid på 658 sekunder, og med den nye version af programet opnås der en renderingstid på 53 sekunder. Der er altså efter implementationen af kd-træer, i dette tilfælde, opnået en speedup på ca. 12.
+Med den gamle version af programmet opnås der en renderingstid på 658 sekunder, og med den nye version af programet opnås der en renderingstid på 53 sekunder. Der er altså efter implementationen af kd-træer, i dette tilfælde, opnået en speedup på $658 sek./53 sek. \approx 12$.
 
 \subsection*{Opsummering}
 Som vist på figur \ref{fig:fake} opfylder programmet krav 1-3 fra afsnit \ref{sec:krav_til_kode}, da den kan rendere og gemme et billede af en lampe og dens belysning på baggrund af indtastede input der indeholder 3D-fil, farvetemperatur, synsvinkel og opløsningen af billedet. Derudover er der som vist sket en optimering af programmets renderingstid efter implementeringen af kd-træer. 
