@@ -2,8 +2,8 @@
 \label{sec:temptilrgb}
 Farvetemperatur, som også er beskrevet nederst i \ref{sec:lys}, er temperaturen af et udsendt lys og måles i kelvin. Denne temperatur kan bruges til at finde ud af, om et lys er varmt eller koldt. 
 RGB-værdien er en værdi for en given farves indhold af rød, grøn og blå. Værdien angives normalt ved et tal mellem 0 og 255, altså er 0 128 255 ingen rød, en del grøn og fuld blå, hvilket, blandet sammen, giver en blålig farve.
-Der findes ingen direkte og 100\% præcis formel for at ’oversætte’ en kelvintemperaturværdi til en RGB-værdi, derfor har rapporten taget udgangspunkt i en algoritme, som er lavet ud fra 400 målinger, men som stadig ikke er præcis nok til videnskabelig brug.
-Måden hvorpå algoritmen er lavet, er ved at tage disse 400 målinger, og lave en funktion ud fra dem. Der er lavet én måling per 100 kelvin, der starter ved 1000 kelvin og slutter ved 40.000 kelvin. Ved at kigge på funktionen \cite{tanner_helland_chart} har Tanner Helland kunne konkludere  tre ting:
+Der findes ingen direkte og 100\% præcis formel for at ’oversætte’ en kelvintemperaturværdi til en RGB-værdi, derfor har rapporten taget udgangspunkt i en algoritme, som er lavet ud fra 400 målinger, men som stadig ikke er præcis nok til videnskabelig brug \cite{tanner_helland}.
+Måden hvorpå algoritmen er lavet, er ved at tage disse 400 målinger, og lave en funktion ud fra dem. Der er lavet én måling per 100 kelvin, der starter ved 1000 kelvin og slutter ved 40.000 kelvin \cite{charity_values}. Ved at kigge på funktionen \cite{tanner_helland_chart} har Tanner Helland kunne konkludere  tre ting:
 
 \begin{itemize}
 \item Røde værdier under 6600 kelvin er altid 255.

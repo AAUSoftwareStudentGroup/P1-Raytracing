@@ -1,6 +1,7 @@
 DOCUMENT=main
 SVGGFX=$(wildcard graphics/*.svg)
 PDFGFX=$(addprefix graphics/,$(notdir $(SVGGFX:.svg=.pdf)))
+UNAME := $(shell uname)
 
 all: main process
 
@@ -8,7 +9,15 @@ main: $(PDFGFX) $(DOCUMENT).tex
 	latexmk -pdf $(DOCUMENT).tex -f -quiet --shell-escape -latexoption=-interaction=batchmode	
 
 process: $(PDFGFX) sections/processanalyse.tex
-	latexmk -pdf sections/processanalyse.tex -f -quiet --shell-escape -latexoption=-interaction=batchmode	
+	cd sections && latexmk -pdf processanalyse.tex -f -quiet --shell-escape -latexoption=-interaction=batchmode	&& cd ../
+	ifeq ($(UNAME), Linux)
+		mv sections/processanalyse.pdf .
+	endif
+	ifeq ($(UNAME), Darwin)
+		mv sections/processanalyse.pdf .
+	else
+		move sections/processanalyse.pdf ../
+	endif
 
 graphics/%.pdf: graphics/%.svg
 	-inkscape $< --export-text-to-path --export-pdf=$@
