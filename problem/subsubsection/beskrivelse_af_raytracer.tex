@@ -1,5 +1,5 @@
 \subsubsection{Beskrivelse af raytracer}
-I dette afsnit vil de væsentlige funktioner til raytraceren blive beskrevet. Formålet med afsnittet er, at få en forståelse for hvordan den tidligere beskrevet teori i afsnit \ref{sec:teori}, er anvendt og håndteret i programudviklingen.
+I dette afsnit vil de væsentlige funktioner til raytraceren blive beskrevet. Formålet med afsnittet er, at få en forståelse for hvordan teorien i afsnit \ref{sec:teori}, er anvendt og håndteret i programudviklingen.
 
 
 \paragraph{Rendering}
@@ -76,7 +76,7 @@ int raytracer_scene_intersection(Ray ray, Scene *scene,
 }
 \end{lstlisting}
 
-I funktionen checkes der om en ray skærer et objekt, hvis dette er tilfældes så returneres der information om denne skæring (linje 11). Der checkes efterfølgende om den nye skæring er tættere på udgangspunktet end de førhenværende skæringer og den tætteste skæring gemmes (linje 14 - 15). Herefter returnerer funktionen true, hvis tiden, som beskriver afstanden fra startpunktet  til skæringspunktet, er over 0, og false hvis den ikke er.
+I funktionen checkes der om en ray skærer et objekt, hvis dette er tilfældes så returneres der information om denne skæring (linje 11). Der checkes efterfølgende om den nye skæring er tættere på udgangspunktet end de førhenværende skæringer og den tætteste skæring gemmes (linje 14 - 15). Herefter returnerer funktionen sandt, hvis tiden, som beskriver afstanden fra startpunktet  til skæringspunktet, er over 0, og falsk hvis den ikke er.
 
 
 
@@ -98,11 +98,11 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection *interse
 }
 \end{lstlisting}
 
-På linje fem i ovenstående kodeuddrag kan man se, at funktionen først checker om lysstrålen skærer med aabb, og hvis dette er sandt tjekker den så om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet, samt bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen true, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er over 0, og false hvis den ikke er.
+På linje fem i ovenstående kodeuddrag kan man se, at funktionen først checker om lysstrålen skærer med AABB, og hvis dette er sandt tjekker den så om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet, samt bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen sandt, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er over 0, og falsk hvis den ikke er.
 
 \paragraph{Skæring med KD-træ}
 
-Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om lysstrålen skærer med kdtræet og i så fald hvor. Formålet med denne funktion er at optimere programmet, og undgå at lave udregninger hvor det ikke er relevant. 
+Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om lysstrålen skærer med kdtræet og i så fald hvor. Formålet med denne funktion er at optimere programmet, og undgå at lave unødvendige udregninger. 
 
 Hele funktionen kan findes på elektronisk bilag i filen kdnode.c
 
