@@ -2,9 +2,9 @@
 \label{sec:triangle_intersection}
 For at finde om der er en skæring mellem en stråle og en trekant, kan man følge tre trin:
 \begin{enumerate}
-  \item Påvis at strålens linje ikke er parralel med trekantens plan
   \item Find skæringen med trekantens plan og påvis at punktet er foran strålens udgangspunkt
   \item Påvis at punktet i trekantens plan, ligger indenfor trekanten
+  \item Påvis at strålens linje ikke er parallel med trekantens plan
 \end{enumerate}
 
 En stråle er paralel med et plan hvis strålens retning er 90 grader relativt til planets normalvektor, dette er sandt hvis ligning \ref{eq:parralel} er opfyldt.
@@ -75,3 +75,38 @@ Hvis strålen ikke er parralel med planet kan vi nu finde et punkt i planet som 
 
 
 [FIND IF POINT IS INSIDE TRIANGLE]()
+
+\begin{figure}[H]
+  \centering
+  \tdplotsetmaincoords{60}{130}
+  \begin{tikzpicture}[tdplot_main_coords,thick,scale=2, every node/.style={transform shape}]
+    \coordinate (Pt) at (2,-4,2);
+    \coordinate (A) at (2,-4,3);
+    \coordinate (B) at (3,-4,1);
+    \coordinate (C) at (1,-4,2);
+    % dashed line through plane
+    % triangle and plane
+    \path[fill=gray!10, draw=gray!20] (0.8,-4,0.8) -- (3.2,-4,0.8) -- (3.2,-4,3.2) -- (0.8,-4,3.2) -- (0.8,-4,0.8);
+    \path[fill=gray!30, draw=gray!60] (A) -- (B) -- (C) -- (A);
+    % triangle
+    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (A) -- (B);
+    \draw [blue!50, thick, -{Stealth[width=2mm, length=2mm]}] (A) -- (Pt);
+    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (B) -- (C);
+    \draw [blue!50, thick, -{Stealth[width=2mm, length=2mm]}] (B) -- (Pt);
+    \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (C) -- (A);
+    \draw [blue!50, thick, -{Stealth[width=2mm, length=2mm]}] (C) -- (Pt);
+    \node [above] at (2,-3,3) {$\vv{n}$};
+    \node [above] at (2,-4,3) {$A$};
+    \draw plot [mark=*, mark size=1] coordinates{(2,-4,3) }; 
+    \node [left] at (3,-4,1) {$B$};
+    \draw plot [mark=*, mark size=1] coordinates{(3,-4,1) }; 
+    \node [below] at (1,-4,2) {$C$};
+    \draw plot [mark=*, mark size=1] coordinates{(1,-4,2) };
+    
+    % ray
+    \node [black, above left] at (2.5,-4,2) {$P(t_A)$};
+    \draw plot [mark=*, mark size=1] coordinates{(2,-4,2) };
+  \end{tikzpicture}
+  \caption{Viser princippet bag perspektiv projektion af et punkt på et billedplan.}
+  \label{fig:perspektiv_projektion}
+\end{figure}

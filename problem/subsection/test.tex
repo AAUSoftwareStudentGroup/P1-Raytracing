@@ -63,16 +63,34 @@ Herefter sammenlignes billeder renderet med forskellige vinkler.
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.4\linewidth]{result_2734s_5000k_0H_0-785V}
+  \includegraphics[width=.4\linewidth]{result_2758s_white_0-8H}
   \caption{}
   \label{fig:fake}
 \end{subfigure}
-\caption{Viser billede renderet af programmet, med vinkler -H -V (a) og -H -V (b).}
+\caption{Viser billede renderet af programmet, med vinkler 0H 0.785V (a) og 0.8H 0V (b).}
+\label{fig:synsvinkel1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.4\linewidth]{result_1sample_white_57s}
+  \caption{}
+  \label{fig:real}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.4\linewidth]{result_1sample_white_old_523s}
+  \caption{}
+  \label{fig:fake}
+\end{subfigure}
+\caption{Viser billede renderet af programmet, med tider 57 Sek[Ny algo] (a) og 523 Sek[Gamel algo med bounding spheres] (b). Billederne er forskællige fordi den gamle algoritme udregner synsvinklen på en anden måde}
 \label{fig:synsvinkel1}
 \end{figure}
 
 \subsection*{Opsummering}
-Som vist på figur \ref{fig:fake} opfylder programmet krav 1-3 fra afsnit \ref{teori}, da den kan rendere og gemme et billede af en lampe og dens belysning på baggrund af indtastede input der indeholder 3D-fil, farvetemperatur, synsvinkel og opløsningen af billedet. Derudover er der som vist sket en optimering af programmets renderingstid efter implementeringen af kd-træer. 
-Som det er vist på figur \ref{fig:test_fake_real} er der en afvigelse mellem billedet af den rigtige lampe og det renderede billede af en model af lampen. Denne afvigelse diskuteres i næste afsnit sammen med rapportens resterende resultater. 
+Som vist på figur \ref{fig:fake} opfylder programmet krav 1-3 fra afsnit \ref{sec:krav_til_kode}, da den kan rendere og gemme et billede af en lampe og dens belysning på baggrund af indtastede input der indeholder 3D-fil, farvetemperatur, synsvinkel og opløsningen af billedet. Derudover er der som vist sket en optimering af programmets renderingstid efter implementeringen af kd-træer. 
+Som det er vist på figur \ref{fig:test_real_fake} er der en afvigelse mellem billedet af den rigtige lampe og det renderede billede af en model af lampen. Denne afvigelse diskuteres i næste afsnit sammen med rapportens resterende resultater. 
 
 %Der er nu blevet udført forskellige test af programmet, som senere diskuteres i afsnit \ref{sec:diskussion}.

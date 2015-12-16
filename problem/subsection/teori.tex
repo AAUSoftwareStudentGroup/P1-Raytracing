@@ -1,7 +1,7 @@
 \subsection{Teori}
 \label{sec:teori}
 
-Dette afsnit omhandler de teorier samt videnskabelige principper som er relevante i forhold til at lave den løsning som er beskrevet i \ref{sec:losning}. Der vil derfor i afsnittet være fokus på de principper, formler og algoritmer som der bruges i udviklingsfasen. Teoriafsnittet vil primært fokusere på at beskrive og undersøge tekniske og matematiske principper som ellers ville være svære at forstå og arbejde med. Ud fra kravene til løsningen \ref{sec:krav} har gruppen valgt at undersøge og diskutere følgende fænomener og principper: Rotationsmatricer \ref{sec:rot_matricer}, konvertering af farvetemperatur til RGB-værdier \ref{sec:temptilrgb}, fra 3D-model til billede \ref{sec:fra_model_til_billede} herunder 3D-model, kamera, perspektiv projektion, backwards raytracing, phong-modellen og til sidst skæring mellem linje og trekant i rummet \ref{sec:triangle_intersection}. I slutningen af afsnittet vil der fremgå, hvordan de enkelte teorier kan bidrage til udviklingen af løsningen.
+Dette afsnit omhandler de teorier samt videnskabelige principper som er relevante i forhold til at lave den løsning som er beskrevet i afsnit \ref{sec:losning}. Der vil derfor i afsnittet være fokus på de principper, formler og algoritmer som der bruges i udviklingsfasen. Teoriafsnittet vil primært fokusere på at beskrive og undersøge tekniske og matematiske principper som ellers ville være svære at forstå og arbejde med. Ud fra kravene til løsningen i afsnit \ref{sec:krav} har gruppen valgt at undersøge og diskutere følgende fænomener og principper: Rotationsmatricer i afsnit \ref{sec:rot_matricer}, konvertering af farvetemperatur til RGB-værdier i afsnit \ref{sec:temptilrgb}, fra 3D-model til billede i afsnit \ref{sec:fra_model_til_billede} herunder 3D-model, kamera, perspektiv projektion, backwards raytracing, phong-modellen og til sidst skæring mellem linje og trekant i rummet i afsnit \ref{sec:triangle_intersection}. I slutningen af afsnittet vil der fremgå, hvordan de enkelte teorier kan bidrage til udviklingen af løsningen.
 
 \input{./subsubsection/rotationsmatricer.tex}
 
@@ -17,13 +17,13 @@ Dette afsnit omhandler de teorier samt videnskabelige principper som er relevant
 
 Ud fra teoridiskussionen kan der nu kortfattes hvordan teorierne bidrager til at opfylde de fem krav til løsningen i afsnit \ref{sec:krav}. 
 
-Rotationsmatricer giver den empiri som skal til for at roterer vektorer i rummet med en vilkårlig vinkel. Dette er relevant når man skal flytte kameraets position, som hører til krav 2 i afsnit \ref{sec:krav} om at lampens belysning skal kunne visualiseres fra flere forskellige vinkler.
+Rotationsmatricer giver den viden som skal til for at rotere vektorer i rummet med en vilkårlig vinkel. Dette er relevant når man skal flytte kameraets position, som hører til krav 2 i afsnit \ref{sec:krav} om at lampens belysning skal kunne visualiseres fra flere forskellige vinkler.
 
 Teorien om konvertering fra farvetemperatur til RGB giver os den algoritme som skal til for, at lave en farvetemperatur i kelvin om til en RGB-værdi. Dette er relevant i forhold til krav 3 i afsnit \ref{sec:krav} om at kunne ændre pærens farvetemperatur. 
 
 Teorien fra 3D-model til billede omhandler matematiske modeller og beskrivelser af relevante teknologier og algoritmer. Teorien i dette er relevant for, at forstå nogle af grundprincipperne i en raytracer heriblandt backwards raytracing og Phong-modellen. Som bruges til at opfylde krav 1 i afsnit \ref{sec:krav}.
 
-Teorien om skæringen mellem linje og trekant i rummet omhandler en matematisk model, som kan anvendes til at udvikle en raytracer, hvor rays er beskrevet ved linjer i rummet og 3D-modellen er beskrevet med trekanter.
+Teorien om skæringen mellem linje og trekant i rummet omhandler en matematisk model, som kan anvendes til at udvikle en raytracer, hvor rays er beskrevet ved linjer i rummet og 3D-modellen er beskrevet med trekanter. Dette er også med til at opfylde krav 1 i afsnit \ref{sec:krav}.
 
 Som afslutning på teoridiskussionen opstilles følgende nye krav til programudviklingen i forhold til kravene i afsnit \ref{sec:krav}:
 \begin{enumerate}
