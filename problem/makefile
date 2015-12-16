@@ -2,13 +2,11 @@ DOCUMENT=main
 SVGGFX=$(wildcard graphics/*.svg)
 PDFGFX=$(addprefix graphics/,$(notdir $(SVGGFX:.svg=.pdf)))
 UNAME := $(shell uname)
-ifeq ($(UNAME), Linux)
-	MOVE := mv
-endif
-ifeq ($(UNAME), Darwin)
-	MOVE := mv
-else
+
+ifeq ($(OS),Windows_NT)
 	MOVE := move
+else
+	MOVE := mv
 endif
 
 all: main process
