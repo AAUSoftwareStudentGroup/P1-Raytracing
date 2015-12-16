@@ -3,7 +3,7 @@ I dette afsnit vil de væsentlige funktioner til raytraceren blive beskrevet. Fo
 
 
 \paragraph{Rendering}
-For at rendere et billede af lampen og dens belysning, er der lavet en funktion raytracer\_render, der modtager scenen, dvs. samlingen af alle 3D-objekter og lys, samt modellen for det kamera, som billedet skal dannes ud fra. Funktionen er vist herunder.
+For at rendere et billede af lampen og dens belysning, er der lavet en funktion raytracer\_render, der modtager scenen, dvs.\ samlingen af alle 3D-objekter og lys, samt modellen for det kamera, som billedet skal dannes ud fra. Funktionen er vist herunder.
 
 \begin{lstlisting}[style=Cstyle, caption=Funktionen der rendere billedet af scenen med et kameras perspektiv]
 Image *raytracer_render(Scene *scene, Camera *camera) {
@@ -30,10 +30,10 @@ Image *raytracer_render(Scene *scene, Camera *camera) {
 }
 \end{lstlisting}
 
-Funktionen vist herover, danner en ray for hver pixel i billedet. Rayen sendes videre sammen med scenen til funktionen raytracer\_trace, som returnere hvilken farve den pågældende pixel på billedet skal have. Til sidst returneres det endelige billede.
+Funktionen vist herover, danner en ray for hver pixel i billedet. Rayen sendes videre sammen med scenen til funktionen raytracer\_trace, som returnerer, hvilken farve den pågældende pixel på billedet skal have. Til sidst returneres det endelige billede.
 
 \paragraph{Tracer}
-Funktionen raytracer\_trace er den funktion som starter raytraceren samt returnerer en pixelfarve hvis en ray skærer med et objekt i scenen. Funktionen er vist herunder.  
+Funktionen raytracer\_trace er den funktion som starter raytraceren samt returnerer en pixelfarve, hvis en ray skærer med et objekt i scenen. Funktionen er vist herunder.  
 
 \begin{lstlisting} [style=Cstyle, caption=Funktionen raytracer\_trace]
 Pixel raytracer_trace(Ray ray, Scene *scene) {
@@ -97,7 +97,7 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection *interse
 }
 \end{lstlisting}
 
-På linje fem i ovenstående kodeuddrag kan man se, at funktionen først tjekker om lysstrålen skærer med AABB, og hvis dette er sandt tjekker den så om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet, samt bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen sandt, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er over 0, og falsk hvis den ikke er.
+På linje fem i ovenstående kodeuddrag kan man se, at funktionen først tjekker om lysstrålen skærer med AABB, og hvis dette er sandt tjekker den om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet. Derudover bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen sandt, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er over 0, og falsk hvis den ikke er.
 
 
 \paragraph{Skæring med KD-træ}
@@ -159,7 +159,7 @@ Funktionen returnerer afstanden i tid, til skæringen med trekanten.
 
 \paragraph{Skæring med trekant}
 
-Funktionen raytracer\_triangle\_intersection bruges til at tjekke om der er skæring mellem en stråle og en trekant. Funktionen ses herunder
+Funktionen raytracer\_triangle\_intersection bruges til at undersøge om der er skæring mellem en stråle og en trekant. Funktionen ses herunder
 
 \begin{lstlisting}[style=Cstyle, caption=Funktionen der finder skæring med trekant]
 int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *intersection) {
@@ -193,10 +193,10 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
 }
 \end{lstlisting}
 
-Funktionen finder en normaliseret normalvektor ud fra to vektorer som beskriver siderne i trekanten (linje 7). Derefter findes trekantens plan ud fra en stedvektor og en normalvektor (linje 10). Der tjekkes nu om der er skæring mellem trekant og plan (linje 13), hvis der er skæring tjekkes der om punktet ligger i trekanten (linje 13 - 22). Hvis punktet ligger indenfor trekanten (linje 22) så skaleres der med -1 for, at få normalvektoren til trekanten til at vende ud mod kameraet (linje 23) og værdien gemmes (linje 24).
+Funktionen finder en normaliseret normalvektor ud fra to vektorer, som beskriver siderne i trekanten (linje 7). Derefter findes trekantens plan ud fra en stedvektor og en normalvektor (linje 10). Der undersøges nu, om der er skæring mellem trekant og plan (linje 13), hvis der er skæring tjekkes der om punktet ligger i trekanten (linje 13 - 22). Hvis punktet ligger indenfor trekanten (linje 22) skaleres der med -1 for, at få normalvektoren til trekanten til at vende ud mod kameraet (linje 23) og værdien gemmes (linje 24).
 
 \paragraph{Phong pixel farve}
-Når skæringen er fundet ved ovenstående funktioner, returneres skæringen og tilhørende data gemt i en Intersection til funktionen raytracer\_trace, som kalder raytracer\_phong med scenen og en Intersection, som parametre. prototypen for funktionen er vist herunder.
+Når skæringen er fundet ved ovenstående funktioner, returneres skæringen og tilhørende data gemt i en Intersection til funktionen raytracer\_trace, som kalder raytracer\_phong med scenen og en Intersection, som parametre. Prototypen for funktionen er vist herunder.
 
 \begin{lstlisting}[style=Cstyle, caption=prototypen til funktionen der beregner pixelfarven på baggrund af data fra skæring med scenen.]
 Pixel raytracer_phong(Intersection intersection, Scene *scene)
@@ -254,7 +254,7 @@ for(i = 0; i < scene->n_lights; i++) {
 }
 \end{lstlisting}
 
-I kodeuddrag \ref{summmering_diffuse_specular} linje 2 indlæses intensiteten fra den pågældende lyskilde. Lysintensiteten beregnes i funktionen raytracer\_get\_light\_intensity, ved at teste hvor stor en procentdel af et bestemt antal tilfældige rays fra lyskilden, som ikke afskærmes på vej mod skæringspunktet ved objektet. Dette muliggør bløde skygger, da hver lyskilde kan have en radius, i stedet for blot et bestemt punkt. Ud fra lysintensiteten og lyskildens farve beregnes $I$ (Linje 4). Herefter beregnes $\vv{I}$ og $\vv{R}$, som er hhv. vektor mod lyset og refleksionsvektoren. I linje 11-16, lægges de pågældende \textit{diffuse} og \textit{specular} lys til de samlede summer. Til sidst i raytracer\_phong returneres summen af \textit{ambient}, \textit{diffuse} og \textit{specular} lys, som er den farve det pågældende skæringspunkt på objektet får, når billedet renderes. 
+I kodeuddrag \ref{summmering_diffuse_specular} linje 2 indlæses intensiteten fra den pågældende lyskilde. Lysintensiteten beregnes i funktionen raytracer\_get\_light\_intensity, ved at teste, hvor stor en procentdel af et bestemt antal tilfældige rays fra lyskilden, som ikke afskærmes på vej mod skæringspunktet ved objektet. Dette muliggør bløde skygger, da hver lyskilde kan have en radius, i stedet for blot et bestemt punkt. Ud fra lysintensiteten og lyskildens farve beregnes $I$ (Linje 4). Herefter beregnes $\vv{I}$ og $\vv{R}$, som er hhv.\ vektor mod lyset og refleksionsvektoren. I linje 11-16, lægges de pågældende \textit{diffuse} og \textit{specular} lys til de samlede summer. Til sidst i raytracer\_phong returneres summen af \textit{ambient}, \textit{diffuse} og \textit{specular} lys, som er den farve det pågældende skæringspunkt på objektet får, når billedet renderes. 
 \begin{lstlisting}[style=Cstyle, caption={summen af ambient, diffuse og specular lys returneres fra raytracer\_phong.}]
 /* return ambient + diffuse + specular */
 return pixel_add(ambient, pixel_add(diffuse, specular));
@@ -262,8 +262,8 @@ return pixel_add(ambient, pixel_add(diffuse, specular));
 
 \paragraph{Kamera placering}
 
-Funktionen 'camera\_look\_at\_point' er en funktion der sørger for at vi nemt og hurtigt kan bestemme en position og vinkel til kameraet hvis vi vil kigge på et bestemt objekt. 
-For at kigge på et punkt skal vi vide hvor langt væk kameraet skal være fra punktet, hvilken vinkel vi vil se punktet fra og selvfølgelig punktets position. Disse variabler er givet ved en vektor der indeholder punktets position og 3 doubles der definerer hhv. de 2 vinkler og afstanden fra punktet.
+Funktionen 'camera\_look\_at\_point' er en funktion, der sørger for at vi nemt og hurtigt kan bestemme en position og vinkel til kameraet hvis vi vil kigge på et bestemt objekt. 
+For at kigge på et punkt skal vi vide hvor langt væk kameraet skal være fra punktet, hvilken vinkel vi vil se punktet fra og punktets position. Disse variabler er givet ved en vektor, der indeholder punktets position og tre doubles, der hhv.\ definerer de to vinkler og afstanden fra punktet.
 Vi sætter kameraets position til at være vores afstand ud af y aksen, og 0 ud af x og z aksen. Så roterer vi punktet ved hjælp af vores camera\_set\_angle funktion som drejer kameraet om sig selv for at vi kigger den rigtige vej.
 Så drejer vi kameraet de angivne radianer om x og z aksen og til sidst lægger vi punktet vi vil se på, til kameraets position.
 

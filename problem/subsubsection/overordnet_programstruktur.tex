@@ -1,5 +1,5 @@
 \subsubsection{Overordnet programstruktur}
-Main funktionen er den funktion som fortæller computerens operativ system hvilke kommandoer den skal udføre. Det er således i funktionen main, at programmets funktioner kaldes og eksekveres. Programmets main funktion er vist nedenfor:
+Main-funktionen er den funktion, som fortæller computerens operativsystem hvilke kommandoer den skal udføre. Det er således i funktionen main, at programmets funktioner kaldes og eksekveres. Programmets main funktion er vist nedenfor:
 
 \begin{lstlisting}[style=Cstyle, caption=Main]
 int main(int argc, char* argv[]) {
@@ -27,17 +27,17 @@ int main(int argc, char* argv[]) {
 }
 \end{lstlisting}
 
-På linje 1 i ovenstående kodeuddrag, kaldes main, med parametrene argc og argv. argv indeholder en liste af programparametre som f.eks.\ favetemperaturen som ønskes anvendt af programmet. argc er blot antallet af programparametre som argv indeholder. På linje 10 behandles program parametrene og der testes om der er fejl i inputet, hvilket kunne være en manglende 3D-model. Dette gøres gennem input\_parse-funktionen i input.c. På Linje 14 kaldes funktionen raytracer\_render som renderer billedet. Linje 7 og 21 bruges udelukkende til teknisk anvendelse, for at kunne se hvor lang tid programmet har taget om at fuldføre.
+På linje 1 i ovenstående kodeuddrag, kaldes main, med parametrene argc og argv. argv indeholder en liste af programparametre som f.eks.\ favetemperaturen, som ønskes anvendt af programmet. argc er blot antallet af programparametre som argv indeholder. På linje 10 behandles programparametrene og der testes om der er fejl i inputtet, hvilket kunne være en manglende 3D-model. Dette gøres gennem input\_parse-funktionen i input.c. På Linje 14 kaldes funktionen raytracer\_render som renderer billedet. Linje 7 og 21 bruges udelukkende til teknisk anvendelse, for at kunne se hvor lang tid programmet har taget om at fuldføre.
 
 \paragraph{Input}
-Som input kræver programmet filnavnet på en 3D-model i PLY formatet, derudover modtager programmet en række valgfrie input parametre:
+Som input kræver programmet filnavnet på en 3D-model i PLY formatet, derudover modtager programmet en række valgfrie input-parametre:
 \begin{itemize}
-  \item -h [INT]: Et heltal som angiver højden af det resulterende billede i pixel
-  \item -w [INT]: Et heltal som angiver breden af det resulterende billede i pixel
-  \item -t [INT]: Et heltal som angiver farvetemperaturen af lyskilder i modellen hvis farve er angivet som sort
-  \item -H [FLOAT]: Et decimaltal som angiver, i radianer, en horisontal rotation om en sort lyskilde
-  \item -V [FLOAT]: Et decimaltal som angiver, i radianer, en vertikal rotation om en sort lyskilde
-  \item -o [STRING]: En tekststreng som angiver placering og navnet på det resulterende billede
+  \item -h [INT]: Et heltal, som angiver højden af det resulterende billede i pixel.
+  \item -w [INT]: Et heltal, som angiver breden af det resulterende billede i pixel.
+  \item -t [INT]: Et heltal, som angiver farvetemperaturen af lyskilder i modellen hvis farve er angivet som sort.
+  \item -H [FLOAT]: Et decimaltal, som angiver, i radianer, en horisontal rotation om en sort lyskilde.
+  \item -V [FLOAT]: Et decimaltal, som angiver, i radianer, en vertikal rotation om en sort lyskilde.
+  \item -o [STRING]: En tekststreng, som angiver placering og navnet på det resulterende billede.
 \end{itemize}
 
-Input 3D-modellen skal være det første programparameter og skal være i et tilpasset PLY format. Data input har ikke været fokuset for opgaven og et tilpasset PLY var blot den nemmeste måde, hurtigt at få et system op at køre så der kunne udvikles forskellige modeller til test. Af samme grund har input parseren heller ikke været et fokus. Input parseren kan findes i input.c, se elektronisk bilag. 
+Input-3D-modellen skal være det første programparameter og skal være i et tilpasset PLY format. Data-input har ikke været fokuset for opgaven og et tilpasset PLY var blot den nemmeste måde, hurtigt at få et system op at køre, så der kunne udvikles forskellige modeller til test. Af samme grund har input-parseren heller ikke været et fokus. Input-parseren kan findes i input.c, se elektronisk bilag. 
