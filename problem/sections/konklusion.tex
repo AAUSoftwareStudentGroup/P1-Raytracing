@@ -1,21 +1,21 @@
 \section{Konklusion}
+Formålet med dette afsnit er at opsummere hvordan den endelige problemformulering blev udarbejdet. Derudover konkluderes der hvorvidt den udviklede løsning besvarer den endelige problemformulering.
 
-Der opsummeres nu kort den løsning som er opnået i projektet samt de mangler som programmet har i forhold til problemformuleringen. 
+I problemanalysen, blev der argumenteret for det initierende problems relevans. I denne forbindelse blev der antaget at det initierende problem eksisterede, på baggrund af egne erfaringer, diskussion med lektor Lars Peter Jensen og en udtagelse fra en belysningskonsulent for en dansk lampebutik. Ønsket var at bekræfte antagelsen ved at udføre en spørgeskemaundersøgelse. Da denne undersøgelse aldrig blev fuldført, så er det ikke bevist, at det initierende problem eksisterer.
+Efter argumentationen for problemets relevant blev begreber, interessenter og placering af det initierende problem undersøgt. Resultatet af disse undersøgelser dannede grundlaget for den endelige problemformulering.
 
-I projektet er der udviklet et program der kan følgende:
-\begin{itemize}
-\item Visualisere en lampe og dens belysning som ved brug af raytracing rendere et billede ud fra en 3D-fil der indeholder lampen, lyskilder og kontekst.
-\item Skifte vinklen hvorfra lampen og dens belysning visualiseres ved brug af rotationsmatricer. 
-\item Skifte farvetemperaturen for pæren i lampen ud fra en algortitme der omdanner farvetemperaturen i kelvin til RGB-værdier. 
-\end{itemize}
+Det første underspørgsmål i problemformuleringen var: \textit{"Hvordan visualiseres lyset fra en given indendørslampe?"}. Dette underspørgsmål blev besvaret ved at repræsentere lampen, som en 3D-model, som sammen med brugerinput om den ønskede visualisering, indlæses af programmet og renderes vha. raytracing med brug af phong-modellen beskrevet i afsnit \ref{sec:teori}.
 
-Programmet har følgende mangler i forhold til at kunne implementeres på en e-butiks hjemmeside:
+Det andet underspørgsmål var: \textit{"Hvordan kan lampen og dens belysning visualiseres fra flere vinkler?"}. Dette underspørgsmålet blev besvaret ved at anvende teorien om rotationsmatricer i afsnit \ref{sec:teori}, til at positionere det virtuelle kamera, som billedet renderes ud fra.
+
+Det tredje underspørgsmål var: \textit{"Hvordan visualiseres forskellige pærers lys?"}. Her blev der anvendt en algoritme, som konverterer en farvetemperatur for pæren til en RGB-værdi, som kunne benyttes i phong-modellen.
+
+Problemformuleringens overordnede spørgsmål var \textit{Hvordan kan vi lave et værktøj til e-butikker, som visualiserer belysningen fra indendørslamper for kunderne?"}. Ud fra ovenstående kan det nu konkluderes, at problemformuleringen er delvist løst, da der er udviklet et værktøj, der kan visualisere en lampe og dens belysning med forskellige synsvinkler og farvetemperaturer. Problemformuleringen er kun delvist løst, da der stadigvæk er mangler i forhold til implementeringen af værktøjet på en e-butiks hjemmeside. Programmet mangler følgende:
+
 \begin{itemize}
 \item Bedre overenstemmelse af farvetemperaturen for pæren i den rigtige lampe i forhold farvetemperaturen på det renderede billede.
 \item Lavere renderingstid for, at løsningen er praktisk anvendelig.
 \item Brugerflade til visning af billeder.
 \end{itemize}
-
-Ud fra ovensående kan vi konkludere, at løsningen delvist besvarer problemformuleringen, men at der stadigvæk er mangler i forholdd til implementeringen af løsningen på en e-butiks hjemmeside. Derfor mangler der stadigvæk at blive testet om løsningsforslaget vil gøre det nemmere for kunden at visualisere en lampe og dens belysning på en e-butiks hjemmeside.  
 
 \clearpage
