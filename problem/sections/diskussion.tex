@@ -1,11 +1,7 @@
 \section{Diskussion}
 \label{sec:diskussion}
 
-Formålet med dette afsnit er: I hvor høj grad løser vores produkt problemet \textit{"Mangel på visualisering af belysningen fra lamper ved E-handel"}. For at afgøre dette sammenlignes de krav der er fastsat igennem rapporten med de resultater der er opnået. 
-
-\subsection{Løsningen i forhold til løsningsforslaget}
-
-Ud fra den løsning der er blevet dokumenteret i afsnit \ref{sec:problemlosning}, diskuteres der nu i hvor høj grad den opfylder kravene til løsningen i afsnit \ref{sec:losning}. Disse krav knytter sig til problemformuleringen.
+Formålet med dette afsnit er at diskutere hvorvidt vores løsning opfylder de krav der blev opstillet til løsningen i afsnit \ref{sec:losning}.
 
 Det første krav var, at programmet skulle kunne vise et billede af en lampe og dens belysning. Dette krav er som vist under afsnit \ref{sec:test} opfyldt, da programmet kan modtage en 3D-fil for en lampe og en kontekst, og ud fra dette rendere og gemme et billede af lampens belysning i konteksten. På figur \ref{fig:test_real_fake} kan det ses, at der er en afvigelse mellem billedet af den virkelige lampe og billedet af den renderede 3D-model for lampen. Dette kan til dels skyldes præcisionen af de mål der blev foretaget for at konstruere 3D-modellen af lampen. Derudover er det en simpel model (phong-modellen) som i vores program ikke tager højde for alle lysfænomener såsom refleksion og refraktion. Dette gør, at programmet har en begrænsning i forhold til den realisme billederne af lampen kan have. Et eksempel som programmet ikke kan rendere er en lampe som har en reflekterende overflade, som gør at man kan se en spejling af andre objekter i lampens overflade. I stedet for phong-modellen, kunne det tænkes er der var andre modeller, som også kunne anvendes. Derudover kunne modellen udvides, så den kunne håndtere refleksioner og refraktioner, og på den måde hæve kvaliteten af det renderede billede. Dette er dog ikke nået i dette projekt grundet tidsmangel. Derudover vil højere realisme sandsynligvis også øge renderingstiden, hvilket vil kræve at programmet optimeres yderligere. Der er derfor en balancegang mellem realisme og renderingstid, som skal tages højde for, hvis programmet skulle videreudvikles.
 
