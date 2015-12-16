@@ -1,6 +1,6 @@
 \subsubsection{Fra 3D-model til billede}
 \label{sec:fra_model_til_billede}
-I dette afsnit er formålet nu at vise en model for, hvordan en billeddannelsen af objekter i rummet, også kaldt rendering, kan konstrueres. Dette er essentielt da billeddannelsen danner grundlag for, hvordan 3D-modellen for en lampe omdannes til et billede, der kan vises for kunderne på e-butikken. Til sidst i afsnittet udledes en model for, hvordan belysningen fra en lampe kan simuleres og visualiseres vha. raytracing. 
+I dette afsnit er formålet nu at vise en model for, hvordan billeddannelsen af objekter i rummet, også kaldt rendering, kan konstrueres. Dette er essentielt, da billeddannelsen danner grundlag for, hvordan 3D-modellen for en lampe omdannes til et billede, der kan vises for kunderne på e-butikken. Til sidst i afsnittet udledes en model for, hvordan belysningen fra en lampe kan simuleres og visualiseres vha.\ raytracing. 
 
 \paragraph{3D-model}
 En 3D-model er en matematisk beskrivelse af et tre dimensionelt objekt. For at beskrive et 3D-objekt opdeler man ofte objektet i trekanter. Dette er illustreret på nedenstående figur.
@@ -15,7 +15,7 @@ En 3D-model er en matematisk beskrivelse af et tre dimensionelt objekt. For at b
 For at rendere et billede af en 3D-model bestående af trekanter, er man nødt til at have en model for det kamera, som billedet renderes ud fra. Hvordan kameraet kan modelleres er beskrevet i næste afsnit.
 
 \paragraph{Kamera}
-Et kamera i konteksten af at rendere en 3D-model, er typisk en beskrivelse af position, orientation og synsfelt. Andre informationer kan tilknyttes som beskriver opløsning af det renderede billede, samt perspektivet af det resulterende billede. Orientationen fastsættes ved hjælp af et sæt vektorer som beskriver hvilken retning der er f.eks.\ højre og op for kameraret.
+Et kamera, i konteksten af at rendere en 3D-model, er typisk en beskrivelse af position, orientation og synsfelt. Andre informationer kan tilknyttes som beskriver opløsning af det renderede billede, samt perspektivet af det resulterende billede. Orientationen fastsættes ved hjælp af et sæt vektorer som beskriver hvilken retning der er f.eks.\ højre og op for kameraret.
 
 \begin{figure}[H]
   \centering
@@ -52,7 +52,7 @@ Et kamera i konteksten af at rendere en 3D-model, er typisk en beskrivelse af po
   \label{fig:kamera_billede}
 \end{figure}
 
-Et punkt $B$ på billedplanet (Se figur \ref{fig:kamera_billede}) kan repræsentere en pixel og kan beskrives som en lineær kombination af en op og en højre orientationsvektor samt en vektor der beskriver afstanden til billedplanet relativt til kammeraet. På figuren er denne vektor $\vv{f}$ skaleret med en faktor $d$.
+Et punkt $B$ på billedplanet (Se figur \ref{fig:kamera_billede}) kan repræsentere en pixel og kan beskrives som en lineær kombination af en op- og en højre-orientationsvektor, samt en vektor, der beskriver afstanden til billedplanet relativt til kammeraet. På figuren er denne vektor $\vv{f}$ skaleret med en faktor $d$.
 
 En stråles retning gennem et pixel koordinat $B$ relativt til kameraets udgangspunkt $C$ kan altså beskrives på følgende måde:
 \begin{align}
@@ -97,14 +97,14 @@ For at udlede en model for billeddannelsen, tages der udgangspunkt i en perspekt
   \label{fig:perspektiv_projektion}
 \end{figure}
 
-Som vist på figur \ref{fig:perspektiv_projektion} kan et punkt $P\in \mathbb{R}^3$ projekteres ned på billedplanen $\alpha$ ved at finde skæringspunktet $B$ mellem billedplanen $\alpha$ og en lysstråle $L$, som går fra punktet $P$ mod kameraets position $C$. Gør man nu dette for alle punkter på et objekt i rummet, og tegner skæringspunkterne på billedplanen, dannes et billede af objektet, ved at oversætte punktet på billedplanen, til (x,y)-pixelkoordinater, på det resulterende billede, med udtrykket beskrevet under afsnittet om kameraet.
+Som vist på figur \ref{fig:perspektiv_projektion} kan et punkt $P\in \mathbb{R}^3$ projekteres ned på billedplanen $\alpha$, ved at finde skæringspunktet $B$ mellem billedplanen $\alpha$ og en lysstråle $L$, som går fra punktet $P$ mod kameraets position $C$. Gør man nu dette for alle punkter på et objekt i rummet, og tegner skæringspunkterne på billedplanen, dannes et billede af objektet, ved at oversætte punktet på billedplanen, til (x,y)-pixelkoordinater, på det resulterende billede, med udtrykket beskrevet under afsnittet om kameraet.
 
-Udfordringen er så at afgøre hvilken farve punkterne på billedplanen skal have, da dette afhænger af objektets egenskaber, samt hvilket udefrakommende lys der rammer objektet. 
+Udfordringen er så, at afgøre hvilken farve punkterne på billedplanen skal have, da dette afhænger af objektets egenskaber, samt hvilket udefrakommende lys der rammer objektet. 
 
-For at løse denne udfordring, benytter vi i dette projekt raytracing, der som beskrevet under afsnit \ref{sec:computergrafik}, bygger på at simulere lysstrålers interaktion med forskellige objekter i rummet. Hvordan dette fungere er beskrevet i næste afsnit, hvor der er beskrevet en model for backwards raytracing.
+For at løse denne udfordring, benytter vi i dette projekt raytracing, der, som beskrevet under afsnit \ref{sec:computergrafik}, bygger på at simulere lysstrålers interaktion med forskellige objekter i rummet. Hvordan dette fungerer er beskrevet i næste afsnit, hvor der er beskrevet en model for backwards raytracing.
 
 \paragraph{Backwards raytracing}
-I modsætning til en perspektiv projektion af et punkt på et plan, er backwards raytracing, hvor man i stedet for punktet i rummet, tager udgangspunkt i de lysstråler der danner billedet. Ved backwards raytracing følger man lysstrålerne baglæns og ser på, hvor stor en lysintensitet, den pågældende lysstråle har efter den har interageret med objekterne i rummet. Ud fra dette farves det tilhørende punkt på billedet, og på den måde kan man rendere et helt billede. På figur \ref{fig:raytracing_skitse} er det vist hvordan man kan konstruere en lysstråle ud fra et bestemt punkt på billedplanen, hvor lysstrålen er beskrevet ved en retningsvektor og et startpunkt.
+I modsætning til en perspektiv projektion af et punkt på et plan, står backwards raytracing, hvor man i stedet for punktet i rummet, tager udgangspunkt i de lysstråler, der danner billedet. Ved backwards raytracing følger man lysstrålerne baglæns og ser på, hvor stor en lysintensitet den pågældende lysstråle har efter den har interageret med objekterne i rummet. Ud fra dette farves det tilhørende punkt på billedet, og på den måde kan man rendere et helt billede. På figur \ref{fig:raytracing_skitse} er det vist hvordan man kan konstruere en lysstråle ud fra et bestemt punkt på billedplanen, hvor lysstrålen er beskrevet ved en retningsvektor og et startpunkt.
 
 \begin{figure}[H]
   \centering
@@ -141,7 +141,7 @@ For at finde ud af hvilken farve punktet på billedplanen $B$ skal have, ser man
 Der findes flere forskellige modeller for hvordan lysintensiteten for en lysstråle beregnes. En simpel model, er Phong-modellen, som opdeler lys i forskellige kategorier: ambient, diffuse og specular.
 
 \paragraph{Phong-modellen}
-Phong-modellen er en såkaldt \textit{shading} funktion, som beskriver lyset fra punkter på et objekt på baggrund af lyskilden, objektet og kameraets synsvinkel\cite{phong_paper}. Der findes flere forskellige variationer af phong-modellen. Da vi som vist i afsnit \ref{sec:temptilrgb} kan arbejde med farvetemperaturer via rgb-værdier, så har vi valgt en variation af phong-modellen, som beskriver lys via rgb-værdier. 
+Phong-modellen er en såkaldt \textit{shading} funktion, som beskriver lyset fra punkter på et objekt på baggrund af lyskilden, objektet og kameraets synsvinkel\cite{phong_paper}. Der findes flere forskellige variationer af phong-modellen. Da vi som vist i afsnit \ref{sec:temptilrgb} kan arbejde med farvetemperaturer via RGB-værdier, så har vi valgt en variation af phong-modellen, som beskriver lys via RGB-værdier. 
 
 Ud fra modellen\cite{stanford_phong}, kan der skrives følgende overordnede \textit{shading} funktion.
 \begin{equation} \label{eq:phong}
@@ -172,7 +172,7 @@ Hvor $m_s$ er den specular konstant, $S$ er en lineær interpolation mellem obje
 	\vv{r} &= -\vv{I} + 2 (\vv{I} \bullet \vv{n}) \vv{n}
 \end{align}
 
-De anvendte vektorer til phong \textit{shading} funktionen er vist på figuren herunder.
+De anvendte vektorer til phong \textit{shading}-funktionen er vist på figuren herunder.
 \begin{figure}[H]
   \label{fig:phong_skitse}
   \centering

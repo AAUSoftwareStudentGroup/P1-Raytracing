@@ -1,8 +1,8 @@
 \subsubsection{Skæring mellem linje og trekant i rummet}
 \label{sec:triangle_intersection}
-For at finde om der er en skæring mellem en stråle og en trekant, er en metode, først at finde strålens skæring med trekantens plan, og derefter at bestemme om punktet er indenfor trekantens tre sider.
+For at finde ud af om der er en skæring mellem en stråle og en trekant, findes en metode, først at finde strålens skæring med trekantens plan, og derefter at bestemme om punktet er indenfor trekantens tre sider.
 
-Hvis stråle er parallel med planet, skære det enten ikke planet noget sted, ellers ligger alle punkter i planet. En stråle er parallel med et plan hvis strålens retning er 90 grader relativt til planets normalvektor, dette er sandt hvis ligning \ref{eq:parralel} er opfyldt.
+Hvis stråle er parallel med planet, skærer det enten ikke planet noget sted, ellers ligger alle punkter i planet. En stråle er parallel med et plan, hvis strålens retning er 90 grader relativt til planets normalvektor, dette er sandt hvis ligning \ref{eq:parralel} er opfyldt.
 
 \begin{equation}
   \label{eq:parralel}
@@ -53,7 +53,7 @@ Planets normalvektor findes ved at krydse to vektorer fra en af trekantens hjør
   \label{fig:perspektiv_projektion}
 \end{figure}
 
-Hvis strålen ikke er parralel med planet kan vi nu finde et punkt i planet som strålen skære. Alle vektorer i planet er ortogonale på normal vektoren, dermed kan vi opstille ligning \ref{eq:vektor_in_plane} til at beskrive betingelsen for et punkt strålen som også ligger i planet. Ved at substituere linjens ligning (ligning \ref{eq:point_on_ray}) ind og isolere $t_A$ kan vi så bruge til at finde punktet på strålens linje og er $t_A > 0$ så er punktet også foran strålens udgangspunkt $P_0$
+Hvis strålen ikke er parallel med planet kan der nu findes et punkt i planet, som strålen skærer. Alle vektorer i planet er ortogonale på normalvektoren, dermed kan der opstilles en ligning \ref{eq:vektor_in_plane} til at beskrive betingelsen for et punkt strålen som også ligger i planet. Ved at substituere linjens ligning (ligning \ref{eq:point_on_ray}) ind og isolere $t_A$ kan vi bruge til at finde punktet på strålens linje og er $t_A > 0$ så er punktet også foran strålens udgangspunkt $P_0$
 
 \begin{align}
   \label{eq:point_on_ray}
