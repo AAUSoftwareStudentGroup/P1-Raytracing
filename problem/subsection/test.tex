@@ -63,11 +63,29 @@ Herefter sammenlignes billeder renderet med forskellige vinkler.
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.4\linewidth]{result_2734s_5000k_0H_0-785V}
+  \includegraphics[width=.4\linewidth]{result_2758s_white_0-8H}
   \caption{}
   \label{fig:fake}
 \end{subfigure}
-\caption{Viser billede renderet af programmet, med vinkler -H -V (a) og -H -V (b).}
+\caption{Viser billede renderet af programmet, med vinkler 0H 0.785V (a) og 0.8H 0V (b).}
+\label{fig:synsvinkel1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.4\linewidth]{result_1sample_white_57s}
+  \caption{}
+  \label{fig:real}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.4\linewidth]{result_1sample_white_old_523s}
+  \caption{}
+  \label{fig:fake}
+\end{subfigure}
+\caption{Viser billede renderet af programmet, med tider 57 Sek[Ny algo] (a) og 523 Sek[Gamel algo med bounding spheres] (b). Billederne er forskællige fordi den gamle algoritme udregner synsvinklen på en anden måde}
 \label{fig:synsvinkel1}
 \end{figure}
 
