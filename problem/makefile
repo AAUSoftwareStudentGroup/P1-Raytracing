@@ -8,7 +8,8 @@ main: $(PDFGFX) $(DOCUMENT).tex
 	latexmk -pdf $(DOCUMENT).tex -f -quiet --shell-escape -latexoption=-interaction=batchmode	
 
 process: $(PDFGFX) sections/processanalyse.tex
-	latexmk -pdf sections/processanalyse.tex -f -quiet --shell-escape -latexoption=-interaction=batchmode	
+	cd sections && latexmk -pdf processanalyse.tex -f -quiet --shell-escape -latexoption=-interaction=batchmode	&& cd ../
+	mv sections/processanalyse.pdf .
 
 graphics/%.pdf: graphics/%.svg
 	-inkscape $< --export-text-to-path --export-pdf=$@
