@@ -79,14 +79,14 @@ Hvis strålen ikke er parralel med planet kan vi nu finde et punkt i planet som 
 \begin{figure}[H]
   \centering
   \tdplotsetmaincoords{60}{130}
-  \begin{tikzpicture}[tdplot_main_coords]
+  \begin{tikzpicture}[tdplot_main_coords,thick,scale=2, every node/.style={transform shape}]
     \coordinate (Pt) at (2,-4,2);
     \coordinate (A) at (2,-4,3);
     \coordinate (B) at (3,-4,1);
     \coordinate (C) at (1,-4,2);
     % dashed line through plane
     % triangle and plane
-    \path[fill=gray!10, draw=gray!20] (0,-4,0) -- (4,-4,0) -- (4,-4,4) -- (0,-4,4) -- (0,-4,0);
+    \path[fill=gray!10, draw=gray!20] (0.8,-4,0.8) -- (3.2,-4,0.8) -- (3.2,-4,3.2) -- (0.8,-4,3.2) -- (0.8,-4,0.8);
     \path[fill=gray!30, draw=gray!60] (A) -- (B) -- (C) -- (A);
     % triangle
     \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (A) -- (B);
