@@ -7,9 +7,9 @@ typedef struct _image {
   Pixel **pixels;
 } Image;
 
-Image *new_image(unsigned int width, unsigned int height);
-
 int image_write(Image *img, char *path);
+
+Image *new_image(unsigned int width, unsigned int height);
 \end{lstlisting}
 
 Funktionen new\_image genererer et billede ved at modtage en bredde og en højde, som er defineret af input filen. Der allokeres plads til billedet for at undgå override, og herefter indlæses alle pixels i loops. Til sidst returneres billedet.
@@ -46,12 +46,11 @@ int image_write(Image *image, char *path) {
   /* For all pixels put pixel-color */
   for(y = 0; y < image->height; y++) {
     for(x = 0; x < image->width; x++) {
-      fputc(pixel_component_to_byte(image->pixels[x][y].red),         image_file);
+      fputc(pixel_component_to_byte(image->pixels[x][y].red), image_file);
       fputc(pixel_component_to_byte(image->pixels[x][y].green), image_file);
       fputc(pixel_component_to_byte(image->pixels[x][y].blue), image_file);
     }
   }
-
   fclose(image_file);
   return 1;
 }
