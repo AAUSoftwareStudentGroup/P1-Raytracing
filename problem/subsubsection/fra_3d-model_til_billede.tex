@@ -120,6 +120,7 @@ I modsætning til en perspektiv projektion af et punkt på et plan, står backwa
 \node [above right] at (0,0,0) {$C$};
 \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (0,0,0) -- (0,-4,0.5);
 \node [above right] at (0,-2,0.25) {$\vv{r}$};
+\draw plot [mark=*, mark size=2] coordinates{(0,-8,1) }; 
 \end{tikzpicture}
   \caption{Viser hvordan der kan opstilles retningsvektor mellem kameraets position $C$ og punktet $P$ på billedplanen, som sammen med startpunktet $C$ beskriver lysstrålen fra trekanten i omvendt retning.}
   \label{fig:raytracing_skitse}
@@ -212,7 +213,7 @@ De anvendte vektorer til phong \textit{shading}-funktionen er vist på figuren h
   (0,1,2) coordinate (c)
   pic[draw=black,|-|,angle eccentricity=1.2,angle radius=1cm] {angle=c--b--a};
 \draw plot [mark=*, mark size=2] coordinates{(0,0,0) }; 
-    \node [below right] at (0,2,4) {$P$};
+    \node [below right] at (0,0,0) {$P$};
     \draw plot [mark=*, mark size=2] coordinates{(0,-3,1.5) }; 
 \end{tikzpicture}
   \caption{Viser vektorer der anvendes i phong-modellen. $\protect\vv{u}$ er vektor mod kameraet med position $C$, $\protect\vv{n}$ er normalvektoren til objektet i punktet $P$, $\protect\vv{I}$ er vektor mod lyskildens position $L$ og $\protect\vv{r}$ er vektor for det reflekterede lys.}
