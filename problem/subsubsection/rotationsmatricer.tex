@@ -5,6 +5,7 @@ En rotationsmatrix er en matrix, der, hvis multipliceret sammen med en anden mat
 \begin{align}\label{eu_eqn}
   R_x(\theta) = 
   \begin{bmatrix}
+  \label{eq:rotate_around_x}
     1 & 0 & 0\\ 
     0 & cos \theta & - sin \theta\\ 
     0 & sin \theta & cos \theta
@@ -22,13 +23,15 @@ En rotationsmatrix er en matrix, der, hvis multipliceret sammen med en anden mat
     0 & 0 & 1
   \end{bmatrix}
 \end{align}
-Vi indsætter den vinkel som vi vil dreje vektoren med i radianer og multiplicerer dem sammen som angivet i formlen. Vektoren bliver drejet omkring nul-punktet med netop den mængde radianer, som er angivet.
+Vi indsætter den vinkel som vi vil dreje vektoren med i radianer og multiplicerer dem sammen som angivet i udtryk \ref{eq:rotate_around_x}. Vektoren bliver drejet omkring nul-punktet med netop den mængde radianer, som er angivet.
 Nedenstående eksempel illustrerer princippet ved at dreje en vektor i rummet.
 
 \begin{equation}
-  U=
+  {\vv{u}} =
   \begin{bmatrix}
-    0 & 1 & 5
+    0 \\ 
+    1 \\
+    5
   \end{bmatrix}
 \end{equation}
 og rotationsvektor \begin{math}R_x\end{math}
