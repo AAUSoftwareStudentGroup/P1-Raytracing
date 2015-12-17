@@ -56,10 +56,9 @@ Et punkt $B$ på billedplanet (Se figur \ref{fig:kamera_billede}) kan repræsent
 
 En stråles retning gennem et pixel koordinat $B$ relativt til kameraets udgangspunkt $C$ kan altså beskrives på følgende måde:
 \begin{align}
-  \vv{B} &= C + \vv{f} \cdot d + \vv{u} \cdot \left(y-\frac{h}{2}\right) + \vv{r} \cdot \left(x-\frac{w}{2}\right) \\
 \label{eq:pixel_til_billede}
+  \vv{B} &= C + \vv{f} \cdot d + \vv{u} \cdot \left(y-\frac{h}{2}\right) + \vv{r} \cdot \left(x-\frac{w}{2}\right) \\
   \vv{s} &= \frac{\vv{B}-\vv{C}}{||\vv{B}-\vv{C}||}
-}
 \end{align}
 
 Hvor $(x,y)$ er pixelkoordinatet på billedet mellem $(0,0)$ og $(w,h)$.
