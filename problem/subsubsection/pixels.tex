@@ -11,6 +11,8 @@ typedef struct _pixel {
 
 Herefter laves der funktionen create\_from\_color\_temperature(), som er af typen Pixel, og som tager en unsigned int kelvin som input. Ud fra de konklusioner, der blev omtalt i teoriafsnittet \ref{sec:temp_til_rgb}, som omhandlede konvertering fra farvetemperatur til RGB, har man ud fra da benyttede data kunne opstille nogle konklusioner, der har gjort algoritmen mere simpel. Det er derfor muligt at beregne en given farve på følgende måde: 
 \begin{lstlisting}[style=Cstyle, caption=Beregning af rød farve]
+kelvin = kelvin / 100;
+/* Calculate red */
 if(kelvin <= 66){
   color.red = 255;
 }
@@ -38,6 +40,7 @@ char pixel_component_to_byte(double);
 Pixel pixel_scale(Pixel color, double scalar);
 Pixel pixel_multiply(Pixel color1, Pixel color2);
 Pixel pixel_add(Pixel color1, Pixel color2);
+Pixel create_from_color_temperature(unsigned int kelvin);
 \end{lstlisting}
 
 \begin{enumerate}
@@ -45,10 +48,10 @@ Pixel pixel_add(Pixel color1, Pixel color2);
   \item create\_pixel - opretter en pixel af typen Pixel med en RGB-værdi.
   \item pixel\_component to byte – ændrer værdien af RGB fra at være mellem 0 og 1, til at være mellem 0 og 255.
   \item pixel\_scale - skalerer en given pixel.
-  \item pixel\_multiply - ganger to pixels sammen, der bruges til colorblending og udregning af, hvor meget farve der optages 								  ift. intensitet.
-  \item pixel\_add - adderer to pixels, for at kunne udregne gennemsnittet senere (eller hvad???????????). I denne funktion er 							 det vigtigt at den returnerede værdi ikke overskrider 1, hvilket er hvorfor vi har implementeret MIN, der 							 sørger for at returnere den mindste funktion, der er 1, hvis en farve overskrider 1. Funktionen kan ses her:
-  
-\lstinline$#define MIN(a, b) ((a) < (b) ? (a) : (b))$  					
+  \item pixel\_multiply - ganger to pixels sammen, der bruges til colorblending og udregning af, hvor meget farve der optages ift. intensitet.
+  \item pixel\_add - adderer to pixels, for at kunne udregne gennemsnittet senere (eller hvad???????????). I denne funktion er det vigtigt at den returnerede værdi ikke overskrider 1, hvilket er hvorfor vi har implementeret MIN, der sørger for at returnere den mindste funktion, der er 1, hvis en farve overskrider 1. Funktionen kan ses her:
+  \lstinline$#define MIN(a, b) ((a) < (b) ? (a) : (b))$
+  \item create\_from\_color\_temperature(unsigned int kelvin); - Returnerer en farveværdi ud fra den angivne kelvin-værdi.
 
 \end{enumerate}
 

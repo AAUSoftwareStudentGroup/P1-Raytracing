@@ -17,8 +17,8 @@ Disse tre, forholdsvis simple, konklusioner har hjulpet med at gøre algoritmen 
 \begin{displaymath}
    R(k) = \left\{
      \begin{array}{lr}
-       255: & 1000 <= \text{k and k} <= 6600\\
-       329.698727446*(k-60^{-0.1332047592}): & 6600< \text{k and k} <= 40000
+       255 &1000 <= \text{k $\land$ k} <= 6600\\
+       329.698727446*(k-60^{-0.1332047592}) &6600 < \text{k $\land$ k} <= 40000
      \end{array}
    \right.
 \end{displaymath} 
@@ -26,8 +26,8 @@ Disse tre, forholdsvis simple, konklusioner har hjulpet med at gøre algoritmen 
 \begin{displaymath}
    G(k) = \left\{
      \begin{array}{lr}
-       99.4708025861*\ln(k)-161.1195681661: & 1000 <= \text{k and k} <= 6600\\
-       288.1221695283*(k-60^{-0.0755148492}): & 6600< \text{k and k} <= 40000
+       99.4708025861*\ln(k)-161.1195681661 &1000 <= \text{k $\land$ k} <= 6600\\
+       288.1221695283*(k-60^{-0.0755148492}) &6600 < \text{k $\land$ k} <= 40000
      \end{array}
    \right.
 \end{displaymath} 
@@ -35,9 +35,9 @@ Disse tre, forholdsvis simple, konklusioner har hjulpet med at gøre algoritmen 
 \begin{displaymath}
    B(k) = \left\{
      \begin{array}{lr}
-       255: & 6600 <= \text{k and k} <= 40000\\
-       0: & 1000 <= \text{k and k} <= 1900\\
-       138.5177312231 * \ln(k-10) - 305.0447927307: & 1900 < \text{k and k} < 6600
+       255 &6600 <= \text{k $\land$ k} <= 40000\\
+       0 &1000 <= \text{k $\land$ k} <= 1900\\
+       138.5177312231 * \ln(k-10) - 305.0447927307 &1900 < \text{k $\land$ k} < 6600
      \end{array}
    \right.
 \end{displaymath} 

@@ -21,10 +21,10 @@ typedef struct _camera {
 'double distance' er hvor langt væk vores kamera er fra vores skærm-gitteret. Flytter man f.eks. skærm-gitteret længere væk fra kameraet uden at gøre den større vil man få en mindre FOV\cite{fov}, og få effekten af at "zoome ind".
 
 \begin{lstlisting}[style=Cstyle, caption=Prototyper for funktioner der manipulerer camera-structen]
-int camera_look_at_point(Camera *camera, Vector *point);
+void camera_look_at_point(Camera *camera, Vector point, double distance, double vertical_angle, double horizontal_angle);
 int camera_set_angle(Camera *camera, double vertical_angle, double horizontal_angle);
 \end{lstlisting}
 
-camera\_look\_at\_point: tager et camera og en vektor. 'camera' parameteren tager et camera og ændrer dens up, right, forward vektorer til at pege mod punktet defineret af 'point'.
+camera\_look\_at\_point: tager et camera, et punkt defineret som en vektor, en længde og 2 vinkler i radianer. 'camera' parameteren tager et camera og ændrer dens up, right, forward vektorer til at pege mod punktet defineret af 'point', med vinklen defineret af vertical_angle og horizontal_angle og med afstanden distance fra punktet.
 
-[camera\_set\_angle: er ikke skrevet på nuværende tidspunkt]
+camera\_set\_angle: tager et camera og 2 vinkler som doubles. funktionen nulstiller kameraets vinkel og drejer så kameraet om sig selv med vinklen defineret af de 2 doubles.

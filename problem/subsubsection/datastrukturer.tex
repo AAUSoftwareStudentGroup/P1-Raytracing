@@ -47,7 +47,7 @@ En stor del af opgaven bygger på vektorer i rummet. Nedenstående kodeuddrag vi
 
 \begin{lstlisting}[style=Cstyle, caption=Struct til vektor]
 typedef struct _vector {
-    double x, y, z;
+  double x, y, z;
 } Vector;
 \end{lstlisting}
 
@@ -70,7 +70,7 @@ Enhver figur i programmet består af mange sammensatte trekanter. Jo flere treka
 En trekant udspændes af flere vektorer af tre hjørner hvor hver hjørne kaldes en vertex, der har en position og en normal.
     
 \begin{lstlisting}[style=Cstyle, caption=Struct til vertex]
-typedef struct _verticie {
+typedef struct _vertex {
   Vector position;
   Vector normal;
 } Vertex;
@@ -81,13 +81,15 @@ I ovenstående kodeuddrag kan det ses at en vertex består af et stedvektor (lin
 Som nævnt for ovenstående struct for en vertex, er alle objekter i programmet bestående af trekanter. Nedenstående kodeuddrag viser hvordan trekanter er implementeret i programmet.
     
 \begin{lstlisting}[style=Cstyle, caption=Struct til triangle]
+#define VERTICES_IN_TRIANGLE 3
+
 typedef struct _triangle {
-  Vertex *verticies[3];
-  Vector edges[3];
+  Vertex *verticies[VERTICES_IN_TRIANGLE];
+  Vector edges[VERTICES_IN_TRIANGLE];
 } Triangle;
 \end{lstlisting}
 
-Denne struct viser, kort sagt, at en trekant består af tre hjørner, altså tre vertices, af typen Vertex, samt tre edges, der er stedvektorer til trekantens tre sider. 
+Denne struct viser, kort sagt, at en trekant består af 3 hjørner, altså 3 vertices, af typen Vertex, samt 3 edges, der er stedvektorer til trekantens 3 sider. 
 
 \paragraph{Point\_lights}
 
@@ -106,7 +108,7 @@ typedef struct _pointlight {
 På linje to i ovenstående kodeuddrag kan det ses, at et lys har en given position, som bestemmes af ét 3D-koordinat. Dette lys har en farve, bestående af en RGB-værdi. Derudover har lyset også en intensitet og radius af typen double, samt sampling\_rate af typen int. sampling\_rate og radius bruges til at danne bløde skygger.
 
 \paragraph{Materiale}
-I virkeligheden har vi mange forskellige materialer, der både syner og føles anderledes end andre. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere dette i programmet anvendes der forskellige konstanter til at beskrive et materiale. Konstanterne bruges i phong-modellen se afsnit \ref{sec:teori} om teori.
+I virkeligheden har vi mange forskellige materialer, der både syner og føles anderledes end andre. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere dette i programmet anvendes der forskellige konstanter til at beskrive et materiale. Konstanterne bruges i phong-modellen se afsnit \ref{sec:teori}.
 
 \begin{lstlisting}[style=Cstyle, caption=Struct til Material]
 typedef struct _material {
@@ -128,7 +130,7 @@ AABB står for \textit{axis aligned bounding box}, og er en kasse, hvis sider er
 Nedenstående kodeuddrag viser hvordan dette er gjort i programmet.
 
 \begin{lstlisting}[style=Cstyle, caption=Struct til bounding boxes]
-typedef struct _plane {
+typedef struct _AABB {
   Vector low, high;
 } AABB;
 \end{lstlisting}
@@ -201,7 +203,7 @@ typedef struct _scene {
   PointLight **lights;
   unsigned int n_lights;
   Pixel ambient_intensity;
-} Scene; 
+} Scene;
 \end{lstlisting}
 
 En scene består af en række objekter (linje 2-3), en række lys (linje 4-5), samt den ambiente lysintensitet, der bruges i Phong-modellen.
@@ -217,10 +219,11 @@ typedef struct _object {
   int n_triangles;
   Pixel color;
   Material material;
+  KDNode root;
 } Object;
 \end{lstlisting}
 
-Et objekt består af en række verticies (linje 2-3), en række trekanter (linje 4-5), samt en farve på objektet og koefficienterne til det materiale den er lavet af.
+Et objekt består af en række verticies (linje 2-3), en række trekanter (linje 4-5), samt en farve på objektet, koefficienterne til det materiale den er lavet af og en KD-rod.
 
 \paragraph{K-dimensionelt træ}
 Da programmet er bygget op efter at skulle kunne implementeres på en hjemmeside, er renderingen nødt til at være hurtig. Dette opnås ved hjælp af optimering, hvor der i programmet er brugt KD-træer.

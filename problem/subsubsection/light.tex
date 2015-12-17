@@ -1,10 +1,12 @@
 \subsubsection{Light}
-For at man kan lave 3D-billeder kræver det at man har lys i scenen. Dette gøres ved at lave et objekt ud fra en struct. Dette objekt kaldes for pointlight, og indeholder objektets position beskrevet som en vektor, en farve beskrevet som RGB værdi og en lysintensitet som er lysets farve ganget med en skalar.
+For at man kan lave 3D-billeder kræver det at man har lys i scenen. Dette gøres ved at lave et objekt ud fra en struct. Dette objekt kaldes for pointlight, og indeholder objektets position beskrevet som en vektor, en farve beskrevet som RGB værdi, lysintensitet som er lysets farve ganget med en skalar, en radius og en sampling_rate. Radius og sampling_rate er kun brugt hvis det er et sphere-light vi har med at gøre. Er det bare et pointlight er radius 0.
 
 \begin{lstlisting}[style=Cstyle, caption=light struct]
 typedef struct _pointlight {
   Vector position;
   Pixel color;
   double intensity;
+  double radius;
+  int sampling_rate;
 } PointLight;
 \end{lstlisting}

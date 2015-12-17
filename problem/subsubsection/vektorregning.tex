@@ -3,20 +3,25 @@ En vigtig del af vores raytracer består af vektorregning. For at regne med vekt
 
 \begin{lstlisting}[style=Cstyle, caption=Vektorprototyper og struct]
 typedef struct _vector {
-    double x,y,z;
+  double x,y,z;
 } Vector;
+
+typedef enum { X_AXIS, Y_AXIS, Z_AXIS } VectorAxis;
 
 Vector vector_add(Vector v1, Vector v2);
 Vector vector_subtract(Vector v1, Vector v2);
 Vector vector_scale(Vector v, double s);
 double vector_dot(Vector v1, Vector v2);
 double vector_norm(Vector v);
+double vector_distance(Vector v1, Vector v2);
 Vector vector_normalize(Vector v);
 double vector_angle_between(Vector v1, Vector v2);
 Vector vector_cross(Vector v1, Vector v2);
 Vector vector_rotate_around_z(Vector v, double angle);
 Vector vector_rotate_around_x(Vector v, double angle);
-
+Vector vector_rotate_around_xz(Vector v, double horizontal, double vertical);
+double vector_get_component(Vector v, VectorAxis axis);
+void   vector_set_component(Vector *v, VectorAxis axis, double value);
 \end{lstlisting}
 
 Et eksempel på én af vores vektorudregninger er vector\_add. Denne funktion adderer to vektorer, som det ses på (program nr bla). Her kan man se, at ved addition af to vektorer, adderer man x-koordinaterne med hinanden og det samme gælder for y- og z-koordinaterne. Resultatet vil også være en vektor.
@@ -25,7 +30,6 @@ Et eksempel på én af vores vektorudregninger er vector\_add. Denne funktion ad
 Vector vector_add(Vector v1, Vector v2) {
   return (Vector){v1.x + v2.x, v1.y + v2.y, v1.z + v2.z};
 }
-
 \end{lstlisting}
 
 Et andet eksempel på en vektorudregning, vi gør brug af, er skalarproduktet af to vektorer. Det er vigtigt at kende skalarproduktet, da det benyttes i vector\_norm for at finde længden af to vektorer og i vector\_angle\_between for at finde vinklen mellem to vektorer. Herunder kan det ses, at skalarproduktet simpelt findes ved at gange de tilsvarende koordinater med hinanden.
@@ -36,5 +40,4 @@ double vector_dot (Vector v1, Vector v2) {
 }
 \end{lstlisting}
 
-
-Vores bibliotek til vektorregning indeholder funktioner til alle de almindelige vektoroperationer. 
+Vores bibliotek til vektorregning indeholder funktioner til alle de almindelige vektoroperationer og simple kombinationer af dem.

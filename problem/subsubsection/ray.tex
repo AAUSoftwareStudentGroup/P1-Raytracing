@@ -6,19 +6,19 @@ typedef struct _ray {
   Vector initial_point, direction;
 } Ray;
 
-Ray create_ray(Vector p1, Vector p2);
+Ray create_ray(Vector origin, Vector direction);
 Vector ray_get_point(Ray ray, double t);
 \end{lstlisting}
 
 Nedenstående kode viser vores to ray funktioner, først create\_ray som returnerer en ray lavet ud fra en startvektor og en retningsvektor.\newline Ray\_get\_point skalerer vores retningsvektor op med en skaler, t, og adderer denne vektor med rayens startpunkt. Vi før nu en ny repræsentation af vores ray, som returneres i funktionen.
 
 \begin{lstlisting}[style=Cstyle, caption=funktionerne create\_ray og ray\_get\_point]
-Ray create_ray(Vector p1, Vector p2) {
-  return (Ray){p1, vector_normalize(p2)};
+Ray create_ray(Vector origin, Vector direction) {
+  return (Ray){origin, vector_normalize(direction)};
 }
 
 Vector ray_get_point(Ray ray, double t) {
-    return vector_add(ray.initial_point, vector_scale(ray.direction, t));
+  return vector_add(ray.initial_point, vector_scale(ray.direction, t));
 }
 \end{lstlisting}
 
