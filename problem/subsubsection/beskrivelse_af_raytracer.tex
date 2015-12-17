@@ -5,7 +5,7 @@ I dette afsnit vil de væsentlige funktioner til raytraceren blive beskrevet. Fo
 \paragraph{Rendering}
 For at rendere et billede af lampen og dens belysning, er der lavet en funktion raytracer\_render, der modtager scenen, dvs.\ samlingen af alle 3D-objekter og lys, samt modellen for det kamera, som billedet skal dannes ud fra. Funktionen er vist herunder.
 
-\begin{lstlisting}[style=Cstyle, caption=Funktionen der rendere billedet af scenen med et kameras perspektiv]
+\begin{lstlisting}[style=Cstyle, caption=Funktionen, der rendere billedet af scenen med et kameras perspektiv]
 Image *raytracer_render(Scene *scene, Camera *camera) {
   int x, y;
   Image *image;
@@ -109,13 +109,13 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection *interse
 På linje 8 i ovenstående kodeuddrag kan man se, at funktionen først tjekker om en ray skærer med AABB, og hvis dette er sandt tjekker den om ray'en skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan rayen rammer objektet. Derudover bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen sandt, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er over 0, og falsk hvis den ikke er.
 
 
-\paragraph{Skæring med kd-træ}
+\paragraph{Skæring med KD-træ}
 
-Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om rayen skærer med kd-træet og i så fald hvor. Formålet med denne funktion er at optimere programmet, og undgå at lave unødvendige udregninger. 
+Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om rayen skærer med KD-træet og i så fald hvor. Formålet med denne funktion er at optimere programmet, og undgå at lave unødvendige udregninger. 
 
 Hele funktionen kan findes på elektronisk bilag i filen kdnode.c
 
-\begin{lstlisting}[style=Cstyle, caption=if(leaf)]
+\begin{lstlisting}[style=Cstyle, caption= Uddrag af funktionen raytracer\_kdtree\_intersection]
 if(kdnode_is_leaf(node)) {
   /* test intersection with triangles */
   for(i = 0; i < node->n_triangles; i++) {
@@ -128,6 +128,7 @@ if(kdnode_is_leaf(node)) {
     }
   }
 }
+}
 \end{lstlisting}
 
 På ovenstående kodeuddrag undersøger funktionen, om skæringen med træet sker i et af bladene, dette ses på linje 1. Et blad er 'bunden' af træet, altså det punkt, hvor en kasse ikke længere kan inddeles i flere kasser. Der er tre krav til, hvornår vi ender vores inddeling af flere kasser, og istedet slutter og kalder det for et blad. Første krav er, at hvis antallet af trekanter i en kasse er mindre end eller lig med to er noden et blad. En kasse med to eller færre trekanter er nemt og hurtigt for computeren at udregne, og derfor behøves den ikke at inddeles yderligere. Det andet krav er, hvis over halvdelen af to kassers trekanter ligger i begge kasser. Hvis dette er tilfældet kaldes begge kasser for blade, da mindst halvdelen af begge kassers fælles trekanter er i begge kasser og der derfor ikke er brug for at inddele i flere yderligere kasser. Det tredje, og sidste, krav er, hvis der er mere end 30 niveauer. Dette krav er nødvendigt for at programmet ikke kører i en evighedsløkke, og bliver ved med at tjekke, selvom det ikke er nødvendigt. En tilfælde, hvor det tredje punkt kunne være nødvendigt er, hvis ét sted i kassen indeholder 10 punkter, og dermed ikke kan opdeles, så ville programmet uden tredje krav blive ved med at lave den samme opdeling igen og igen.
@@ -135,6 +136,7 @@ På ovenstående kodeuddrag undersøger funktionen, om skæringen med træet ske
 
 Hvis roden (hovedkassen) er et blad, findes de nærmeste skæringer først som vist på linjerne 6-8, og der findes skæring med samtlige trekanter som vist på linje tre, medmindre nogle trekanter ligger helt i skygge for andre. 
 
+<<<<<<< HEAD
 \begin{lstlisting}[style=Cstyle, caption=else (recursive)]
  } else {
   /* test intersection recursively */
@@ -144,6 +146,20 @@ Hvis roden (hovedkassen) er et blad, findes de nærmeste skæringer først som v
   if(retl && reth) { /* Intersecting both sub-nodes */
     if(t_minh < t_minl) { /* low node is hit first */
       if(!raytracer_kdtree_intersection(ray, node->high, intersection)) {
+=======
+\begin{lstlisting}[style=Cstyle, caption=Fortsættelse af uddraget fra funktionen raytracer\_kdtree\_intersection]
+else {
+    /* test intersection recursively */
+    retl = intersection_ray_aabb(ray, node->low->box, &t_minl, &t_maxl);
+    reth = intersection_ray_aabb(ray, node->high->box, &t_minh, &t_maxh);
+
+    if(retl && reth) { /* Intersecting both sub-nodes */
+      if(t_minh < t_minl) { /* low node is hit first */
+        if(!raytracer_kdtree_intersection(ray, node->high, intersection)) {
+          raytracer_kdtree_intersection(ray, node->low, intersection);
+        }
+      } else if(t_minh == t_minl) {
+>>>>>>> 6e104e669bded535e979e72e8380feb6be5077c5
         raytracer_kdtree_intersection(ray, node->low, intersection);
       }
     } else if(t_minh == t_minl) {
@@ -170,7 +186,7 @@ Funktionen returnerer afstanden i tid, til skæringen med trekanten.
 
 Funktionen raytracer\_triangle\_intersection bruges til at undersøge om der er skæring mellem en ray og en trekant. Funktionen ses herunder
 
-\begin{lstlisting}[style=Cstyle, caption=Funktionen der finder skæring med trekant]
+\begin{lstlisting}[style=Cstyle, caption=Funktionen, der finder skæring med trekant]
 int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *intersection) {
   double denominator, time;
   Plane plane;

@@ -108,7 +108,7 @@ typedef struct _pointlight {
 På linje to i ovenstående kodeuddrag kan det ses, at et lys har en given position, som bestemmes af ét 3D-koordinat. Dette lys har en farve, bestående af en RGB-værdi. Derudover har lyset også en intensitet og radius af typen double, samt sampling\_rate af typen int. sampling\_rate og radius bruges til at danne bløde skygger.
 
 \paragraph{Materiale}
-I virkeligheden har vi mange forskellige materialer, der både syner og føles anderledes end andre. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere dette i programmet anvendes der forskellige konstanter til at beskrive et materiale. Konstanterne bruges i phong-modellen se afsnit \ref{sec:teori} om teori.
+I virkeligheden har vi mange forskellige materialer, der både syner og føles anderledes end andre. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere dette i programmet anvendes der forskellige konstanter til at beskrive et materiale. Konstanterne bruges i phong-modellen se afsnit \ref{sec:teori}.
 
 \begin{lstlisting}[style=Cstyle, caption=Struct til Material]
 typedef struct _material {
