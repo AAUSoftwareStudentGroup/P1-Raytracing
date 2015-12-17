@@ -60,17 +60,17 @@ Og kalder det for vektor $\vv{v}$ og indsætter både $\vv{u}$ og $\vv{v}$ i ned
     \coordinate (u) at (2, 1) ;
     \coordinate (v) at (1, 2) ;
 
-    \draw[thick,->] (O) -- (4.5,0);
-    \draw[thick,->] (O) -- (0,4.5);
-    \draw[thick,->] (O) -- (4.5,0) node[anchor=north west] {y};
-    \draw[thick,->] (O) -- (0,4.5) node[anchor=south east] {z};
+    \draw[thick,->] (O) -- (3,0);
+    \draw[thick,->] (O) -- (0,3);
+    \draw[thick,->] (O) -- (3,0) node[anchor=north west] {y};
+    \draw[thick,->] (O) -- (0,3) node[anchor=south east] {z};
 
     \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (O) -- (u);
     \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (O) -- (v);
     \node [below right] at (u) {$u$};
-    \node [below] at (v) {$v$};
-    \draw (1, 1) arc (10:10:1);
-    \node[] at (1,1.2)  {$\theta$};
+    \node [below right] at (v) {$v$};
+    \draw[<-] (0.5, 1) arc (60:20:1);
+    \node[] at (1,1)  {$\theta$};
   \end{tikzpicture}
   % \includegraphics[width=12cm]{rotationsmatrix_eksempel.png}
   \caption{Eksempel på en rotationsmatrix}
