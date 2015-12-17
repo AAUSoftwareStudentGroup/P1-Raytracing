@@ -87,7 +87,11 @@ For at teste de forskellige programparametre, som kan indtastes i programmet, er
 \label{fig:optimering}
 \end{figure}
 
+<<<<<<< HEAD
 Med den gamle version af programmet opnås der en renderingstid på 658 sekunder, og med den nye version af programet opnås der en renderingstid på 53 sekunder. Der er altså efter implementationen af KD-træer, i dette tilfælde, opnået en speedup på $658 sek./53 sek. \approx 12$.
+=======
+Med den gamle version af programmet opnås der en renderingstid på 658 sekunder, og med den nye version af programet opnås der en renderingstid på 53 sekunder. Der er altså efter implementationen af kd-træer, i dette tilfælde, opnået en speedup på $658 sek./53 sek. \approx 12$. Renderingen af de to billeder er foretaget på samme hardware, da renderingstiden bla.\ er afhængig af hvilken hardware programmet bliver kørt på. Hvis billederne renderes på en anden hardware vil renderingstiden derfor ændres, men speedup skulle gerne være det samme. 
+>>>>>>> 2af963991443c2495d8fb3c6c66409fe56f7378c
 
 \subsection*{Opsummering}
 Som vist på figur \ref{fig:fake} opfylder programmet krav 1-3 fra afsnit \ref{sec:krav_til_kode}, da den kan rendere og gemme et billede af en lampe og dens belysning på baggrund af indtastede input der indeholder 3D-fil, farvetemperatur, synsvinkel og opløsningen af billedet. Derudover er der, som vist, sket en optimering af programmets renderingstid efter implementeringen af KD-træer. 

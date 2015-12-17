@@ -5,7 +5,7 @@ I dette afsnit vil de væsentlige funktioner til raytraceren blive beskrevet. Fo
 \paragraph{Rendering}
 For at rendere et billede af lampen og dens belysning, er der lavet en funktion raytracer\_render, der modtager scenen, dvs.\ samlingen af alle 3D-objekter og lys, samt modellen for det kamera, som billedet skal dannes ud fra. Funktionen er vist herunder.
 
-\begin{lstlisting}[style=Cstyle, caption=Funktionen der rendere billedet af scenen med et kameras perspektiv]
+\begin{lstlisting}[style=Cstyle, caption=Funktionen, der rendere billedet af scenen med et kameras perspektiv]
 Image *raytracer_render(Scene *scene, Camera *camera) {
   int x, y;
   Image *image;
@@ -106,7 +106,7 @@ Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om rayen sk�
 
 Hele funktionen kan findes på elektronisk bilag i filen kdnode.c
 
-\begin{lstlisting}[style=Cstyle, caption=if(leaf)]
+\begin{lstlisting}[style=Cstyle, caption= Uddrag af funktionen raytracer\_kdtree\_intersection]
   if(kdnode_is_leaf(node)) {
     /* test intersection with triangles */
     for(i = 0; i < node->n_triangles; i++) {
@@ -125,7 +125,7 @@ På ovenstående kodeuddrag undersøger funktionen, om skæringen med træet ske
 
 Hvis roden (hovedkassen) er et blad, findes de nærmeste skæringer først som vist på linjerne 6-8, og der findes skæring med samtlige trekanter som vist på linje tre, medmindre nogle trekanter ligger helt i skygge for andre. 
 
-\begin{lstlisting}[style=Cstyle, caption=else (recursive)]
+\begin{lstlisting}[style=Cstyle, caption=Fortsættelse af uddraget fra funktionen raytracer\_kdtree\_intersection]
 else {
     /* test intersection recursively */
     retl = intersection_ray_aabb(ray, node->low->box, &t_minl, &t_maxl);
@@ -162,7 +162,7 @@ Funktionen returnerer afstanden i tid, til skæringen med trekanten.
 
 Funktionen raytracer\_triangle\_intersection bruges til at undersøge om der er skæring mellem en ray og en trekant. Funktionen ses herunder
 
-\begin{lstlisting}[style=Cstyle, caption=Funktionen der finder skæring med trekant]
+\begin{lstlisting}[style=Cstyle, caption=Funktionen, der finder skæring med trekant]
 int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *intersection) {
   double denominator, time;
   Plane plane;
