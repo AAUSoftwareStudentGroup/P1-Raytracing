@@ -2,7 +2,7 @@
 \label{sec:kdtree}
 
 Et K-dimensionelt træ (KD-træ), er en abstrakt datastruktur som bl.a.\ andvendes til opdeling af 'rum'. Et KD-træ er repræsenteret som et binært træ, dvs.\ at
-hver gren i træet har yderligere to grene indtil bladene nåes (se figur ...) herunder. 
+hver gren i træet har yderligere to grene indtil bladene nåes (se figur \ref{fig:binary-tree}) herunder. 
 
 \begin{figure}[H]
   \centering
@@ -27,6 +27,9 @@ hver gren i træet har yderligere to grene indtil bladene nåes (se figur ...) h
   \caption{Binært træ}
   \label{fig:binary-tree}
 \end{figure}
+
+Med et KD-træ opdeles et rum efter værdier, højere eller lavere end et taktisk udvalgt delingspunkt (se figur \ref{fig:kd-tree-itteration}),
+således at alle værdier i en gren, enten er højere eller lavere end den gren de udspringer fra. Denne  opdeling fortsætter indtil værdierne i en gren er trivielle at behandle, herved kaldes en sådan gren for et blad.
 
 \begin{figure}[H]
   \begin{subfigure}{0.31\textwidth}
@@ -151,7 +154,7 @@ hver gren i træet har yderligere to grene indtil bladene nåes (se figur ...) h
   \label{fig:kd-tree-finished}
   \end{subfigure}
   \caption{KD-træ}
+  \label{fig:kd-tree-example}
 \end{figure}
 
-Med et KD-træ opdeles et rum efter værdier, højere eller lavere end et taktisk udvalgt delingspunkt (se figur ...),
-således at alle værdier i en gren, enten er højere eller lavere end den gren de udspringer fra. Denne  opdeling fortsætter indtil værdierne i en gren er trivielle at behandle, herved kaldes en sådan gren for et blad.
+Et eksempel på opbygningen af et KD-træ ses i figur \ref{fig:kd-tree-example}. Et KD-træ starter med roden (figur \ref{fig:kd-tree-initial}), som omkranser hele data-mængden. Herefter opdeles alle non-trivielle grene i yderligere to grene (figur \ref{fig:kd-tree-itteration}), dette gentages indtil alle grene/blade er et simpelt tilfælde (figur \ref{fig:kd-tree-finished}).
