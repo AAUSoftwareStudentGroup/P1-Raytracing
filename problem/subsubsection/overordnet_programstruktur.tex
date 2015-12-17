@@ -1,5 +1,5 @@
 \subsubsection{Overordnet programstruktur}
-Main-funktionen er den funktion, som fortæller computerens operativsystem hvilke kommandoer den skal udføre. Det er således i funktionen main, at programmets funktioner kaldes og eksekveres. Programmets main funktion er vist nedenfor:
+Main-funktionen er den første funktion i programkoden der eksikveres. Det er således i funktionen main, at programmets andre funktioner kaldes og eksekveres. Programmets main funktion er vist nedenfor:
 
 \begin{lstlisting}[style=Cstyle, caption=Main]
 int main(int argc, char* argv[]) {
@@ -35,9 +35,9 @@ Som input kræver programmet filnavnet på en 3D-model i PLY formatet, derudover
   \item -h [INT]: Et heltal, som angiver højden af det resulterende billede i pixel.
   \item -w [INT]: Et heltal, som angiver breden af det resulterende billede i pixel.
   \item -t [INT]: Et heltal, som angiver farvetemperaturen af lyskilder i modellen hvis farve er angivet som sort.
-  \item -H [FLOAT]: Et decimaltal, som angiver, i radianer, en horisontal rotation om en sort lyskilde.
-  \item -V [FLOAT]: Et decimaltal, som angiver, i radianer, en vertikal rotation om en sort lyskilde.
+  \item -H [FLOAT]: Et decimaltal som, i radianer, angiver en horisontal rotation om en sort lyskilde.
+  \item -V [FLOAT]: Et decimaltal som, i radianer, angiver en vertikal rotation om en sort lyskilde.
   \item -o [STRING]: En tekststreng, som angiver placering og navnet på det resulterende billede.
 \end{itemize}
 
-Input-3D-modellen skal være det første programparameter og skal være i et tilpasset PLY format. Data-input har ikke været fokuset for opgaven og et tilpasset PLY var blot den nemmeste måde, hurtigt at få et system op at køre, så der kunne udvikles forskellige modeller til test. Af samme grund har input-parseren heller ikke været et fokus. Input-parseren kan findes i input.c, se elektronisk bilag. 
+Filstilen til 3D-modellen skal være den første programparameter og skal være i et tilpasset PLY format. Data-input har ikke været fokus for opgaven og et tilpasset PLY var blot den nemmeste måde, hurtigt at få et system op at køre, så der kunne udvikles forskellige modeller til test. Af samme grund har input-parseren heller ikke været et fokus. Input-parseren kan findes i input.c, se elektronisk bilag. 

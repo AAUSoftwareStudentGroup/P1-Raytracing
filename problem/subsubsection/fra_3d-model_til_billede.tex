@@ -9,7 +9,7 @@ En 3D-model er en matematisk beskrivelse af et tre dimensionelt objekt. For at b
 \label{fig:kanin}
     \centering
     \includegraphics[width=5cm]{kanin}
-    \caption{Eksempel hvor trekanter bruges til at repræsentere et objekt: http://www.cs.rpi.edu}
+    \caption{Eksempel hvor trekanter bruges til at repræsentere et objekt. Kilde: http://www.cs.rpi.edu}
 \end{figure}
 
 For at rendere et billede af en 3D-model bestående af trekanter, er man nødt til at have en model for det kamera, som billedet renderes ud fra. Hvordan kameraet kan modelleres er beskrevet i næste afsnit.
@@ -52,17 +52,19 @@ Et kamera, i konteksten af at rendere en 3D-model, er typisk en beskrivelse af p
   \label{fig:kamera_billede}
 \end{figure}
 
-Et punkt $B$ på billedplanet (Se figur \ref{fig:kamera_billede}) kan repræsentere en pixel og kan beskrives som en lineær kombination af en op- og en højre-orientationsvektor, samt en vektor, der beskriver afstanden til billedplanet relativt til kammeraet. På figuren er denne vektor $\vv{f}$ skaleret med en faktor $d$.
+Et punkt $B$ på billedplanet (Se figur \ref{fig:kamera_billede}) kan repræsentere en pixel og kan beskrives som en lineær kombination af en op- og en højre-orientationsvektor, samt en vektor, der beskriver afstanden til billedplanet relativt til kameraet. På figuren er denne vektor $\vv{f}$ skaleret med en faktor $d$.
 
 En stråles retning gennem et pixel koordinat $B$ relativt til kameraets udgangspunkt $C$ kan altså beskrives på følgende måde:
 \begin{align}
   \vv{B} &= C + \vv{f} \cdot d + \vv{u} \cdot \left(y-\frac{h}{2}\right) + \vv{r} \cdot \left(x-\frac{w}{2}\right) \\
+\label{eq:pixel_til_billede}
   \vv{s} &= \frac{\vv{B}-\vv{C}}{||\vv{B}-\vv{C}||}
+}
 \end{align}
 
-Hvor $(x,y)$ er en et koordinat mellem $(0,0)$ og $(w,h)$.
+Hvor $(x,y)$ er pixelkoordinatet på billedet mellem $(0,0)$ og $(w,h)$.
 
-Afstanden $d$ samt størrelsen af billedplanet bestemmer forvrængningen af perspektiv projektionen.
+Afstanden $d$ samt størrelsen af billedplanet bestemmer synsvinklen.
 
 \paragraph{Perspektiv projektion}
 \label{sec:perspektiv_projektion}
@@ -93,18 +95,18 @@ For at udlede en model for billeddannelsen, tages der udgangspunkt i en perspekt
 \node [above left] at (1,-4,1) {$B$};
 \node [above right] at (0,0,0) {$C$};
 \end{tikzpicture}
-  \caption{Viser princippet bag perspektiv projektion af et punkt på et billedplan.}
+  \caption{Princippet bag perspektiv projektion af et punkt på et billedplan.}
   \label{fig:perspektiv_projektion}
 \end{figure}
 
-Som vist på figur \ref{fig:perspektiv_projektion} kan et punkt $P\in \mathbb{R}^3$ projekteres ned på billedplanen $\alpha$, ved at finde skæringspunktet $B$ mellem billedplanen $\alpha$ og en lysstråle $L$, som går fra punktet $P$ mod kameraets position $C$. Gør man nu dette for alle punkter på et objekt i rummet, og tegner skæringspunkterne på billedplanen, dannes et billede af objektet, ved at oversætte punktet på billedplanen, til (x,y)-pixelkoordinater, på det resulterende billede, med udtrykket beskrevet under afsnittet om kameraet.
+Som vist på figur \ref{fig:perspektiv_projektion} kan et punkt $P\in \mathbb{R}^3$ projekteres ned på billedplanen $\alpha$, ved at finde skæringspunktet $B$ mellem billedplanen $\alpha$ og en lysstråle $L$, som går fra punktet $P$ mod kameraets position $C$. Gør man nu dette for alle punkter på et objekt i rummet, og tegner skæringspunkterne på billedplanen, dannes et billede af objektet, ved at oversætte punktet på billedplanen, til (x,y)-pixelkoordinater, på det resulterende billede, med udtryk \ref{eq:pixel_til_billede} beskrevet under afsnittet om kameraet.
 
 Udfordringen er så, at afgøre hvilken farve punkterne på billedplanen skal have, da dette afhænger af objektets egenskaber, samt hvilket udefrakommende lys der rammer objektet. 
 
 For at løse denne udfordring, benytter vi i dette projekt raytracing, der, som beskrevet under afsnit \ref{sec:computergrafik}, bygger på at simulere lysstrålers interaktion med forskellige objekter i rummet. Hvordan dette fungerer er beskrevet i næste afsnit, hvor der er beskrevet en model for backwards raytracing.
 
 \paragraph{Backwards raytracing}
-I modsætning til en perspektiv projektion af et punkt på et plan, står backwards raytracing, hvor man i stedet for punktet i rummet, tager udgangspunkt i de lysstråler, der danner billedet. Ved backwards raytracing følger man lysstrålerne baglæns og ser på, hvor stor en lysintensitet den pågældende lysstråle har efter den har interageret med objekterne i rummet. Ud fra dette farves det tilhørende punkt på billedet, og på den måde kan man rendere et helt billede. På figur \ref{fig:raytracing_skitse} er det vist hvordan man kan konstruere en lysstråle ud fra et bestemt punkt på billedplanen, hvor lysstrålen er beskrevet ved en retningsvektor og et startpunkt.
+I modsætning til en perspektiv projektion af et punkt på et plan, står backwards raytracing, hvor man i stedet for punktet i rummet, tager udgangspunkt i de lysstråler (rays), der danner billedet. Ved backwards raytracing følger man lysstrålerne baglæns og ser på, hvor stor en lysintensitet den pågældende lysstråle har efter den har interageret med objekterne i rummet. Ud fra dette farves det tilhørende punkt på billedet, og på den måde kan man rendere et helt billede. På figur \ref{fig:raytracing_skitse} er det vist hvordan man kan konstruere en lysstråle ud fra et bestemt punkt på billedplanen, hvor lysstrålen er beskrevet ved en retningsvektor og et startpunkt.
 
 \begin{figure}[H]
   \centering
@@ -120,7 +122,7 @@ I modsætning til en perspektiv projektion af et punkt på et plan, står backwa
 \draw [blue!50, thick, -{Stealth[width=3mm, length=3mm]}] (0,0,0) -- (0,-4,0.5);
 \node [above right] at (0,-2,0.25) {$\vv{r}$};
 \end{tikzpicture}
-  \caption{Viser hvordan en der kan opstilles retningsvektor mellem kameraets position $C$ og punktet $P$ på billedplanen, som sammen med startpunktet $C$ beskriver lysstrålen fra trekanten i omvendt retning.}
+  \caption{Viser hvordan der kan opstilles retningsvektor mellem kameraets position $C$ og punktet $P$ på billedplanen, som sammen med startpunktet $C$ beskriver lysstrålen fra trekanten i omvendt retning.}
   \label{fig:raytracing_skitse}
 \end{figure}
 
@@ -141,33 +143,33 @@ For at finde ud af hvilken farve punktet på billedplanen $B$ skal have, ser man
 Der findes flere forskellige modeller for hvordan lysintensiteten for en lysstråle beregnes. En simpel model, er Phong-modellen, som opdeler lys i forskellige kategorier: ambient, diffuse og specular.
 
 \paragraph{Phong-modellen}
-Phong-modellen er en såkaldt \textit{shading} funktion, som beskriver lyset fra punkter på et objekt på baggrund af lyskilden, objektet og kameraets synsvinkel\cite{phong_paper}. Der findes flere forskellige variationer af phong-modellen. Da vi som vist i afsnit \ref{sec:temptilrgb} kan arbejde med farvetemperaturer via RGB-værdier, så har vi valgt en variation af phong-modellen, som beskriver lys via RGB-værdier. 
+Phong-modellen er en såkaldt \textit{shading} funktion, som beskriver lyset fra punkter på et objekt på baggrund af lyskilden, objektet og kameraets synsvinkel \cite{phong_paper}. Der findes flere forskellige variationer af phong-modellen. Da vi som vist i afsnit \ref{sec:temptilrgb} kan arbejde med farvetemperaturer via RGB-værdier, så har vi valgt en variation af phong-modellen, som beskriver lys via RGB-værdier. 
 
-Ud fra modellen\cite{stanford_phong}, kan der skrives følgende overordnede \textit{shading} funktion.
+Ud fra modellen \cite{stanford_phong}, kan der skrives følgende overordnede \textit{shading} funktion.
 \begin{equation} \label{eq:phong}
   \rho = \rho_a + \sum\limits_{lights} (\rho_d + \rho_s)
 \end{equation}
 Hvor $\rho_a$, $\rho_l$ og $\rho_s$ er hhv. \textit{ambient}, \textit{diffuse} og \textit{specular} lys der er beskrevet kort herunder.
 
-\subparagraph{\textit{Ambient} lys} repræsenterer det lys, som reflekteres rundt i rummet og rammer objekter ligeligt fra alle sider\cite{stanford_phong}. Formlen til at beregne dette er følgende\cite{stanford_phong}.
+\subparagraph{\textit{Ambient} lys} repræsenterer det lys, som reflekteres rundt i rummet og rammer objekter ligeligt fra alle sider \cite{stanford_phong}. Formlen til at beregne dette er følgende \cite{stanford_phong}.
 \begin{align}
 \label{eq:ambient_formel}
 	\rho_a &= m_a C A
 \end{align}
 Hvor $m_a$ er den ambiente konstant, $C$ er overfladens farve som rgb-værdi og $A$ er den ambiente lysintensitet.
 
-\subparagraph{\textit{Diffuse} lys} er det lys, som reflekteres ifølge \textit{Lambert's Cosinuslov}. Ud fra loven kan følgende model anvendes til at udregne \textit{diffuse} lys\cite{stanford_phong}.
+\subparagraph{\textit{Diffuse} lys} er det lys, som reflekteres ifølge \textit{Lambert's Cosinuslov}. Ud fra loven kan følgende model anvendes til at udregne \textit{diffuse} lys \cite{stanford_phong}.
 \begin{align}
 	\rho_l &= m_l C I max(\vv{I}\bullet\vv{n}, 0)
 \end{align}
-Hvor $m_l$ er den Lambertianske konstant, $I$ er det lyskildens lysintensitet, $\vv{I}$ og $\vv{n}$, er normaliserede vektorer, hhv. vektor fra overfladepunktet mod lyskilden og normalvektoren til overfladepunktet.
+Hvor $m_l$ er den Lambertianske konstant, $I$ er det lyskildens lysintensitet, $\vv{I}$ og $\vv{n}$, er normaliserede vektorer, hhv.\ vektor fra overfladepunktet mod lyskilden og normalvektoren til overfladepunktet.
 
-\subparagraph{\textit{Specular} lys} er det lys der spejles i objektets overflade, givet ved nedenstående formel\cite{stanford_phong}.
+\subparagraph{\textit{Specular} lys} er det lys der spejles i objektets overflade, givet ved nedenstående formel \cite{stanford_phong}.
 \begin{align}
 	\rho_s &= m_s S I max(\vv{r}\bullet\vv{u},0)^{m_{sp}} \\
 	S &= m_{sm} C + (1 - m_{sm})(1,1,1)
 \end{align}
-Hvor $m_s$ er den specular konstant, $S$ er en lineær interpolation mellem objektets farve og hvid, afhængig af objektets \textit{metalness} $m_{sm}$. $\vv{u}$ og $\vv{r}$ er normaliserede vektorer, for hhv. vektor fra overfladepunktet mod kameraet og retningsvektor for det reflekterede lys beregnet som følgende.
+Hvor $m_s$ er den speculare konstant, $m_sp$ er den speculare eksponent som beskriver størrelsen af lys der spejles i objektets overflade, $S$ er en lineær interpolation mellem objektets farve og hvid, afhængig af objektets \textit{metalness} $m_{sm}$. $\vv{u}$ og $\vv{r}$ er normaliserede vektorer, for hhv. vektor fra overfladepunktet mod kameraet og retningsvektor for det reflekterede lys beregnet som følgende.
 \begin{align}
 	\vv{r} &= -\vv{I} + 2 (\vv{I} \bullet \vv{n}) \vv{n}
 \end{align}

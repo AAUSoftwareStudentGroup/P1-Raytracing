@@ -53,7 +53,7 @@ Funktionen initialiserer en skæring med værdien -1 ved at kalde funktionen cre
 
 \paragraph{Skæring med scene}
 
-Funktionen raytracer\_scene\_intersection tjekker om en stråle skærer med et objekt.
+Funktionen raytracer\_scene\_intersection tjekker om en ray skærer med et objekt.
 
 \begin{lstlisting}[style=Cstyle, caption=Funktionen raytracer\_scene\_intersection]
 int raytracer_scene_intersection(Ray ray, Scene *scene, 
@@ -76,12 +76,12 @@ int raytracer_scene_intersection(Ray ray, Scene *scene,
 }
 \end{lstlisting}
 
-I funktionen tjekkes der om en ray skærer et objekt, hvis dette er tilfældes så returneres der information om denne skæring (linje 11). Der tjekkes efterfølgende om den nye skæring er tættere på udgangspunktet end de førhenværende skæringer og den tætteste skæring gemmes (linje 14 - 15). Herefter returnerer funktionen sandt, hvis tiden, som beskriver afstanden fra startpunktet  til skæringspunktet, er over 0, og falsk hvis den ikke er.
+I funktionen tjekkes der om en ray skærer et objekt, hvis dette er tilfældet så returneres der information om denne skæring (linje 11). Der tjekkes efterfølgende om den nye skæring er tættere på udgangspunktet end de førhenværende skæringer og den tætteste skæring gemmes (linje 14 - 15). Herefter returnerer funktionen sandt, hvis tiden, som beskriver afstanden fra startpunktet  til skæringspunktet, er over 0, og falsk hvis den ikke er.
 
 
 \paragraph{Skæring med objekt}
 
-Funktionen raytracer\_object\_intersection er en funktion, der undersøger om der er en skæring mellem en stråle og et objekt. Funktionen ses herunder:
+Funktionen raytracer\_object\_intersection er en funktion, der undersøger om der er en skæring mellem en ray og et objekt. Funktionen ses herunder:
 
 \begin{lstlisting}[style=Cstyle, caption=raytracer\_object\_intersection]
 int raytracer_object_intersection(Ray ray, Object *object, Intersection *intersection) {
@@ -97,12 +97,12 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection *interse
 }
 \end{lstlisting}
 
-På linje fem i ovenstående kodeuddrag kan man se, at funktionen først tjekker om lysstrålen skærer med AABB, og hvis dette er sandt tjekker den om lysstrålen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan lysstrålen rammer objektet. Derudover bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen sandt, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er over 0, og falsk hvis den ikke er.
+På linje fem i ovenstående kodeuddrag kan man se, at funktionen først tjekker om en ray skærer med AABB, og hvis dette er sandt tjekker den om rayen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan rayen rammer objektet. Derudover bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen sandt, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er over 0, og falsk hvis den ikke er.
 
 
-\paragraph{Skæring med KD-træ}
+\paragraph{Skæring med kd-træ}
 
-Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om lysstrålen skærer med kdtræet og i så fald hvor. Formålet med denne funktion er at optimere programmet, og undgå at lave unødvendige udregninger. 
+Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om rayen skærer med kd-træet og i så fald hvor. Formålet med denne funktion er at optimere programmet, og undgå at lave unødvendige udregninger. 
 
 Hele funktionen kan findes på elektronisk bilag i filen kdnode.c
 
@@ -153,13 +153,13 @@ else {
 }
 \end{lstlisting}
 
-Hvis roden ikke er et blad og hvis strålen skærer i begge kasser, undersøges hvilken kasse der er nærmest og funktionen kaldes rekursivt for denne kasse, dette kan ses på 6-18. Hvis strålen går gennem den nærmeste kasse uden at ramme et objekt tjekkes for den fjerneste kasse. Hvis strålen kun skærer én af kasserne, tjekkes simpelt kun for den kasse, som set på linje 19-24.
+Hvis roden ikke er et blad og hvis ray skærer i begge kasser, undersøges hvilken kasse der er nærmest og funktionen kaldes rekursivt for denne kasse, dette kan ses på linje 6-18. Hvis rayen går gennem den nærmeste kasse uden at ramme et objekt tjekkes for den fjerneste kasse. Hvis rayen kun skærer én af kasserne, tjekkes simpelt kun for den kasse, som set på linje 19-24.
 
 Funktionen returnerer afstanden i tid, til skæringen med trekanten.
 
 \paragraph{Skæring med trekant}
 
-Funktionen raytracer\_triangle\_intersection bruges til at undersøge om der er skæring mellem en stråle og en trekant. Funktionen ses herunder
+Funktionen raytracer\_triangle\_intersection bruges til at undersøge om der er skæring mellem en ray og en trekant. Funktionen ses herunder
 
 \begin{lstlisting}[style=Cstyle, caption=Funktionen der finder skæring med trekant]
 int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *intersection) {
@@ -193,9 +193,9 @@ int raytracer_triangle_intersection(Ray ray, Triangle *triangle, Intersection *i
 }
 \end{lstlisting}
 
-Funktionen finder en normaliseret normalvektor ud fra to vektorer, som beskriver siderne i trekanten (linje 7). Derefter findes trekantens plan ud fra en stedvektor og en normalvektor (linje 10). Der undersøges nu, om der er skæring mellem trekant og plan (linje 13), hvis der er skæring tjekkes der om punktet ligger i trekanten (linje 13 - 22). Hvis punktet ligger indenfor trekanten (linje 22) skaleres der med -1 for, at få normalvektoren til trekanten til at vende ud mod kameraet (linje 23) og værdien gemmes (linje 24).
+Funktionen finder en normaliseret normalvektor ud fra to vektorer, som beskriver siderne i trekanten (linje 7). Derefter findes trekantens plan ud fra en stedvektor og en normalvektor (linje 10). Der undersøges nu, om der er skæring mellem trekant og plan (linje 13), hvis der er skæring tjekkes der om punktet ligger i trekanten (linje 13 - 22). Hvis punktet ligger indenfor trekanten (linje 22) skaleres der med -1 for, at få normalvektoren til trekanten til at vende ud mod kameraet (linje 23) og værdien gemmes i en output parameter (linje 24).
 
-\paragraph{Phong pixel farve}
+\paragraph{Phong pixelfarve}
 Når skæringen er fundet ved ovenstående funktioner, returneres skæringen og tilhørende data gemt i en Intersection til funktionen raytracer\_trace, som kalder raytracer\_phong med scenen og en Intersection, som parametre. Prototypen for funktionen er vist herunder.
 
 \begin{lstlisting}[style=Cstyle, caption=prototypen til funktionen der beregner pixelfarven på baggrund af data fra skæring med scenen.]
@@ -260,10 +260,10 @@ I kodeuddrag \ref{summmering_diffuse_specular} linje 2 indlæses intensiteten fr
 return pixel_add(ambient, pixel_add(diffuse, specular));
 \end{lstlisting}
 
-\paragraph{Kamera placering}
+\paragraph{Placering af kamera}
 
-Funktionen 'camera\_look\_at\_point' er en funktion, der sørger for at vi nemt og hurtigt kan bestemme en position og vinkel til kameraet hvis vi vil kigge på et bestemt objekt. 
-For at kigge på et punkt skal vi vide hvor langt væk kameraet skal være fra punktet, hvilken vinkel vi vil se punktet fra og punktets position. Disse variabler er givet ved en vektor, der indeholder punktets position og tre doubles, der hhv.\ definerer de to vinkler og afstanden fra punktet.
+Funktionen camera\_look\_at\_point er en funktion, der sørger for, at vi nemt og hurtigt kan bestemme en position og vinkel til kameraet hvis vi vil kigge på et bestemt objekt. 
+For at kigge på et punkt skal vi vide hvor langt væk kameraet skal være fra punktet, hvilken vinkel vi vil se punktet fra og punktets position. Disse variabler er givet ved en vektor, der indeholder punktets position og tre doubles, der definerer de to vinkler og afstanden fra punktet til kameraet.
 Vi sætter kameraets position til at være vores afstand ud af y aksen, og 0 ud af x og z aksen. Så roterer vi punktet ved hjælp af vores camera\_set\_angle funktion som drejer kameraet om sig selv for at vi kigger den rigtige vej.
 Så drejer vi kameraet de angivne radianer om x og z aksen og til sidst lægger vi punktet vi vil se på, til kameraets position.
 
