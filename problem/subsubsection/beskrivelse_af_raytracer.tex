@@ -100,9 +100,9 @@ int raytracer_object_intersection(Ray ray, Object *object, Intersection *interse
 På linje fem i ovenstående kodeuddrag kan man se, at funktionen først tjekker om en ray skærer med AABB, og hvis dette er sandt tjekker den om rayen skærer i træet. Hvis begge af disse tilfælde er sande, får pixlen i skæringspunktet en farve bestemt af, hvor og hvordan rayen rammer objektet. Derudover bliver værdierne af materialet gemt, som kan bruges senere. Herefter returnerer funktionen sandt, hvis tiden, som beskriver afstanden fra startpunktet til skæringspunktet, er over 0, og falsk hvis den ikke er.
 
 
-\paragraph{Skæring med kd-træ}
+\paragraph{Skæring med KD-træ}
 
-Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om rayen skærer med kd-træet og i så fald hvor. Formålet med denne funktion er at optimere programmet, og undgå at lave unødvendige udregninger. 
+Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om rayen skærer med KD-træet og i så fald hvor. Formålet med denne funktion er at optimere programmet, og undgå at lave unødvendige udregninger. 
 
 Hele funktionen kan findes på elektronisk bilag i filen kdnode.c
 
