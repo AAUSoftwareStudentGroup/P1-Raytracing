@@ -5,7 +5,7 @@ I dette afsnit vil de væsentlige funktioner til raytraceren blive beskrevet. Fo
 \paragraph{Rendering}
 For at rendere et billede af lampen og dens belysning, er der lavet en funktion raytracer\_render, der modtager scenen, dvs.\ samlingen af alle 3D-objekter og lys, samt modellen for det kamera, som billedet skal dannes ud fra. Funktionen er vist herunder.
 
-\begin{lstlisting}[style=Cstyle, caption=Funktionen der rendere billedet af scenen med et kameras perspektiv]
+\begin{lstlisting}[style=Cstyle, caption=Funktionen, der rendere billedet af scenen med et kameras perspektiv]
 Image *raytracer_render(Scene *scene, Camera *camera) {
   int x, y;
   Image *image;
