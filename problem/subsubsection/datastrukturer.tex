@@ -1,5 +1,5 @@
 \subsubsection{Datastrukturer}
-I programmet bliver der brugt datastrukturer for at abstrahere over data. Data, der hænger sammen er således grupperet sammen. Nedenstående figur viser data-relationerne i programmet.
+I programmet bliver der brugt datastrukturer for at abstrahere over data. Nedenstående figur viser data-relationerne i programmet.
 
 \begin{figure}[H]
 \centering
@@ -30,7 +30,7 @@ I programmet bliver der brugt datastrukturer for at abstrahere over data. Data, 
   child {node {PointLight $\{L_1, L_2, ...\}$}}
 ;
 \end{tikzpicture}
-\caption{Data relations model - Stiplede afmærkninger indikerer fortsat liste}
+\caption{Viser relationer mellem sammenhængende datastrukturer.}
 \label{fig:data_model}
 \end{figure}
 
@@ -43,7 +43,7 @@ typedef struct _vector {
 } Vector;
 \end{lstlisting}
 
-På linje 2 i ovenstående kodeuddrag er det vist hvordan en 3D vektors koordinater er beskrevet med typen double. 
+På linje 2 i ovenstående kodeuddrag er det vist hvordan en 3D-vektors koordinater er beskrevet med typen double. 
 
 \paragraph{Ray}
 For at benytte sig af raytracing-metoden er det nødvendigt at have en ray som man kan følge. 
@@ -68,7 +68,7 @@ typedef struct _vertex {
 } Vertex;
 \end{lstlisting}
 
-I ovenstående kodeuddrag kan det ses at en vertex består af et stedvektor (line 2), og en normalvektor (linje 3). Vertex normalerne kan bruges i forbindelse med implementationen af phong-modellen.
+I ovenstående kodeuddrag kan det ses at en vertex består af et stedvektor (linje 2), og en normalvektor (linje 3). Vertex normalerne kan bruges i forbindelse med implementationen af phong-modellen.
 
 Som nævnt for ovenstående struct for en vertex, er alle objekter i programmet bestående af trekanter. Nedenstående kodeuddrag viser hvordan trekanter er implementeret i programmet.
     
@@ -81,7 +81,7 @@ typedef struct _triangle {
 } Triangle;
 \end{lstlisting}
 
-Denne struct viser, kort sagt, at en trekant består af 3 hjørner, altså 3 vertices, af typen Vertex, samt 3 edges, der er stedvektorer til trekantens 3 sider. 
+Denne struct viser, kort sagt, at en trekant består af 3 hjørner, altså 3 vertices, af typen Vertex, samt 3 edges, der er vektorer til trekantens 3 sider. 
 
 \paragraph{Point\_lights}
 
@@ -100,7 +100,7 @@ typedef struct _pointlight {
 På linje to i ovenstående kodeuddrag kan det ses, at et lys har en given position, som bestemmes af ét 3D-koordinat. Dette lys har en farve, bestående af en RGB-værdi. Derudover har lyset også en intensitet og radius af typen double, samt sampling\_rate af typen int. sampling\_rate og radius bruges til at danne bløde skygger.
 
 \paragraph{Materiale}
-I virkeligheden har vi mange forskellige materialer, der både syner og føles anderledes end andre. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere dette i programmet anvendes der forskellige konstanter til at beskrive et materiale. Konstanterne bruges i phong-modellen se afsnit \ref{sec:teori}.
+I virkeligheden har vi mange forskellige materialer, som har forskelligt udseende. En helt ny bil skinner når man lyser på den, mens en murstensvæg er helt mat. For at illustrere dette i programmet anvendes der forskellige konstanter til at beskrive et materiale. Konstanterne bruges i phong-modellen se afsnit \ref{sec:teori}.
 
 \begin{lstlisting}[style=Cstyle, caption=Struct til Material]
 typedef struct _material {
@@ -183,7 +183,7 @@ typedef struct _camera {
 } Camera;
 \end{lstlisting}
 
-Kameraets orientering kan beskrives som tre vektorer af typen Vector (linje 2-4). Kameraets position kan angives som en stedvektor af typen Vector (linje 5). Opløsningen er angivet som positive heltal af typen unsigned int (linje 6). Afstanden til kameraet er angivet som typen double (linje 7).
+Kameraets orientering kan beskrives som tre vektorer af typen Vector (linje 2-4). Kameraets position kan angives som en stedvektor af typen Vector (linje 5). Opløsningen er angivet som positive heltal af typen unsigned int (linje 6). Afstanden mellem kameraets position og billedplanen er beskrevet vha.\ distance (linje 7).
 
 \paragraph{Scene}
 Scenen er den virtuelle verden, som skal visualiseres. I programmet er scenen beskrevet på følgende måde. 
@@ -198,7 +198,7 @@ typedef struct _scene {
 } Scene;
 \end{lstlisting}
 
-En scene består af en række objekter (linje 2-3), en række lys (linje 4-5), samt den ambiente lysintensitet, der bruges i Phong-modellen.
+En scene består af en liste af objekter (linje 2-3), en liste af lys (linje 4-5), samt den ambiente lysintensitet, der bruges i Phong-modellen.
 
 \paragraph{Objekt}
 Objektet er det man kan se, når billedet bliver renderet af raytraceren. I programmet er objektet beskrevet på følgende måde.
@@ -215,7 +215,7 @@ typedef struct _object {
 } Object;
 \end{lstlisting}
 
-Et objekt består af en række verticies (linje 2-3), en række trekanter (linje 4-5), samt en farve på objektet, koefficienterne til det materiale den er lavet af og en KD-rod.
+Et objekt består af en liste af verticies (linje 2-3), en liste af trekanter (linje 4-5), samt en farve på objektet, koefficienterne til det materiale den er lavet af og en KD-rod.
 
 \paragraph{K-dimensionelt træ}
 Da programmet er bygget op efter at skulle kunne implementeres på en hjemmeside, er renderingen nødt til at være hurtig. Dette opnås ved hjælp af optimering, hvor der i programmet er brugt KD-træer.
@@ -229,4 +229,4 @@ typedef struct _KDNode {
 } KDNode;
 \end{lstlisting}
 
-Et KD-træ består af en række nodes (linje 2), hvilket er forgreninger, den består af en AABB box (linje 3) og en række trekanter (linje 4-5).
+Et KD-træ består af to nodes (linje 2), hvilket er forgreninger, den består af en AABB box (linje 3) og en liste af trekanter (linje 4-5).

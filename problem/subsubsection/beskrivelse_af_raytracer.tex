@@ -115,7 +115,7 @@ Funktionen raytracer\_kdtree\_intersection bruges til at undersøge om rayen sk�
 
 Hele funktionen kan findes på elektronisk bilag i filen kdnode.c
 
-\begin{lstlisting}[style=Cstyle, caption= Uddrag af funktionen raytracer\_kdtree\_intersection]
+\begin{lstlisting}[style=Cstyle, label=kd_intersection, caption= Uddrag af funktionen raytracer\_kdtree\_intersection]
 if(kdnode_is_leaf(node)) {
   /* test intersection with triangles */
   for(i = 0; i < node->n_triangles; i++) {
@@ -134,7 +134,7 @@ if(kdnode_is_leaf(node)) {
 På ovenstående kodeuddrag undersøger funktionen, om skæringen med træet sker i et af bladene, dette ses på linje 1. Et blad er 'bunden' af træet, altså det punkt, hvor en kasse ikke længere kan inddeles i flere kasser. Der er tre krav til, hvornår vi ender vores inddeling af flere kasser, og istedet slutter og kalder det for et blad. Første krav er, at hvis antallet af trekanter i en kasse er mindre end eller lig med to er noden et blad. En kasse med to eller færre trekanter er nemt og hurtigt for computeren at udregne, og derfor behøves den ikke at inddeles yderligere. Det andet krav er, hvis over halvdelen af to kassers trekanter ligger i begge kasser. Hvis dette er tilfældet kaldes begge kasser for blade, da mindst halvdelen af begge kassers fælles trekanter er i begge kasser og der derfor ikke er brug for at inddele i flere yderligere kasser. Det tredje, og sidste, krav er, hvis der er mere end 30 niveauer. Dette krav er nødvendigt for at programmet ikke kører i en evighedsløkke, og bliver ved med at tjekke, selvom det ikke er nødvendigt. En tilfælde, hvor det tredje punkt kunne være nødvendigt er, hvis ét sted i kassen indeholder 10 punkter, og dermed ikke kan opdeles, så ville programmet uden tredje krav blive ved med at lave den samme opdeling igen og igen.
 
 
-Hvis roden (hovedkassen) er et blad, findes de nærmeste skæringer først som vist på linjerne 6-8, og der findes skæring med samtlige trekanter som vist på linje tre, medmindre nogle trekanter ligger helt i skygge for andre. 
+Hvis roden (hovedkassen) er et blad, findes de nærmeste skæringer først som vist på linjerne 6-8 i kodeuddrag \ref{kd_intersection}, og der findes skæring med samtlige trekanter som vist på linje 3 i kodeuddrag \ref{kd_intersection}, medmindre nogle trekanter ligger helt i skygge for andre. 
 
 \begin{lstlisting}[style=Cstyle, caption={Fortsættelse af uddraget fra funktionen raytracer\_kdtree\_intersection}]
 else {
@@ -168,7 +168,7 @@ else {
 
 Hvis roden ikke er et blad og hvis ray skærer i begge kasser, undersøges hvilken kasse, der er nærmest og funktionen kaldes rekursivt for denne kasse, dette kan ses på linje 6-18 i ovenstående kodeuddrag. Hvis rayen går gennem den nærmeste kasse uden at ramme et objekt tjekkes for den fjerneste kasse. Hvis rayen kun skærer én af kasserne, tjekkes simpelt kun for den kasse, som set på linje 19-24.
 
-Funktionen returnerer afstanden i tid, til skæringen med trekanten.
+Funktionen returnerer tiden for skæringen med trekanten.
 
 \paragraph{Skæring med trekant}
 

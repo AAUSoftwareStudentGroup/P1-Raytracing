@@ -1,15 +1,15 @@
 \subsubsection{Skæring mellem linje og trekant i rummet}
 \label{sec:triangle_intersection}
-For at finde ud af om der er en skæring mellem en ray og en trekant, findes en metode, først at finde strålens skæring med trekantens plan, og derefter at bestemme om punktet er indenfor trekantens tre sider.
+En essentiel del af raytracing er at bestemme skæring mellem en ray og en trekant i 3D-modellen. For at finde ud af om der er en skæring mellem en ray og en trekant, følger her en beskrivelse af først at finde strålens skæring med trekantens plan, og derefter at bestemme om punktet er indenfor trekantens tre sider.
 
-Hvis rayen er parallel med planen, skærer det enten ikke planen noget sted, ellers ligger alle punkter i planet. En ray er parallel med en plan, hvis rayens retning er 90 grader relativt til planets normalvektor, dette er sandt hvis ligning \ref{eq:parralel} er opfyldt.\cite{ray_triangle_intersection}
+Hvis rayen er parallel med planen, skærer det enten ikke planen noget sted, ellers ligger alle punkter i planen. En ray er parallel med en plan, hvis rayens retning er 90 grader relativt til planens normalvektor, dette er sandt hvis ligning \ref{eq:parralel} er opfyldt.\cite{ray_triangle_intersection}
 
 \begin{equation}
   \label{eq:parralel}
   \vv{r} \bullet \vv{n} = 0
 \end{equation}
 
-Planets normalvektor findes ved at krydse to vektorer fra en af trekantens hjørner til de to andre (se ligning \ref{eq:triangle_normal}).
+Planens normalvektor findes ved at krydse to vektorer fra en af trekantens hjørner til de to andre (se ligning \ref{eq:triangle_normal}).
 
 \begin{equation}
   \label{eq:triangle_normal}
@@ -49,11 +49,11 @@ Planets normalvektor findes ved at krydse to vektorer fra en af trekantens hjør
     \draw [black, thick, -{Stealth[width=3mm, length=3mm]}] (0,0,0) -- (0.5,-1,0.5);
     \draw plot [mark=*, mark size=1] coordinates{(2,-4,2) };
   \end{tikzpicture}
-  \caption{Viser princippet bag perspektiv projektion af et punkt på et billedplan.}
-  \label{fig:perspektiv_projektion}
+  \caption{Viser princippet bag bestemmelsen af en linjes skæring med planen for en trekant.}
+  \label{fig:point_in_plane}
 \end{figure}
 
-Hvis strålen ikke er parallel med planet kan der nu findes et punkt i planet, som strålen skærer. Alle vektorer i planet er ortogonale på normalvektoren, dermed kan der opstilles en ligning \ref{eq:vektor_in_plane} til at beskrive betingelsen for et punkt strålen som også ligger i planet. Ved at substituere linjens ligning (ligning \ref{eq:point_on_ray}) ind og isolere $t_A$ kan vi bruge til at finde punktet på strålens linje og er $t_A > 0$ så er punktet også foran strålens udgangspunkt $P_0$ \cite{ray_triangle_intersection}
+Hvis strålen ikke er parallel med planen kan der nu findes et punkt i planen, som strålen skærer. Alle vektorer i planen er ortogonale på normalvektoren, dermed kan der opstilles en ligning \ref{eq:vektor_in_plane} til at beskrive betingelsen for et punkt strålen som også ligger i planen. Ved at substituere linjens ligning (ligning \ref{eq:point_on_ray}) ind og isolere $t_A$, som bruges til at finde punktet på strålens linje. Er $t_A > 0$, så er punktet også foran rayens udgangspunkt $P_0$ \cite{ray_triangle_intersection}
 
 \begin{align}
   \label{eq:point_on_ray}
@@ -106,7 +106,7 @@ Hvis strålen ikke er parallel med planet kan der nu findes et punkt i planet, s
     \draw plot [mark=*, mark size=1] coordinates{(P') };
   \end{tikzpicture}
   \caption{Viser krydsproduktet $\protect\vv{n_a}$ af en af trekantens sider $\protect\vv{a}$ og $\protect\vv{AP}$.}
-  \label{fig:perspektiv_projektion}
+  \label{fig:point_in_triangle}
 \end{figure}
 
-For at et punkt i trekantens plan også er indenfor trekanten skal det ligge på den rigtige side af hver af trekantens sider $\{\vv{AB}, \vv{BC}, \vv{CA}\}$. Krydsproduktet af en side og en vektor til punktet i planen fra en af trekantens hjørner $\vv{AB} \times \vv{AP}$ vil være parralel med trekantens normal vektor (enten i samme retning eller direkte modsat). Afhængigt af hvilken side af $\vv{AB}$ punktet $P$ befinder sig bestemmer retningen af krydsproduktsvektoren, Så derved kan vi vælge et andet punkt på den ønskede side af $\vv{AB}$ at sammenligne med. Derved skal retningen af $\vv{AB} \times \vv{AP}$ være lig $\vv{AB} \times \vv{AC}$. Samme metode anvendt på de to andre sider af trekanten ($\vv{BC}$, $\vv{CA}$) og hvis punktet $P$ er på 'indersiden' af dem alle, da er $P$ i trekanten.
+For at et punkt i trekantens plan også er indenfor trekanten skal det ligge på den rigtige side af hver af trekantens sider $\{\vv{AB}, \vv{BC}, \vv{CA}\}$. Krydsproduktet af en side og en vektor til punktet i planen fra en af trekantens hjørner $\vv{AB} \times \vv{AP}$ vil være parralel med trekantens normal vektor (enten i samme retning eller direkte modsat). Siden af $\vv{AB}$ hvoraf punktet $P$ befinder sig bestemmer retningen af krydsproduktsvektoren, Så derved kan vi vælge et andet punkt på den ønskede side af $\vv{AB}$ at sammenligne med. Derved skal retningen af $\vv{AB} \times \vv{AP}$ være lig $\vv{AB} \times \vv{AC}$. Samme metode anvendt på de to andre sider af trekanten ($\vv{BC}$, $\vv{CA}$) og hvis punktet $P$ er på 'indersiden' af dem alle, da er $P$ i trekanten.

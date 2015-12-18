@@ -1,6 +1,6 @@
 \subsubsection{Rotationsmatricer}
 \label{sec:rot_matricer}
-Hvis vi vil rotere et punkt eller en vektor omkring nul-punktet i et koordinatsystem kan vi bruge en rotationsmatrix \cite{rotationsmatricer}.
+Hvis vi vil rotere et punkt eller en vektor omkring en akse i et koordinatsystem kan vi bruge en rotationsmatrix \cite{rotationsmatricer}.
 \begin{align} 
   R_x(\theta) = 
   \begin{bmatrix}
@@ -33,15 +33,6 @@ Nedenstående eksempel illustrerer princippet ved at dreje en vektor i rummet.
     u_z
   \end{bmatrix}
 \end{equation}
-og rotationsvektor $R_x$
-\begin{equation}
-  R_x(\theta) = 
-  \begin{bmatrix}
-    1 & 0 & 0\\ 
-    0 & cos \theta & - sin \theta\\ 
-    0 & sin \theta & cos \theta
-  \end{bmatrix}
-\end{equation}
 Den roterede vektor $\vv{u}$ kan nu beskrives som set i udtryk \ref{eq:rotation_x}
 \begin{equation}
   \vv{v} = R_x(\theta) \cdot \vv{u} = \begin{bmatrix}
@@ -51,7 +42,7 @@ Den roterede vektor $\vv{u}$ kan nu beskrives som set i udtryk \ref{eq:rotation_
   \end{bmatrix}
   \label{eq:rotation_x}
 \end{equation}
-Og kalder det for vektor $\vv{v}$ og indsætter både $\vv{u}$ og $\vv{v}$ i nedenstående skitse.
+Vektor $\vv{u}$ og $\vv{v}$ er illustreret i nedenstående figur \ref{fig:rotationsmatrix_eksempel}.
 \begin{figure}[H]
   \center
   \begin{tikzpicture}
@@ -71,12 +62,6 @@ Og kalder det for vektor $\vv{v}$ og indsætter både $\vv{u}$ og $\vv{v}$ i ned
     \draw[<-] (0.5, 1) arc (60:20:1);
     \node[] at (1,1)  {$\theta$};
   \end{tikzpicture}
-  % \includegraphics[width=12cm]{rotationsmatrix_eksempel.png}
-  \caption{Eksempel på en rotationsmatrix}
+  \caption{Eksempel på rotation af en vektor om x-aksen}
   \label{fig:rotationsmatrix_eksempel}
 \end{figure}
-% Geogebra udregner vinkler i grader, så vi omregner grader til radianer ved hjælp af ligningen:
-% \begin{equation}
-  % R=d/2*\pi/360=57,31/2*\pi/360\approx1
-% \end{equation}
-Vi ser at vektor $\vv{u}$ blev drejet $\theta$ radianer, som forventet.

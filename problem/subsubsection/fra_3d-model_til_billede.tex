@@ -15,7 +15,7 @@ En 3D-model er en matematisk beskrivelse af et tre dimensionelt objekt. For at b
 For at rendere et billede af en 3D-model bestående af trekanter, er man nødt til at have en model for det kamera, som billedet renderes ud fra. Hvordan kameraet kan modelleres er beskrevet i næste afsnit.
 
 \paragraph{Kamera}
-Et kamera, i konteksten af at rendere en 3D-model, er typisk en beskrivelse af position, orientation og synsfelt. Andre informationer kan tilknyttes som beskriver opløsning af det renderede billede, samt perspektivet af det resulterende billede. Orientationen fastsættes ved hjælp af et sæt vektorer som beskriver hvilken retning der er f.eks.\ højre og op for kameraret.
+Et kamera i forbindelse med rendering af en 3D-model, er typisk en beskrivelse af position, orientation og synsfelt. Andre informationer kan tilknyttes som beskriver opløsning af det renderede billede, samt perspektivet af det resulterende billede. Orientationen fastsættes ved hjælp af et sæt vektorer som beskriver hvilken retning der f.eks.\ er højre og op for kameraret.
 
 \begin{figure}[H]
   \centering
@@ -48,13 +48,13 @@ Et kamera, i konteksten af at rendere en 3D-model, er typisk en beskrivelse af p
 \node [above] at (0,-4,3.2) {$w$};
 \node [left]  at (3.2,-4,0) {$h$};
 \end{tikzpicture}
-  \caption{Visualisering af et punkt på billedplanet som en kombination af tre vektorer $\protect\vv{r}$, $\protect\vv{u}$ og $\protect\vv{f}$, der repræsenterer hhv. højre, op og frem retninger for kameraet.}
+  \caption{Visualisering af et punkt på billedplanen som en kombination af tre vektorer $\protect\vv{r}$, $\protect\vv{u}$ og $\protect\vv{f}$, der repræsenterer hhv. højre, op og frem retninger for kameraet.}
   \label{fig:kamera_billede}
 \end{figure}
 
-Et punkt $B$ på billedplanet (Se figur \ref{fig:kamera_billede}) kan repræsentere en pixel og kan beskrives som en lineær kombination af en op- og en højre-orientationsvektor, samt en vektor, der beskriver afstanden til billedplanet relativt til kameraet. På figuren er denne vektor $\vv{f}$ skaleret med en faktor $d$.
+Et punkt $B$ på billedplanen (Se figur \ref{fig:kamera_billede}) kan repræsentere en pixel og kan beskrives som en lineær kombination af en op- og en højre-orientationsvektor, samt en vektor, der beskriver afstanden til billedplanen relativt til kameraet.
 
-En stråles retning gennem et pixel koordinat $B$ relativt til kameraets udgangspunkt $C$ kan altså beskrives på følgende måde:
+En stråles retning gennem et pixelkoordinat $B$ relativt til kameraets udgangspunkt $C$ kan altså beskrives på følgende måde:
 \begin{align}
 \label{eq:pixel_til_billede}
   \vv{B} &= C + \vv{f} \cdot d + \vv{u} \cdot \left(y-\frac{h}{2}\right) + \vv{r} \cdot \left(x-\frac{w}{2}\right) \\
@@ -63,7 +63,7 @@ En stråles retning gennem et pixel koordinat $B$ relativt til kameraets udgangs
 
 Hvor $(x,y)$ er pixelkoordinatet på billedet mellem $(0,0)$ og $(w,h)$.
 
-Afstanden $d$ samt størrelsen af billedplanet bestemmer synsvinklen.
+Afstanden $d$ samt størrelsen af billedplanen bestemmer synsvinklen.
 
 \paragraph{Perspektiv projektion}
 \label{sec:perspektiv_projektion}
@@ -147,7 +147,7 @@ Phong-modellen er en såkaldt \textit{shading} funktion, som beskriver lyset fra
 
 Ud fra modellen \cite{stanford_phong}, kan der skrives følgende overordnede \textit{shading} funktion.
 \begin{equation} \label{eq:phong}
-  \rho = \rho_a + \sum\limits_{lights} (\rho_d + \rho_s)
+  \rho = \rho_a + \sum\limits_{lights} (\rho_l + \rho_s)
 \end{equation}
 Hvor $\rho_a$, $\rho_l$ og $\rho_s$ er hhv. \textit{ambient}, \textit{diffuse} og \textit{specular} lys der er beskrevet kort herunder.
 
@@ -156,7 +156,7 @@ Hvor $\rho_a$, $\rho_l$ og $\rho_s$ er hhv. \textit{ambient}, \textit{diffuse} o
 \label{eq:ambient_formel}
 	\rho_a &= m_a C A
 \end{align}
-Hvor $m_a$ er den ambiente konstant, $C$ er overfladens farve som rgb-værdi og $A$ er den ambiente lysintensitet.
+Hvor $m_a$ er den ambiente konstant, $C$ er overfladens farve som RGB-værdi og $A$ er den ambiente lysintensitet.
 
 \subparagraph{\textit{Diffuse} lys} er det lys, som reflekteres ifølge \textit{Lambert's Cosinuslov}. Ud fra loven kan følgende model anvendes til at udregne \textit{diffuse} lys \cite{stanford_phong}.
 \begin{align}
@@ -169,7 +169,7 @@ Hvor $m_l$ er den Lambertianske konstant, $I$ er det lyskildens lysintensitet, $
 	\rho_s &= m_s S I max(\vv{r}\bullet\vv{u},0)^{m_{sp}} \\
 	S &= m_{sm} C + (1 - m_{sm})(1,1,1)
 \end{align}
-Hvor $m_s$ er den speculare konstant, $m_sp$ er den speculare eksponent som beskriver størrelsen af lys der spejles i objektets overflade, $S$ er en lineær interpolation mellem objektets farve og hvid, afhængig af objektets \textit{metalness} $m_{sm}$. $\vv{u}$ og $\vv{r}$ er normaliserede vektorer, for hhv. vektor fra overfladepunktet mod kameraet og retningsvektor for det reflekterede lys beregnet som følgende.
+Hvor $m_s$ er den speculare konstant, $m_{sp}$ er den speculare eksponent som beskriver størrelsen af lys der spejles i objektets overflade, $S$ er en lineær interpolation mellem objektets farve og hvid, afhængig af objektets \textit{metalness} $m_{sm}$. $\vv{u}$ og $\vv{r}$ er normaliserede vektorer, for hhv. vektor fra overfladepunktet mod kameraet og retningsvektor for det reflekterede lys beregnet som følgende.
 \begin{align}
 	\vv{r} &= -\vv{I} + 2 (\vv{I} \bullet \vv{n}) \vv{n}
 \end{align}
