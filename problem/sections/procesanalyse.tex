@@ -1,3 +1,11 @@
+\documentclass[oneside,a4paper,titlepage]{article}
+\usepackage{blindtext}
+\usepackage[utf8]{inputenc}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{float}
+\begin{document}
 \begin{titlepage}
   %\toprule[2pt]
   %\midrule
@@ -8,7 +16,6 @@
   \vspace{0.2cm}
   %\midrule
   %\toprule{2pt}
-  \vfill
   \begin{center}
     \Large{\textbf{Gruppe B2-28}}\\
     Morten Rask Andersen\\
@@ -25,15 +32,9 @@
   \end{center}
 \end{titlepage}
 
-\documentclass[oneside,a4paper,titlepage]{article}
-\usepackage{blindtext}
-\usepackage[utf8]{inputenc}
-\usepackage{pdfpages}
-\usepackage{graphicx}
-\usepackage{geometry}
-\usepackage{float}
 
-\begin{document}
+
+
 
 \section{Indledning}
 
@@ -76,7 +77,7 @@ Ud fra den overordnede tidsplan blev der hver morgen lavet en dagsplan, som besk
   \item Skriv testafsnit færdigt.
 \end{itemize}
 
-Ud fra dagsorden uddelte vi arbejdsopgaver, og måden dette foregik på var, at gruppens medlemmer selv havde indflydelse på, hvilke ting, fra dagsorden, de ville skrive om. Opgaverne blev udført individuelt eller i mindre grupper. Derudover blev der taget højde for omfanget af opgaverne, så det ikke endte med, at en person havde en 30 minutters opgave mens en anden person havde en to timers opgave. I slutningen af dagen eller dagen efter holdte vi korte og uformelle møder, hvor vi gennemgik og diskuterede resultaterne af opgaveskrivningen. I forbindelse med opgaveskrivningen benyttede vi os af værktøjet git til at administrere forskellige versioner af rapporten, og på den måde sørge for, at vi alle havde tilgang til den nyeste version af rapporten. Derudover blev rapporten skrevet i 'LaTeX' som gjorde det muligt at opdele rapporten i flere filer.  
+Ud fra dagsorden uddelte vi arbejdsopgaver, og måden dette foregik på var, at gruppens medlemmer selv havde indflydelse på, hvilke ting, fra dagsorden, de ville skrive om. Opgaverne blev udført individuelt eller i mindre grupper. Derudover blev der ikke altid taget højde for omfanget af opgaverne, så det endte nogle gange med, at en person havde en 30 minutters opgave mens en anden person havde en to timers opgave. I slutningen af dagen eller dagen efter holdte vi korte og uformelle møder, hvor vi gennemgik og diskuterede resultaterne af opgaveskrivningen. I forbindelse med opgaveskrivningen benyttede vi os af værktøjet Git til at administrere forskellige versioner af rapporten, og på den måde sørge for, at vi alle havde tilgang til den nyeste version af rapporten. Derudover blev rapporten skrevet i 'LaTeX' som bl.a.\ gjorde det muligt at opdele rapporten i flere filer.
 
 Med hensyn til arbejdsfordelingen har vi ikke haft en snak i gruppen om, hvad vi forventede af hinanden. Der var dog nogle forventninger, der på forhånd var aftalt som f.eks.\ at vi mødte ind til aftalt tid og, at man udførte det arbejde som blev aftalt. 
 
@@ -112,51 +113,53 @@ Ud fra afsnit \ref{sec:beskrivelse} er der vurderet følgende:
 \end{itemize}
 
 \section{Analyse}
-Formålet med dette afsnit er, at analysere hvorfor de forskellige udsagn i vurderingen er gældende.
+Formålet med dette afsnit er, at analysere hvorfor de forskellige udsagn i vurderingen er gældende. \\
 
-"Opgaveuddeling ved hjælp af Trello gik godt i starten og knap så godt i slutningen af projektet":
+\textbf{\textit{"Opgaveuddeling ved hjælp af Trello gik godt i starten og knap så godt i slutningen af projektet"}}: \\
 
-Dette skyldes, at der er i starten af projektet var mange hjemmeopgaver, som ikke skulle laves fælles i gruppen, og Trello derfor var effektiv til at holde styr på hvem, der lavede hvilke opgaver, samt hvilke opgaver, der var afsluttet. Som projektet skred frem blev vi mere afhængige af at diskutere og lave fælles arbejde i grupperummet, og Trello blev opdateret. Derudover kom der så mange boards, at det i slutningen af projektet ikke var til at overskue.
+Dette skyldes, at der er i starten af projektet var mange hjemmeopgaver, som ikke skulle laves fælles i gruppen, og Trello derfor var effektiv til at holde styr på hvem, der lavede hvilke opgaver, samt hvilke opgaver, der var afsluttet. Som projektet skred frem blev vi mere afhængige af at diskutere og lave fælles arbejde i grupperummet, og Trello blev ikke opdateret. Derudover kom der så mange boards, at det i slutningen af projektet ikke var til at overskue. \\
 
-"Git som version-control var rigtigt god til at holde styr på koden, men knap så god til LaTeX.":
+\textbf{\textit{"Git som version-control var rigtigt god til at holde styr på koden, men knap så god til LaTeX."}}: \\
 
-Grunden til at Git er et bedre værktøj til koden end til rapportskrivning i LaTeX er, at Git ikke selv henter den nyeste version af rapporten ned, hvilket gør at der ofte opstår konflikter som er tidskrævende at rette. Dette problem kan også opstå i koden, men der vil være en mindre tilbøjelighed til at folk sider og retter i samme funktion i koden. 
+Grunden til at Git er et bedre værktøj til koden end til rapportskrivning i LaTeX er, at Git ikke selv henter den nyeste version af rapporten ned, hvilket gør at der ofte opstår konflikter som er tidskrævende at rette. Dette problem kan også opstå i koden, men der vil være en mindre tilbøjelighed til at folk sider og retter i samme funktion i koden.  \\
 
-"Dagsordenerne gik godt, men nogle gange var de meget korte og upræcise."
+\textbf{\textit{"Dagsordenerne gik godt, men nogle gange var de meget korte og upræcise."}}: \\
 
-Grunden til at nogle dagsordner var meget korte og upræcise skyldes, at det især i opstartfasen var svært at finde nye opgaver til alle gruppemedlemmer.
+Grunden til at nogle dagsordner var meget korte og upræcise skyldes, at det især i opstartfasen var svært at finde nye opgaver til alle gruppemedlemmer. \\
 
-"Gennemgang af rettelser på projektet var godt."
-Grunden til at fælles rettelser af rapporten i grupperummet var godt skyldes, at vi i gruppen fik diskuteret tingene igennem, og derved fik set projektet fra flere synsvinkler. Dette gjorde at alle gruppemedlemer havde en mulighed for at have indflydelse på udarbejdelsen af hele rapporten. 
+\textbf{\textit{"Gennemgang af rettelser på projektet var godt."}}: \\
 
-"Fællesregning af gruppeopgaver fra kurser styrkede samarbejdet."
-Grunden til at fællesregning af gruppeopgaver fra andre kurser var med til at styrke samarbejdet i gruppen skyldes, at vi blev vænnet til at arbejde sammen og hjælpe hinanden i gruppen. 
+Grunden til at fælles rettelser af rapporten i grupperummet var godt skyldes, at vi i gruppen fik diskuteret tingene igennem, og derved fik set projektet fra flere synsvinkler. Dette gjorde at alle gruppemedlemer havde en mulighed for at have indflydelse på udarbejdelsen af hele rapporten.  \\
 
-"Den kvalitative metode fungerede godt til at opnå viden under problemanalysen"
+\textbf{\textit{"Fællesregning af gruppeopgaver fra kurser styrkede samarbejdet."}}: \\
 
-Den kvalitative metoder er god til at få viden direkte fra de interessenter, som rapporten omhandler. Derfor har det været bedre at kontake disse, frem for blot at gætte sig til, hvilken mening de havde om problemet.
+Grunden til at fællesregning af gruppeopgaver fra andre kurser var med til at styrke samarbejdet i gruppen skyldes, at vi blev vænnet til at arbejde sammen og hjælpe hinanden i gruppen.  \\
 
-"Den overordnede tidsplan fungerede godt."
+\textbf{\textit{"Den kvalitative metode fungerede godt til at opnå viden under problemanalysen."}}: \\
 
-Den overordnede tidsplan fungerede godt, fordi vi huskede at sammenligne denne med dagsordnerne og diskuterede ugentligt hvad der skulle til for at den overordnede tidsplan blev overholdt. 
+Den kvalitative metoder er god til at få viden direkte fra de interessenter, som rapporten omhandler. Derfor har det været bedre at kontake disse, frem for blot at gætte sig til, hvilken mening de havde om problemet. \\
 
-"Arbejdsfordelingen kan forbedres"
+\textbf{\textit{"Den overordnede tidsplan fungerede godt."}}: \\
 
-Grunden at arbejdsfordelingen i gruppen kan forbedres er, at der som nævnt har været situationer, hvor nogle gruppemedlemmer har haft meget større opgaver end andre. 
+Den overordnede tidsplan fungerede godt, fordi vi huskede at sammenligne denne med dagsordnerne og diskuterede ugentligt hvad der skulle til for at den overordnede tidsplan blev overholdt.  \\
 
-"Peer-learning var god til videndeling mellem gruppemedlemmerne"
+\textbf{\textit{"Arbejdsfordelingen kan forbedres."}}: \\
 
-Det var fordel for gruppen, at vi kunne dele vores viden og erfaringer internt med hinanden, da dette gjorde at alle havde en chance for at få den samme viden i gruppen, derudover gav det muligheden for gruppemedlemmer at styrke evnen til at formidle viden til de andre i gruppen.
+Grunden at arbejdsfordelingen i gruppen kan forbedres er, at der som nævnt har været situationer, hvor nogle gruppemedlemmer har haft meget større opgaver end andre.  \\
 
-"Top-down programmering fungerede godt ved udvikling af programmet"
+\textbf{\textit{"Peer-learning var god til videndeling mellem gruppemedlemmerne."}}: \\
+
+Det var fordel for gruppen, at vi kunne dele vores viden og erfaringer internt med hinanden, da dette gjorde at alle havde en chance for at få den samme viden i gruppen, derudover gav det muligheden for gruppemedlemmer at styrke evnen til at formidle viden til de andre i gruppen. \\
+
+\textbf{\textit{"Top-down programmering fungerede godt ved udvikling af programmet."}}: \\
 
 Denne metode bidrog til at skabe en god struktur i koden, som gjorde denne lettere læsbar og heraf nemmere at arbejde med.
 
 
 \section{Syntese}
+Syntesen er herunder opbygget efter start-stop-fortsæt-modellen, som består af operationelle udsagn, til hvilke ting gruppen ønsker at starte, stoppe og fortsætte med.
 
-\paragraph{Start}
-Vi vil starte med at:
+Vi vil \{textbf}starte med at:
 \begin{itemize}
   \item Bruge ShareLatex til rapportskrivning. 
   \item Bruge en dag i starten af projektet til at diskutere arbejdsindsats, forventning, samarbejdskontrakt og hjemmearbejde. 
@@ -183,7 +186,7 @@ Vi vil fortsætte med at:
   \item Have fælles opgaveregninger som styrker gruppens faglighed i flere kurser.
   \item Rette rapporten i fællesskab på projektoren i grupperummet.
   \item Anvende Trello til fordeling af hjemmeopgaver.
-
+\end{itemize}
 \end{document}
 
 \clearpage
